@@ -165,9 +165,11 @@
 <!-- markdownlint-disable MD033 -->
 <figure class="cheat-image" data-gate="ballerina" hidden>
   <figcaption>Cheat Code Entered</figcaption>
-  <img src="ballerina-cappuccina-agentic-loop.png" alt="Ballerina Cappuccina pirouetting through the four steps of the agentic loop">
+  <img src="ballerina-cappuccina-agentic-loop.png" alt="Ballerina Cappuccina shows the four steps of the agentic loop">
 </figure>
-<p>We’re going to build an entire agent now, in under a hundred lines of python. The heart of the kit is <code>agent_loop</code> in <code>agent.py</code>: the agentic tool loop, task-agnostic by design. We’ll build it once here, test it interactively, and then use it as the basis of the the dispatcher tomorrow. (Ignore the other files in the starter for now, we’ll work on them tomorrow.)</p>
+<p>In this activity, you will build an agent in fewer than 100 lines of Python.</p>
+<p>The main function is <code>agent_loop</code> in <code>agent.py</code>. This function runs the tool loop and does not depend on a specific task. You will build it once and test it. Tomorrow, you will use it in the dispatcher.</p>
+<p>Do not use the other starter files in this activity. You will use them tomorrow.</p>
 <pre class="mermaid">---
 config:
   layout: elk
@@ -178,44 +180,54 @@ flowchart LR
     llm -- &quot;no tool_calls&quot; --&gt; y[&quot;yield: final message&quot;]
     llm -- &quot;tool_calls&quot; --&gt; t[&quot;run each tool&quot;]
     t -- &quot;one result per tool_call_id&quot; --&gt; m
-</pre><p>Four invariants the loop must hold:</p>
+</pre><p>The loop must meet these four requirements:</p>
 <ol>
-<li>Feed the assistant turn back <em>verbatim</em> - content including the <code>&lt;think&gt;</code> block, <code>tool_calls</code> unchanged. Anything you rewrite breaks the provider’s implicit prompt cache, and <code>cached_tokens</code> stays at zero.</li>
-<li>Exactly one <code>role: &quot;tool&quot;</code> message per <code>tool_call_id</code>. The API rejects a mismatched transcript.</li>
-<li>Rounds are bounded (<code>max_rounds</code>), to prevent runaway token burn.</li>
-<li>The loop never calls <code>next_tick()</code>, that is the responsibility of the outer runner.</li>
+<li>Add the assistant turn to the history without changes. Keep all content, including the <code>&lt;think&gt;</code> block and <code>tool_calls</code>. A change can prevent the provider from using its prompt cache. If this occurs, <code>cached_tokens</code> stays at zero.</li>
+<li>Add exactly one <code>role: &quot;tool&quot;</code> message for each <code>tool_call_id</code>. The API rejects a history that does not have matching messages.</li>
+<li>Stop the loop when it reaches <code>max_rounds</code>. This limit prevents the loop from using too many tokens.</li>
+<li>Do not call <code>next_tick()</code> in the loop. The outer runner calls this function.</li>
 </ol>
-<h2 id="activity%3A-one-llm-call" tabindex="-1"><a class="header-anchor" href="#activity%3A-one-llm-call">Activity: One LLM call</a></h2>
-<details class="spoiler" data-gate="ballerina" hidden><summary>Spoiler: stuck on phase 1?</summary><p><a href="phase-1-solution/">Phase 1 reference solution</a></p></details>
-<p>We’re going to begin without any tools or loop. We will send the system prompt and the task to the model and return the output, including the <code>&lt;think&gt;</code> block, as the final message.</p>
-<p>Implement that much of <code>agent_loop</code> in <code>agent.py</code>. Note that the docstring contract describes the finished loop, which strips the think block on yield - for this phase, return the content unstripped. One pyright friction you will hit, expected and not a mistake on your part: <code>message.content</code> is typed <code>str | None</code>, so read it as <code>message.content or &quot;&quot;</code>.</p>
-<p>Then check it against the scripted model:</p>
+<h2 id="activity%3A-one-model-call" tabindex="-1"><a class="header-anchor" href="#activity%3A-one-model-call">Activity: One model call</a></h2>
+<details class="spoiler" data-gate="ballerina" hidden><summary>Help for phase 1</summary><p><a href="phase-1-solution/">Phase 1 reference solution</a></p></details>
+<p>Start with one model call. Do not add tools or a loop.</p>
+<p>Send the system prompt and the task to the model. Return all model output as the final message. The output must include the <code>&lt;think&gt;</code> block.</p>
+<p>Implement this version of <code>agent_loop</code> in <code>agent.py</code>. The docstring describes the completed loop, which removes the <code>&lt;think&gt;</code> block from the final message. Do not remove this block in this phase.</p>
+<p>Pyright defines <code>message.content</code> as <code>str | None</code>. Read it as <code>message.content or &quot;&quot;</code>.</p>
+<p>Run this test with the scripted model:</p>
 <pre><code class="language-bash">uv run behave features/agent_loop.feature -n LOOP-1
 </code></pre>
-<p>Once it works, run the same loop interactively against the real model with a question that needs no tools:</p>
+<p>When the test passes, ask the real model a question that does not require tools:</p>
 <pre><code class="language-bash">uv run hadr-agent &quot;in one sentence, why is the sky blue?&quot;
 </code></pre>
-<p>The answer arrives wrapped in a <code>&lt;think&gt;...&lt;/think&gt;</code> block - that is expected, and worth reading. Read the output: the <code>&lt;think&gt;</code> reasoning, the yielded answer, and <code>rounds: 1</code>.</p>
+<p>The answer is in a <code>&lt;think&gt;...&lt;/think&gt;</code> block. This is correct for this phase. Examine the reasoning, the final answer, and <code>rounds: 1</code>.</p>
 <h3 id="the-%3Cthink%3E-tags" tabindex="-1"><a class="header-anchor" href="#the-%3Cthink%3E-tags">The <code>&lt;think&gt;</code> tags</a></h3>
-<p>Most models you use, including <code>minimax-m3</code>, are reasoning models. They are trained to emit a chain-of-thought before the answer. This measurably improves multi-step decisions at the cost of more tokens, spent in the <code>&lt;think&gt;...&lt;/think&gt;</code> block. Read it to see <em>how</em> the model decided, not just what it concluded.</p>
-<p>Phase 1 returns it as-is, so you can see it. Later phases strip it for display with <code>strip_think</code>, but still feed the assistant turn back into the history <em>verbatim</em> - <code>&lt;think&gt;</code> block included - so the provider’s implicit prompt cache keeps hitting (invariant 1).</p>
-<h3 id="when-you%E2%80%99re-done" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done">When you’re done</a></h3>
+<p>Most models in this course are reasoning models. This group includes <code>minimax-m3</code>. These models put reasoning in a <code>&lt;think&gt;...&lt;/think&gt;</code> block before the answer. The reasoning can improve decisions that have multiple steps, but it uses more tokens.</p>
+<p>Phase 1 displays the block so that you can examine it. Later phases use <code>strip_think</code> to remove it from the displayed answer. They still add the complete assistant turn to the history without changes. This includes the <code>&lt;think&gt;</code> block and lets the provider use its prompt cache.</p>
+<h3 id="when-you-finish" tabindex="-1"><a class="header-anchor" href="#when-you-finish">When you finish</a></h3>
 <ol>
-<li><strong>Open a pull request and have a teammate review it.</strong> This is the smallest diff you will ship all course, so use it to prove the review flow actually works: branch protection stops you merging your own, <code>@claude</code> leaves a review, and a teammate approves before it lands. Fix the plumbing now, not tomorrow afternoon.</li>
-<li><strong>Post the strangest <code>&lt;think&gt;</code> block you got to the Padlet.</strong> A one-sentence question about the sky can produce a startling amount of deliberation, and the shape of that reasoning is what you will be budgeting for in the next session.</li>
+<li><strong>Open a pull request and ask a teammate to review it.</strong> Use this small change to test the review process. Make sure that branch protection prevents you from merging your own change. Make sure that <code>@claude</code> submits a review. Get approval from a teammate before you merge. Resolve process problems before the next activity.</li>
+<li><strong>Post your most unusual <code>&lt;think&gt;</code> block to the Padlet.</strong> In the next session, you will estimate the tokens that this reasoning uses.</li>
 </ol>
 <h2 id="activity%3A-the-agentic-loop" tabindex="-1"><a class="header-anchor" href="#activity%3A-the-agentic-loop">Activity: The agentic loop</a></h2>
-<details class="spoiler" data-gate="ballerina" hidden><summary>Spoiler: stuck on phase 2?</summary><p><a href="phase-2-solution/">Phase 2 reference solution</a></p></details>
-<p>Now we add the loop and the tool_calls.</p>
+<details class="spoiler" data-gate="ballerina" hidden><summary>Help for phase 2</summary><p><a href="phase-2-solution/">Phase 2 reference solution</a></p></details>
+<p>Now, add the loop and the tool calls.</p>
+<p>One round is one model call. Run the model calls in a loop.</p>
+<p>If the model does not request a tool, return its final message. If the model requests tools, do these steps:</p>
 <ol>
-<li>Run inference in a loop, terminating when the model stops asking for tools (it yields) or <code>max_rounds</code> is hit.</li>
+<li>Add the complete assistant turn to the history without changes.</li>
+<li>Run each requested tool.</li>
+<li>Add one <code>role: &quot;tool&quot;</code> result for each <code>tool_call_id</code>.</li>
+<li>Start the next round.</li>
 </ol>
-<p>Now the <code>tool_calls</code> branch: run each tool the model asked for, append exactly one <code>role: &quot;tool&quot;</code> result per <code>tool_call_id</code>, feed the assistant turn back verbatim, and go round again until the model stops asking - bounded by <code>max_rounds</code>. That is invariants 1-3, and <code>LOOP-2</code> through <code>LOOP-5</code> check them. One more expected pyright friction: <code>message.tool_calls</code> is a union type and only function calls carry <code>.function</code>, so narrow with <code>tc.type == &quot;function&quot;</code> before touching it:</p>
+<p>Stop when the model does not request a tool or when the loop reaches <code>max_rounds</code>.</p>
+<p>Tests <code>LOOP-2</code> through <code>LOOP-5</code> check the first three requirements. Pyright defines <code>message.tool_calls</code> as a union type. Only function calls have <code>.function</code>. Check <code>tc.type == &quot;function&quot;</code> before you use <code>.function</code>.</p>
+<p>Run all the tests:</p>
 <pre><code class="language-bash">uv run behave features/agent_loop.feature
 </code></pre>
 <details class="spoiler">
-<summary>Hint: if your model emits invalid tool-call arguments.</summary>
-<p>Models occasionally emit tool-call <code>arguments</code> that are not valid JSON. Your loop already handles that, but you need to fix this when sending the broken string back in the assistant turn, otherwise the provider rejects the entire request. Here’s one way to do this:</p>
+<summary>Help for invalid tool-call arguments</summary>
+<p>A model can return tool-call <code>arguments</code> that are not valid JSON. Your loop handles this when it runs the tool. You must also correct the arguments in the assistant turn that you send to the provider. If you do not correct them, the provider rejects the request.</p>
+<p>You can use this function:</p>
 <pre><code class="language-python">def _replayable_args(raw: str | None) -&gt; str:
     &quot;&quot;&quot;Tool-call arguments as the provider will accept them back.&quot;&quot;&quot;
     try:
@@ -224,81 +236,88 @@ flowchart LR
         return &quot;{}&quot;
     return raw or &quot;{}&quot;
 </code></pre>
-<p>Then use <code>_replayable_args(tc.function.arguments)</code> where you rebuild the assistant turn. Valid JSON passes through untouched, so the cache invariant still holds.</p>
+<p>Use <code>_replayable_args(tc.function.arguments)</code> when you reconstruct the assistant turn. The function does not change valid JSON. Thus, valid arguments continue to meet the cache requirement.</p>
 </details>
-<p>All green? <code>hadr-agent</code> wires the same loop to a set of toy tools - watch it actually think:</p>
+<p>When all tests pass, use <code>hadr-agent</code> to connect the loop to the example tools:</p>
 <pre><code class="language-bash">uv run hadr-agent &quot;roll two dice and tell me the time&quot;
 </code></pre>
-<p>Then push it harder and read the <code>rounds</code> count and the model’s <code>&lt;think&gt;</code> reasoning as it plans and acts across rounds:</p>
-<pre><code class="language-sh"># offloading math to a tool.
+<p>Run these tasks. Examine the <code>rounds</code> value and the reasoning in the <code>&lt;think&gt;</code> block.</p>
+<pre><code class="language-sh"># Use a tool for the calculation.
 uv run hadr-agent &quot;what is 2**31 - 1?&quot;
-# chaining fetch then decode across rounds.
+# Fetch and decode data in separate rounds.
 uv run hadr-agent &quot;what's the secret message?&quot;
-# tools touching the real world.
+# Use tools to examine the project.
 uv run hadr-agent &quot;what files are in this project and what is it for?&quot;
 </code></pre>
-<p>Watch <code>rounds</code> climb when a task forces tool chaining, and watch the loop yield once the model stops asking for tools. This is the exact machine tomorrow’s dispatcher runs on - only the tools, prompt, and state message change.</p>
-<h3 id="when-you%E2%80%99re-done-1" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done-1">When you’re done</a></h3>
+<p>The <code>rounds</code> value increases when a task needs a sequence of tools. The loop returns the final message when the model stops requesting tools.</p>
+<p>Tomorrow, the dispatcher will use this loop. Only the tools, prompt, and state message will change.</p>
+<h3 id="when-you-finish-1" tabindex="-1"><a class="header-anchor" href="#when-you-finish-1">When you finish</a></h3>
 <ol>
-<li><strong>Open a pull request and have a teammate review it against the four invariants</strong>, not against the test output: <code>behave</code> passing means the scripted client was satisfied, not that you feed the assistant turn back verbatim or bound your rounds. Get it reviewed carefully - the rest of this course hinges on this.</li>
-<li><strong>Post your <code>rounds</code> count for <code>what's the secret message?</code> on the Padlet.</strong> Same tools, same model, different loops: if someone’s is consistently lower, ask them what their system prompt says.</li>
+<li><strong>Open a pull request and ask a teammate to check the four requirements.</strong> The test result does not prove that the code keeps the assistant turn unchanged. It also does not prove that the code limits the rounds. Ask the teammate to examine these parts of the code.</li>
+<li><strong>Post your <code>rounds</code> value for <code>what's the secret message?</code> on the Padlet.</strong> Compare your result with the other results. If another value is usually lower, compare the system prompts.</li>
 </ol>
-<h2 id="activity%3A-grow-the-scenarios-(optional)" tabindex="-1"><a class="header-anchor" href="#activity%3A-grow-the-scenarios-(optional)">Activity: Grow the scenarios (Optional)</a></h2>
-<details class="spoiler" data-gate="ballerina" hidden><summary>Spoiler: stuck on phase 3?</summary><p><a href="phase-3-solution/">Phase 3 reference solution</a></p></details>
-<p>Add one <code>LOOP-*</code> scenario of your own for an edge you fear - malformed tool arguments, an unknown tool name, a tool that raises.</p>
-<p>Tip: the scripted client in <code>features/steps/agent_loop_steps.py</code> records every request your loop makes - read a failing scenario’s transcript before guessing.</p>
-<h2 id="this-is%2C-roughly%2C-how-claude-code-works" tabindex="-1"><a class="header-anchor" href="#this-is%2C-roughly%2C-how-claude-code-works">This is, roughly, how Claude Code works</a></h2>
-<p>There is no second, cleverer mechanism hiding inside the tools you have been using all day. Claude Code, OpenCode, Cursor, and the rest run exactly what you just built: history in, one model call, tool calls out, one result appended per call, repeat until the model stops asking. The four invariants above are their invariants too.</p>
-<p>What separates a hundred-line loop from a shipped product is not a better loop. It is the engineering stacked around it, wringing every bit of performance out of a model you can call yourself - and you have already seen most of these layers:</p>
+<h2 id="activity%3A-add-test-scenarios-(optional)" tabindex="-1"><a class="header-anchor" href="#activity%3A-add-test-scenarios-(optional)">Activity: Add test scenarios (Optional)</a></h2>
+<details class="spoiler" data-gate="ballerina" hidden><summary>Help for phase 3</summary><p><a href="phase-3-solution/">Phase 3 reference solution</a></p></details>
+<p>Add one <code>LOOP-*</code> scenario for a possible error. For example, test invalid tool arguments, an unknown tool name, or a tool exception.</p>
+<p>The scripted client in <code>features/steps/agent_loop_steps.py</code> records each request from the loop. If a scenario fails, examine its recorded history before you change the code.</p>
+<h2 id="how-coding-agents-use-the-loop" tabindex="-1"><a class="header-anchor" href="#how-coding-agents-use-the-loop">How coding agents use the loop</a></h2>
+<p>Claude Code, OpenCode, Cursor, and similar products use this basic loop:</p>
+<ol>
+<li>Send the message history to the model.</li>
+<li>Receive tool calls from the model.</li>
+<li>Run the tools and add one result for each call.</li>
+<li>Repeat the steps until the model does not request a tool.</li>
+</ol>
+<p>A production product adds other components around this loop. The following table shows examples:</p>
 <table>
 <thead>
 <tr>
-<th>Layer</th>
+<th>Component</th>
 <th>What you built today</th>
-<th>What a shipped harness adds</th>
+<th>What a production system adds</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Tools</td>
-<td>A handful of toy tools</td>
-<td>Dozens of typed tools (edit, shell, search, web), plus <a href="/day-1/03-skills-tools-mcps/">any MCP server you attach</a>, each behind a permission prompt</td>
+<td>Some example tools</td>
+<td>Many typed tools for editing, shell commands, search, and the web. The system can also use <a href="/day-1/03-skills-tools-mcps/">connected MCP servers</a>. A permission prompt controls access to each tool.</td>
 </tr>
 <tr>
 <td>Context</td>
 <td>One system prompt</td>
-<td><code>CLAUDE.md</code>, memory, <a href="/day-1/04-tokens/"><code>/context</code> and <code>/compact</code></a>, and subagents that do the reading in their own window so yours stays lean</td>
+<td><code>CLAUDE.md</code>, memory, <a href="/day-1/04-tokens/"><code>/context</code> and <code>/compact</code></a>, and subagents. Each subagent reads information in a separate context window.</td>
 </tr>
 <tr>
 <td>Caching</td>
-<td>Feeding the assistant turn back verbatim</td>
-<td>A prompt deliberately ordered so the prefix is byte-identical on every call - <a href="/day-1/04-tokens/">the difference between $1 and $7 for one session</a></td>
+<td>An unchanged assistant turn</td>
+<td>A prompt with the same byte sequence at the start of each call. This can make <a href="/day-1/04-tokens/">one session cost $1 instead of $7</a>.</td>
 </tr>
 <tr>
 <td>Models</td>
-<td>One model for everything</td>
-<td><a href="/day-2/05-evaluation/">A model per job</a>: a cheap one to search and summarize, an expensive one for the turn that decides something</td>
+<td>One model for all tasks</td>
+<td><a href="/day-2/05-evaluation/">A different model for each type of task</a>. A less expensive model can search and summarize. A more capable model can make important decisions.</td>
 </tr>
 <tr>
-<td>Failure</td>
+<td>Failure control</td>
 <td><code>max_rounds</code></td>
-<td>Retries, timeouts, truncation of oversized tool results, and sessions you can resume</td>
+<td>Retries, timeouts, limits for large tool results, and sessions that you can stop and continue.</td>
 </tr>
 <tr>
-<td>Quality</td>
+<td>Quality control</td>
 <td>Your <code>LOOP-*</code> scenarios</td>
-<td>Eval suites re-run on every model and prompt change</td>
+<td>Evaluation suites that run after each model or prompt change.</td>
 </tr>
 </tbody>
 </table>
-<p>That is the good news for tomorrow. You will not out-train a frontier lab, but the loop is a hundred lines and everything above it is ordinary engineering - which is exactly where your dispatcher’s casualty count is won or lost.</p>
-<p>If you want to go deeper:</p>
+<p>Tomorrow, you will add these types of components to the dispatcher. You do not have to train a model. You can improve the dispatcher through standard software engineering.</p>
+<p>For more information, read these resources:</p>
 <ul>
-<li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a> - curating what goes in the window, and why more context is not better context.</li>
-<li><a href="https://www.anthropic.com/engineering/writing-tools-for-agents">Writing effective tools for AI agents</a> - tool descriptions and return values as a contract you design, not an afterthought.</li>
-<li><a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">Effective harnesses for long-running agents</a> - what breaks when the loop runs for hours instead of rounds.</li>
-<li><a href="https://github.com/humanlayer/12-factor-agents">12-factor agents</a> - a non-Anthropic take on the same problem: own your prompt, your control flow, and your state.</li>
-<li><a href="https://github.com/sst/opencode">OpenCode’s source</a> - a production harness you can read. Find its loop and compare it to yours.</li>
+<li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a>: Learn how to select information for the context window.</li>
+<li><a href="https://www.anthropic.com/engineering/writing-tools-for-agents">Writing effective tools for AI agents</a>: Learn how to write clear tool descriptions and return values.</li>
+<li><a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">Effective harnesses for long-running agents</a>: Learn how to control agents that run for a long time.</li>
+<li><a href="https://github.com/humanlayer/12-factor-agents">12-factor agents</a>: Read a different method for the prompt, control flow, and state.</li>
+<li><a href="https://github.com/sst/opencode">OpenCode source</a>: Find its loop and compare it with your loop.</li>
 </ul>
 
           
