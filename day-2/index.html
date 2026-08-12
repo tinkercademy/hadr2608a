@@ -105,7 +105,13 @@
               <a href="/day-2/05-evaluation/" class="sidebar-sublink">Model comparisons</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-2/06-finale/" class="sidebar-sublink">Presentation and finale</a>
+              <a href="/day-2/06-llm-app/" class="sidebar-sublink">Build an LLM-based app</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/07-presentation/" class="sidebar-sublink">Prepare the presentation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/08-finale/" class="sidebar-sublink">HADR finale</a>
             </li>
           </ul>
         </li>
@@ -155,34 +161,32 @@
       <header class="page-header">
         <div class="page-header-inner">
           <h1 class="page-title">Day 2</h1>
-          <p class="page-subtitle">Build, evaluate, and run</p>
+          <p class="page-subtitle">Build, evaluate, and apply</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
           <h1 id="day-2" tabindex="-1"><a class="header-anchor" href="#day-2">Day 2</a></h1>
-<p>On Day 2, you build the common agent loop and add quality gates. You then build the HADR pipeline in four stages, compare models, and run the challenge without human input.</p>
-<h2 id="morning" tabindex="-1"><a class="header-anchor" href="#morning">Morning</a></h2>
-<p>In the morning, build the agent loop and prepare a clean integration baseline. Then build each pipeline stage in a separate pull request. Review and merge the pull requests in the listed order.</p>
+<p>On Day 2, you build the common agent loop and add quality gates. You then complete the HADR system. You use test results to improve it. Finally, you use the course techniques in a paired LLM app.</p>
+<h2 id="complete-the-hadr-pipeline" tabindex="-1"><a class="header-anchor" href="#complete-the-hadr-pipeline">Complete the HADR pipeline</a></h2>
+<p>Each stage includes a prompt for Claude Code. Claude reads the repository, makes a focused change, and runs checks. You must review and understand its decisions.</p>
 <ol>
 <li><a href="/day-2/00a-agentic-loop/">Agentic loop</a>: build the common tool loop. Test it with example tools and a real model.</li>
 <li><a href="/day-2/00b-quality-gates/">Quality gates and integration</a>: add automated checks, merge open work, and record a baseline run.</li>
-<li><a href="/day-2/01-dispatcher/">Stage 1: dispatcher</a>: configure the agent loop as the dispatcher. Run it with the simulator.</li>
-<li><a href="/day-2/02-intake/">Stage 2: intake</a>: turn natural-language contacts into structured reports.</li>
-<li><a href="/day-2/03-reconciliation/">Stage 3: reconciliation</a>: use deterministic rules to match reports to incidents.</li>
-<li><a href="/day-2/04-replanning/">Stage 4: replanning</a>: respond to contradictions, corrections, redirects, and closed incidents.</li>
+<li><a href="/day-2/01-dispatcher/">Stage 1: dispatcher</a>: configure the loop with state, instructions, and typed tools.</li>
+<li><a href="/day-2/02-intake/">Stage 2: intake</a>: build one text-to-structure model call and evaluate it.</li>
+<li><a href="/day-2/03-reconciliation/">Stage 3: reconciliation</a>: integrate the supplied deterministic solution.</li>
+<li><a href="/day-2/04-replanning/">Stage 4: replanning</a>: make one measured change for new evidence.</li>
 </ol>
-<h2 id="afternoon" tabindex="-1"><a class="header-anchor" href="#afternoon">Afternoon</a></h2>
-<p>In the afternoon, compare models, set agent limits, and run the final exercise.</p>
+<h2 id="evaluate-and-apply" tabindex="-1"><a class="header-anchor" href="#evaluate-and-apply">Evaluate and apply</a></h2>
 <ol>
-<li><a href="/day-2/05-evaluation/">Model comparisons</a>: compare each model with one alternative. Use fixed test data and repeated game runs.</li>
-<li><a href="/day-2/06-finale/">Presentation and finale</a>: publish your solution page. Present the important changes and run the challenge map.</li>
+<li><a href="/day-2/05-evaluation/">Model comparisons</a>: compare models against the same evidence instead of choosing by reputation.</li>
+<li><a href="/day-2/06-llm-app/">Build an LLM-based app</a>: in pairs, build one complete application and apply three course techniques.</li>
+<li><a href="/day-2/07-presentation/">Prepare the presentation</a>: prepare to present the work to the class with your group.</li>
+<li><a href="/day-2/08-finale/">HADR finale</a>: return to the HADR agent for the final group run.</li>
 </ol>
-<h2 id="merge-train" tabindex="-1"><a class="header-anchor" href="#merge-train">Merge train</a></h2>
-<p>Build the agent loop in two reviewed pull requests. Then make each pipeline stage a small pull request for one scenario. A different team member must review and merge each pull request.</p>
-<p>Merge the pull requests in order. Later stages depend on the earlier stages.</p>
-<p>Stop feature changes before the final exercise. Use the remaining time to integrate and test the system.</p>
+<p>The aim is not to build every possible HADR feature. The aim is to understand the complete system and use its techniques in a new app.</p>
 
           
           

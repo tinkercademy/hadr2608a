@@ -105,7 +105,13 @@
               <a href="/day-2/05-evaluation/" class="sidebar-sublink">Model comparisons</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-2/06-finale/" class="sidebar-sublink">Presentation and finale</a>
+              <a href="/day-2/06-llm-app/" class="sidebar-sublink">Build an LLM-based app</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/07-presentation/" class="sidebar-sublink">Prepare the presentation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/08-finale/" class="sidebar-sublink">HADR finale</a>
             </li>
           </ul>
         </li>
@@ -264,26 +270,26 @@ To gate new content, wrap it in any element with data-gate="<code>" hidden - the
 <tr>
 <td><a href="/day-2/01-dispatcher/">Stage 1: dispatcher</a></td>
 <td>individual</td>
-<td><code>_state_message</code>, <code>dispatch_system.md</code>, the minimal <code>_finalize</code>, the runner wiring</td>
-<td>Casualties, buildings lost, and dispatch tokens on <code>stage1-basic@londone</code></td>
+<td>The complete structured-contact-to-dispatch slice, including <code>_state_message</code> and <code>dispatch_system.md</code></td>
+<td>Baseline casualties, buildings lost, and dispatch tokens on <code>stage1-basic@londone</code></td>
 </tr>
 <tr>
 <td><a href="/day-2/02-intake/">Stage 2: intake</a></td>
 <td>individual</td>
-<td><code>intake_system.md</code>, <code>_finalize</code>, new <code>human_text</code> scenarios</td>
-<td>Per-field extraction accuracy and tokens per contact</td>
+<td><code>intake_system.md</code>, <code>_finalize</code>, a small grader, and focused <code>human_text</code> scenarios</td>
+<td>Per-field extraction accuracy and the live result on <code>stage2-language@londone</code></td>
 </tr>
 <tr>
 <td><a href="/day-2/03-reconciliation/">Stage 3: reconciliation</a></td>
 <td>individual</td>
-<td>The belief-strength PRD; <code>reconcile.py</code>; the <code>contradiction</code> flag and confidence field on <code>Incident</code>; own fixtures</td>
-<td><code>MATCH_RADIUS</code> and <code>TIME_WINDOW</code>, with the numbers they produced on <code>stage3-partial@londone</code>; one high-value fixture, traded (each person adopts a couple of others’)</td>
+<td>The supplied reconciliation solution integrated with all <code>REC-*</code> scenarios green</td>
+<td>-</td>
 </tr>
 <tr>
 <td><a href="/day-2/04-replanning/">Stage 4: replanning</a></td>
 <td>individual</td>
-<td><code>@stage4</code> scenarios (none ship); the state-message and prompt changes</td>
-<td>One redirect rationale where the agent gave something up, plus <code>stage4-replan@londone</code> casualties</td>
+<td>One focused replanning scenario and one evidence-based state-message or prompt change</td>
+<td>Before-and-after score, tokens, and one redirect rationale</td>
 </tr>
 <tr>
 <td><a href="/day-2/05-evaluation/">Evaluation</a></td>
@@ -292,10 +298,22 @@ To gate new content, wrap it in any element with data-gate="<code>" hidden - the
 <td>Two artifact links: dispatch-model comparison, then intake-model comparison</td>
 </tr>
 <tr>
-<td><a href="/day-2/06-finale/">Presentation and finale</a></td>
+<td><a href="/day-2/06-llm-app/">Build an LLM-based app</a></td>
+<td>pair</td>
+<td>A working app, <code>PRD.md</code>, three fixtures, and a README naming the three techniques and their evidence</td>
+<td>-</td>
+</tr>
+<tr>
+<td><a href="/day-2/07-presentation/">Prepare the presentation</a></td>
 <td>group</td>
-<td>The GitHub Pages site, published from each participant’s own agent repo; frozen branch, configuration, and runtime model IDs</td>
-<td>The GitHub Pages link; casualties, buildings lost, self-reported tokens, and both model IDs</td>
+<td>-</td>
+<td>The working app presentation</td>
+</tr>
+<tr>
+<td><a href="/day-2/08-finale/">HADR finale</a></td>
+<td>group</td>
+<td>-</td>
+<td>The HADR finale result</td>
 </tr>
 </tbody>
 </table>
@@ -323,22 +341,22 @@ To gate new content, wrap it in any element with data-gate="<code>" hidden - the
 <tr>
 <td><a href="/day-2/01-dispatcher/">Stage 1: dispatcher</a></td>
 <td><code>tralalero</code></td>
-<td>Reveals the Stage 1 reference solution.</td>
+<td>Reveals the Stage 1 catch-up solution.</td>
 </tr>
 <tr>
 <td><a href="/day-2/02-intake/">Stage 2: intake</a></td>
 <td><code>bombardiro</code></td>
-<td>Reveals the Stage 2 reference solution.</td>
+<td>Reveals the Stage 2 catch-up prompt and implementation.</td>
 </tr>
 <tr>
 <td><a href="/day-2/03-reconciliation/">Stage 3: reconciliation</a></td>
 <td><code>lirili</code></td>
-<td>Reveals the Stage 3 reference solution.</td>
+<td>Reveals the stage illustration; the solution itself is supplied openly.</td>
 </tr>
 <tr>
 <td><a href="/day-2/04-replanning/">Stage 4: replanning</a></td>
 <td><code>patapim</code></td>
-<td>Reveals the Stage 4 reference solution.</td>
+<td>Reveals the Stage 4 catch-up solution.</td>
 </tr>
 </tbody>
 </table>

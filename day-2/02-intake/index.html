@@ -105,7 +105,13 @@
               <a href="/day-2/05-evaluation/" class="sidebar-sublink">Model comparisons</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-2/06-finale/" class="sidebar-sublink">Presentation and finale</a>
+              <a href="/day-2/06-llm-app/" class="sidebar-sublink">Build an LLM-based app</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/07-presentation/" class="sidebar-sublink">Prepare the presentation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/08-finale/" class="sidebar-sublink">HADR finale</a>
             </li>
           </ul>
         </li>
@@ -167,67 +173,91 @@
   <figcaption>Cheat Code Entered</figcaption>
   <img src="bombardiro-crocodilo-intake.png" alt="Bombardiro Crocodilo bombing transcripts into JSON">
 </figure>
-<p>Stage 1 handed you claims already in JSON. From stage 2 onwards, contacts arrive as human-generated text, so somebody has to read the sentence and turn it into something understandable. That somebody is <code>intake</code>, a stateless model call that takes one transcript in and produces one report out. It has no memory between contacts and no access to your stores.</p>
-<p>For now, each incident is reported only once. In <a href="/day-2/03-reconciliation/">Stage 3</a>, you’ll start reconciling duplicates.</p>
+<p>Stage 2 replaces structured contacts with human text. Intake converts one contact into one typed report. The dispatcher reads this report.</p>
 <p><img src="/day-2/02-intake/global-data-analytics-pipeline.png" alt="From raw contacts to structured reports"></p>
-<h2 id="what-needs-to-be-built" tabindex="-1"><a class="header-anchor" href="#what-needs-to-be-built">What needs to be built</a></h2>
-<p><code>extract_report</code> in <code>intake.py</code> is ready. It picks the model, sends the system prompt with the contact text, and budgets the completion. Smaller models occasionally struggle with structured output, so <code>_parse</code> helps with that. You need to:</p>
-<ol>
-<li><code>prompts/intake_system.md</code> - five TODO sections: output structure, <code>incident_type</code>, severity, headcount, and event time with confidence. This governs how the model turns text into a structure.</li>
-<li><code>_finalize(fields, contact)</code> in <code>intake.py</code> - The <code>TODO (stage 2)</code> at the end of <code>extract_report</code> needs to check and validate the model output. Flip that line to <code>return _finalize(fields, contact), usage</code>.</li>
-</ol>
-<p>As you build the prompt, you’ll need to grade it against the fixtures your team <a href="/day-1/05-evaluation/">developed on day 1</a>.</p>
-<h3 id="envelope-authority" tabindex="-1"><a class="header-anchor" href="#envelope-authority">Envelope authority</a></h3>
-<p><code>_finalize</code> is where the report structure is enforced. You can design your own report schema, but maintain these four invariants:</p>
+<h2 id="the-design" tabindex="-1"><a class="header-anchor" href="#the-design">The design</a></h2>
+<p>Intake is not an agent loop. Intake makes one model call for each contact.</p>
+<pre class="mermaid">flowchart LR
+    T[&quot;one contact&quot;] --&gt; L[&quot;intake model&quot;] --&gt; R[&quot;typed report&quot;] --&gt; V[&quot;code validation&quot;]
+</pre><p>The model interprets the text. Code validates the output. Code also copies facts that are already in the contact envelope.</p>
+<h2 id="what-is-provided" tabindex="-1"><a class="header-anchor" href="#what-is-provided">What is provided</a></h2>
+<p>The starter provides:</p>
 <ul>
-<li><code>contact_id</code> and <code>reported_location</code> are copied from the contact object, never taken from the model. Never give an LLM the opportunity to invent something when you can just copy the ground truth.</li>
-<li><code>incident_type</code> is exactly one of <code>fire</code>, <code>none</code>, <code>unknown</code>. Anything else coerces to <code>unknown</code>.</li>
-<li><code>notes</code> is <code>&quot;&quot;</code> when absent.</li>
-<li>A <code>none</code> report carries no fire severity and no headcount: force both to null.</li>
+<li>the model-call code in <code>extract_report</code>;</li>
+<li>the parser for model output;</li>
+<li>the report schema;</li>
+<li>the zero-token path for structured reports; and</li>
+<li>the accepted Day 1 fixtures, if your team merged them.</li>
 </ul>
-<p>Everything else - severity, headcount and its qualifier, event time, and how confident your intake bot is in each field - comes from the model.</p>
-<h3 id="the-model-is-small" tabindex="-1"><a class="header-anchor" href="#the-model-is-small">The model is small</a></h3>
-<p><code>INTAKE_MODEL</code> defaults to <code>mimo-v2.5</code>. It follows explicit rules well and guesses unstated ones badly, so a clearly-stated decision ladder beats a pile of few-shot examples: say what you mean rather than hoping it infers the convention. If you have the examples and want to build the ladder, use Opus to do that; it is a much more powerful model and excels at such tasks.</p>
-<p><code>MAX_TOKENS</code> is 1400 and that is deliberate. If you enable reasoning (or swap to a reasoning model later), it needs enough token output to complete its reasoning trace before it ever emits the JSON. A tight budget truncates the response to empty content and your accuracy collapses to zero.</p>
-<h2 id="activity%3A-extract-the-claim" tabindex="-1"><a class="header-anchor" href="#activity%3A-extract-the-claim">Activity: Extract the claim</a></h2>
-<details class="spoiler" data-gate="bombardiro" hidden><summary>Spoiler: stuck on Stage 2?</summary><p><a href="reference-solution/">Stage 2 reference solution</a></p></details>
+<h2 id="what-claude-implements" tabindex="-1"><a class="header-anchor" href="#what-claude-implements">What Claude implements</a></h2>
+<p>Claude changes only these parts:</p>
 <ol>
-<li>
-<p><strong>Write the prompt.</strong> Fill the five sections of <code>prompts/intake_system.md</code>. <code>incident_type</code> is the one that moves the score: explicit flame or fire words are <code>fire</code>; an explicit denial or a clearly non-fire request is <code>none</code>; smoke, a smell, an alarm, or plain ambiguity is <code>unknown</code>. Absence of the word “fire” is not a denial.</p>
-</li>
-<li>
-<p><strong>Implement <code>_finalize</code></strong> to the envelope-authority rules above, then flip the <code>TODO (stage 2)</code> line so raw model output stops escaping unvalidated.</p>
-</li>
-<li>
-<p><strong>Keep the free paths free.</strong> Typed truck observations and Stage 1 structured claims must not reach the model - <code>extract_report</code> already routes <code>structured_report</code> to <code>_project_claim</code> at zero tokens, and <code>runner._process_tick</code> already splits truck observations out before intake sees them. Neither should cost you a model call.</p>
-</li>
-<li>
-<p><strong>Grade it</strong> against the fixtures in your repository - the accepted labels Day 1’s <a href="/day-1/05-evaluation/">evaluation session</a> produced over <code>datasets/contacts_unlabeled.jsonl</code>, which the driver’s pull request merged into every teammate’s repo. Score against the claim the caller expressed, never against hidden simulator truth. Give severity, headcount, and event time a tolerance band, because the model is reading prose and a defensible reading can differ from your labeller’s. Treat per-field <code>confidence</code> as advisory and directional rather than a number to match: it carries generation jitter and is not worth chasing. The instructor’s own labeled corpus is a different, unseen set of contacts and stays sealed until <a href="/day-2/05-evaluation/">model comparison</a>, where you unseal it as a held-out test set - so do not tune against it, because you cannot.</p>
-</li>
-<li>
-<p><strong>Add the scenarios.</strong> <code>features/intake.feature</code> ships only INT-2 and INT-3, both on the structured path. Add <code>human_text</code> scenarios of your own for the cases you just argued about in the prompt - a denial, ambiguous smoke, a red herring, a caller who hedges - and record the new baseline.</p>
-</li>
-<li>
-<p><strong>Run it live.</strong> Point the runner at a stage-2 scenario, where every contact is a panicked sentence rather than a structured claim:</p>
-<pre><code class="language-bash">uv run hadr-runner stage2-language@londone
+<li>Claude completes <code>prompts/intake_system.md</code>.</li>
+<li>Claude extends <code>_finalize</code> in <code>intake.py</code>.</li>
+<li>Claude enables <code>_finalize</code> for the human-text path.</li>
+<li>Claude adds a small fixture grader.</li>
+<li>Claude adds focused human-text scenarios.</li>
+</ol>
+<p>The finalizer must:</p>
+<ul>
+<li>copy <code>contact_id</code> from the contact;</li>
+<li>copy <code>reported_location</code> from the contact;</li>
+<li>allow only <code>fire</code>, <code>unknown</code>, or <code>none</code> as <code>incident_type</code>;</li>
+<li>use an empty string when notes are absent; and</li>
+<li>set severity and headcount to null for a <code>none</code> report.</li>
+</ul>
+<h2 id="what-you-decide-and-check" tabindex="-1"><a class="header-anchor" href="#what-you-decide-and-check">What you decide and check</a></h2>
+<p>You approve the extraction rules. Review examples before Claude writes the prompt.</p>
+<p>Check these distinctions:</p>
+<ul>
+<li>A stated fire or stated flames means <code>fire</code>.</li>
+<li>An explicit denial or a clear non-fire event means <code>none</code>.</li>
+<li>Smoke, smell, or an alarm without proof of fire means <code>unknown</code>.</li>
+</ul>
+<p>Review the prompt as carefully as code. Ask Claude to use clear decision rules. Do not use the sealed instructor labels during prompt development.</p>
+<h2 id="what-you-do-not-build" tabindex="-1"><a class="header-anchor" href="#what-you-do-not-build">What you do not build</a></h2>
+<p>Do not add:</p>
+<ul>
+<li>tools to intake;</li>
+<li>memory between contacts;</li>
+<li>incident matching; or</li>
+<li>dispatch rules that hide intake errors.</li>
+</ul>
+<h2 id="prompt-claude" tabindex="-1"><a class="header-anchor" href="#prompt-claude">Prompt Claude</a></h2>
+<p>Paste this prompt into Claude Code:</p>
+<blockquote>
+<p>Complete Stage 2 intake as one text-to-JSON model call.</p>
+<p>Read <code>intake.py</code>, the report schema, <code>prompts/intake_system.md</code>, <code>features/intake.feature</code>, and a representative sample of <code>datasets/contacts_unlabeled.jsonl</code>. Read the accepted Day 1 fixtures if they are present. Do not read the sealed instructor labels.</p>
+<p>Before you edit, show me three difficult contacts. For each contact, propose values for <code>incident_type</code>, severity, headcount, and event time. Explain the rule for each value.</p>
+<p>Create a short decision table for the extraction prompt. Separate stated fire, explicit non-fire, and uncertain evidence. Show me the table before you edit.</p>
+<p>After I approve the rules, implement only these items:</p>
+<ul>
+<li>Complete <code>prompts/intake_system.md</code>.</li>
+<li>Extend <code>_finalize</code> in <code>intake.py</code>.</li>
+<li>Enable <code>_finalize</code> for human text.</li>
+<li>Add a small grader for our accepted fixtures.</li>
+<li>Add scenarios for a stated fire, a denial, uncertain smoke, and one difficult sentence.</li>
+</ul>
+<p>Keep intake stateless. Do not give intake tools. Keep the zero-token path for structured reports. Copy envelope facts in code. Validate model output in code.</p>
+<p>Run the intake scenarios. If parsing fails, show me the raw model output before you edit the parser or prompt.</p>
+<p>At the end, show one contact, the raw model output, and the finalized report. Mark every field that code changed.</p>
+</blockquote>
+<h2 id="check-the-result" tabindex="-1"><a class="header-anchor" href="#check-the-result">Check the result</a></h2>
+<p>Run:</p>
+<pre><code class="language-bash">uv run behave features/intake.feature
+uv run hadr-runner stage2-language@londone
 </code></pre>
-<p>Your Stage 1 dispatcher is unchanged, so any drop against Stage 1 is intake losing information the dispatcher used to get for free.</p>
-</li>
-</ol>
-<h3 id="boundaries" tabindex="-1"><a class="header-anchor" href="#boundaries">Boundaries</a></h3>
+<p>Run the fixture grader that Claude added. Report results for each field. Do not report only one total score.</p>
+<p>Compare the live result with Stage 1. The dispatch code did not change. Trace a new failure from the contact text to the finalized report before you change the dispatch prompt.</p>
+<details class="spoiler" data-gate="bombardiro" hidden><summary>Catch-up solution</summary><p>If intake remains blocked, use the <a href="reference-solution/">reference intake prompt and implementation</a>.</p></details>
+<p>The <a href="helper-prompt/">intake review prompt</a> gives a more detailed boundary check.</p>
+<h2 id="completion-criteria" tabindex="-1"><a class="header-anchor" href="#completion-criteria">Completion criteria</a></h2>
 <ul>
-<li>Intake has no incident-store access and no memory across contacts.</li>
-<li>Ambiguous smoke is <code>unknown</code>, not a confirmed fire or an explicit false alarm.</li>
-<li>A clearly non-fire red herring such as a cat rescue or a neighbour dispute is <code>none</code>, not <code>unknown</code>.</li>
-<li>Every human contact supplies exact coordinates or an exact <code>l...</code> building ID. It may still be wrong relative to the real fire. The runner converts buildings to locations for you. The <a href="helper-prompt/">intake helper-prompt stub</a> still asks you to say why, not to pick freely.</li>
-<li>Do not add duplicate reconciliation yet.</li>
+<li>Human text produces a valid typed report.</li>
+<li>Code enforces envelope facts and schema rules.</li>
+<li>The prompt contains explicit extraction rules.</li>
+<li>You have per-field evaluation results.</li>
 </ul>
-<h3 id="when-you%E2%80%99re-done" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done">When you’re done</a></h3>
-<ol>
-<li><strong>Open a pull request</strong> with the prompt and <code>_finalize</code>, and have a teammate review the prompt as prose, not as code. It is the part of your system a reviewer can actually read end to end, and a rule that is ambiguous to your teammate is ambiguous to <code>mimo-v2.5</code>.</li>
-<li><strong>Post your extraction accuracy on the Padlet</strong>: the per-field breakdown, not one aggregate number, plus tokens per contact. Your team graded against the same fixtures, so the field where your numbers diverge is the field where your prompts disagree - and one of you is wrong.
-a. If you spot your accuracy as unusually high, ask yourself if that is because your intake bot is good, or because your fixtures are missing details, and too easy to predict.</li>
-</ol>
 
           
           

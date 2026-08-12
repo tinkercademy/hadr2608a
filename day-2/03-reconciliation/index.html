@@ -105,7 +105,13 @@
               <a href="/day-2/05-evaluation/" class="sidebar-sublink">Model comparisons</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-2/06-finale/" class="sidebar-sublink">Presentation and finale</a>
+              <a href="/day-2/06-llm-app/" class="sidebar-sublink">Build an LLM-based app</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/07-presentation/" class="sidebar-sublink">Prepare the presentation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/08-finale/" class="sidebar-sublink">HADR finale</a>
             </li>
           </ul>
         </li>
@@ -167,111 +173,136 @@
   <figcaption>Cheat Code Entered</figcaption>
   <img src="lirili-larila-reconcile.png" alt="Lirili Larila deciding whether two smoke clouds are one fire">
 </figure>
-<p>Until now one report meant one incident. From stage 3 onwards, expect duplicates, delayed calls, false alarms, red herrings, and incorrect locations, all in the same stream. Something has to decide which calls are real fires, which calls have mistakes, and which calls should be ignored. That something is ordinary code: no model call, no judgement.</p>
+<p>Stage 3 adds duplicate reports, delays, denials, contradictions, and incorrect locations. Reconciliation converts reports into the current set of incident beliefs.</p>
 <p><img src="/day-2/03-reconciliation/matching-reports-to-incidents.png" alt="Reports matched to incidents by distance and time, with truck vision correcting a wrong match"></p>
-<p>The store methods you built on Day 1 stay exactly as they are. Reconciliation sits above them and uses <code>IncidentStore.find(near=..., radius=..., incident_type=...)</code>, to match reports to incidents.</p>
-<h2 id="what-needs-to-be-built" tabindex="-1"><a class="header-anchor" href="#what-needs-to-be-built">What needs to be built</a></h2>
-<p>Everything lives in <code>reconcile.py</code>, which ships the vocabulary and the signatures and none of the logic:</p>
-<ol>
-<li><code>MATCH_RADIUS</code> and <code>TIME_WINDOW</code>, both <code>None</code> at the top of the module. A report within that many world units and that many ticks of an incident may be the same event. Picking the two numbers is most of the work.</li>
-<li><code>reconcile_reports(reports, incidents, report_store, tick)</code> - fold each new report into the incident store per the decision table below, append every report to <code>report_store</code>, and return one <code>Outcome</code> per report for the log.</li>
-<li><code>reconcile_vision(observations, incidents, tick, coords_of)</code> - apply truck-vision, which is always accurate and outranks any human claim.</li>
-<li>The reconcile hole in <code>runner._process_tick</code> - replace Stage 1’s one-incident-per-report with a call to <code>reconcile_reports</code>, which should
-a. resolve each observation’s buildings to points, and
-b. call <code>reconcile_vision</code>. (Add the import if necessary.)</li>
-<li>Two more belief fields on <code>Incident</code>: a <code>contradiction</code> flag and whatever confidence field you designed in the PRD. Stage 1 already grew the rest of both dataclasses - <code>severity</code>, <code>headcount</code>, <code>headcount_qualifier</code>, and <code>building_id</code> on <code>Incident</code>, and the matching extraction fields on <code>Report</code> - the moment the runner started opening incidents from reports. Check the <code>REC-*</code> scenarios.</li>
-</ol>
-<p><strong>NOTE:</strong> Reconciliation must be pure and testable without an engine. Call <code>building_to_coords</code> before intake, and accept <code>coords is None</code> when a location cannot be resolved at all.</p>
-<h3 id="the-decision-table" tabindex="-1"><a class="header-anchor" href="#the-decision-table">The decision table</a></h3>
-<p><code>reconcile_reports</code>, per report:</p>
+<h2 id="the-design" tabindex="-1"><a class="header-anchor" href="#the-design">The design</a></h2>
+<p>Reconciliation is deterministic code. It is not a model call.</p>
+<pre class="mermaid">flowchart LR
+    T[&quot;human text&quot;] --&gt; I[&quot;LLM intake&quot;] --&gt; R[&quot;reports: evidence&quot;] --&gt; C[&quot;code reconciliation&quot;] --&gt; B[&quot;incidents: beliefs&quot;]
+</pre><p>The intake model records what a caller said. Reconciliation uses fixed spatial, time, and incident-type rules. The same input and state must always give the same result.</p>
+<p>The supplied policy uses these main cases:</p>
 <table>
 <thead>
 <tr>
-<th>Report type</th>
-<th>Match found?</th>
-<th>Action</th>
+<th>Report</th>
+<th>Nearby open incident</th>
+<th>Result</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>none</code></td>
-<td>no open incident near</td>
-<td><code>IGNORED</code> - a denial on its own opens nothing</td>
+<td>denial or non-fire</td>
+<td>no</td>
+<td>ignore the report</td>
 </tr>
 <tr>
-<td><code>none</code></td>
-<td>open incident near</td>
-<td><code>FALSE_ALARM</code> - link the report, keep the incident <strong>open</strong></td>
+<td>denial or non-fire</td>
+<td>yes</td>
+<td>link the report; keep the incident open</td>
 </tr>
 <tr>
-<td><code>fire</code> or <code>unknown</code></td>
-<td>no match</td>
-<td><code>OPEN</code> a new incident, link the report</td>
+<td>fire or unknown</td>
+<td>no</td>
+<td>open an incident</td>
 </tr>
 <tr>
-<td><code>fire</code> or <code>unknown</code></td>
-<td>match</td>
-<td>link the report, then merge</td>
+<td>fire or unknown</td>
+<td>yes</td>
+<td>link and merge the report</td>
 </tr>
 </tbody>
 </table>
-<p>Merging an already-matched report:</p>
+<p>Truck vision is more reliable than a human report:</p>
 <ul>
-<li>an <code>unknown</code> incident meeting a <code>fire</code> report - <code>UPDATE</code> the incident type</li>
-<li>a higher severity band than the belief holds - <code>UPDATE</code></li>
-<li><code>all_out</code> against <code>confirmed_trapped</code> - <code>CONTRADICTION</code>: retain the <strong>more cautious</strong> belief and flag it</li>
-<li>a headcount where none was held yet - <code>UPDATE</code>, adopt it</li>
-<li>anything else - <code>DUPLICATE</code></li>
+<li>A normal building closes the matching incident.</li>
+<li>A burning building confirms or opens an incident.</li>
 </ul>
-<p>The <code>none</code> row is the one people get wrong. A denial should be treated as weak evidence, not absolute proof that nothing is happening.</p>
-<p><code>reconcile_vision</code>, per observed building:</p>
+<h2 id="what-is-provided" tabindex="-1"><a class="header-anchor" href="#what-is-provided">What is provided</a></h2>
+<p>The instructor provides the complete reconciliation policy and implementation. Use the <a href="reference-solution/">Stage 3 reference solution</a> or the files supplied in class.</p>
+<p>The solution includes:</p>
 <ul>
-<li>seen <code>normal</code> - close a co-located incident, <code>RESOLVED_VISION</code></li>
-<li>seen <code>burning</code> - confirm or open one, <code>CONFIRMED_VISION</code></li>
-<li>seen <code>collapsed</code> - terminal. The building is lost and there is nothing left to dispatch to, so take no reconcile action.</li>
+<li>report matching by distance and time;</li>
+<li>incident confidence and contradiction fields;</li>
+<li>merge rules;</li>
+<li>truck-vision rules; and</li>
+<li>the <code>REC-*</code> scenarios.</li>
 </ul>
-<h3 id="tuning-the-two-thresholds" tabindex="-1"><a class="header-anchor" href="#tuning-the-two-thresholds">Tuning the two thresholds</a></h3>
-<p>Once you pass the <code>REC-*</code> scenario fixtures, then tune <code>MATCH_RADIUS</code> against the live map. The <code>REC-*</code> scenarios all sit inside a 100-unit box, so almost any radius passes them. Londone is a different shape: neighbouring buildings are only tens of world units apart, while the incidents in <code>stage3-partial@londone</code> are hundreds apart. If you set the radius too low, you may send two trucks to a small fire. If you set the radius too high, you may fuse two genuinely separate fires into one belief, send only one truck to two burning buildings, and lose the second.</p>
-<p>Bad merges are normal and realistic. Lean on the truck-vision override to self-correct the bad merge.</p>
-<h2 id="the-belief-strength-prd" tabindex="-1"><a class="header-anchor" href="#the-belief-strength-prd">The belief-strength PRD</a></h2>
-<p>Return to the product brief you wrote on Day 1. When reports disagree, what should the dispatcher be able to understand and decide? What uncertainty must remain visible? When may the system continue, and when should it warn or hold?</p>
-<p>Do not repeat the full product interview. Revisit only the new decision introduced by this stage, then write a short PRD for the behaviour the operator needs. Cover how a belief opens, how a corroborating report strengthens it, how a false alarm or a denial weakens it <em>without</em> closing it, and how truthful truck vision overrides it. Only then choose the confidence field or rule that supports that behaviour.</p>
-<p>Put your belief-strength rule into the reconciliation code. Write scenarios that show what the operator sees after corroboration, denial, contradiction, and truck vision. You must deliver the rule, the code, and the tests.</p>
-<h2 id="activity%3A-reconcile-deterministically" tabindex="-1"><a class="header-anchor" href="#activity%3A-reconcile-deterministically">Activity: Reconcile deterministically</a></h2>
-<details class="spoiler" data-gate="lirili" hidden><summary>Spoiler: stuck on Stage 3?</summary><p><a href="reference-solution/">Stage 3 reference solution</a></p></details>
+<h2 id="what-claude-implements" tabindex="-1"><a class="header-anchor" href="#what-claude-implements">What Claude implements</a></h2>
+<p>Claude does not design a new solution. Claude integrates the supplied solution into your repository.</p>
+<p>Claude changes only these parts:</p>
 <ol>
-<li>
-<p><strong>Write the PRD first.</strong> Keep it to one page. Include what the operator sees and may decide, not just how the confidence field changes.</p>
-</li>
-<li>
-<p><strong>Grow the dataclasses.</strong> Add the belief fields your PRD needs to <code>Report</code> and <code>Incident</code>. <code>IncidentStore.open</code> and <code>update</code> already take <code>**fields</code>.</p>
-</li>
-<li>
-<p><strong>Implement both functions</strong> as ordinary code. If you find yourself reaching for a model call, the design has gone wrong: identical inputs and identical incident state must produce identical links, run after run.</p>
-</li>
-<li>
-<p><strong>Pass the scenarios.</strong> <code>uv run behave features/reconcile.feature</code> covers REC-1 to REC-8: open, merge-and-escalate, contradiction, denial-keeps-open, lone denial, vision-closes, vision-opens, and unknown-upgraded-in-place.</p>
-</li>
-<li>
-<p><strong>Add fixtures of your own</strong> for the cases the eight do not cover - a delayed report, a red herring, and a spatially inconsistent exact location - and preserve conflicting claims rather than silently overwriting them. Worth knowing: <code>stage3-partial@londone</code> contains no denial at all, so <code>FALSE_ALARM</code> and <code>IGNORED</code> are only ever exercised by fixtures. Live play will never tell you those two branches are broken.</p>
-</li>
-<li>
-<p><strong>Run it live</strong> and tune the thresholds against what you see:</p>
-<pre><code class="language-bash">uv run https://dl.hadr.ocelliq.com/hadr-engine.py serve --port 8000   # in its own terminal
+<li>Claude applies the supplied changes to <code>reconcile.py</code>.</li>
+<li>Claude adds the supplied incident fields.</li>
+<li>Claude connects reconciliation in <code>runner._process_tick</code>.</li>
+<li>Claude resolves merge conflicts with your Stage 1 and Stage 2 code.</li>
+<li>Claude runs all <code>REC-*</code> scenarios.</li>
+</ol>
+<h2 id="what-you-decide-and-check" tabindex="-1"><a class="header-anchor" href="#what-you-decide-and-check">What you decide and check</a></h2>
+<p>You do not choose a new reconciliation policy in this stage. You must understand the supplied policy.</p>
+<p>Ask Claude to trace:</p>
+<ul>
+<li>two reports that refer to the same fire;</li>
+<li>a denial near an open incident; and</li>
+<li>truck vision that contradicts a report.</li>
+</ul>
+<p>For each case, identify:</p>
+<ul>
+<li>the matching rule;</li>
+<li>the outcome;</li>
+<li>the store method that records the change; and</li>
+<li>the evidence that remains in the report store.</li>
+</ul>
+<h2 id="what-you-do-not-build" tabindex="-1"><a class="header-anchor" href="#what-you-do-not-build">What you do not build</a></h2>
+<p>Do not add:</p>
+<ul>
+<li>an LLM call for matching;</li>
+<li>embeddings or a vector database;</li>
+<li>a new store;</li>
+<li>new matching rules; or</li>
+<li>Stage 4 dispatch changes.</li>
+</ul>
+<h2 id="prompt-claude" tabindex="-1"><a class="header-anchor" href="#prompt-claude">Prompt Claude</a></h2>
+<p>Paste this prompt into Claude Code. Give Claude access to the supplied solution files.</p>
+<blockquote>
+<p>Integrate the supplied Stage 3 reconciliation solution.</p>
+<p>Read <code>reconcile.py</code>, both stores, <code>runner._process_tick</code>, <code>features/reconcile.feature</code>, and the supplied solution. Do not design a different reconciliation system.</p>
+<p>Before you edit, trace these cases through the supplied design:</p>
+<ul>
+<li>Two reports refer to the same fire.</li>
+<li>A denial is near an open incident.</li>
+<li>Truck vision contradicts a report.</li>
+</ul>
+<p>For each case, name the matching rule, outcome, and store mutation.</p>
+<p>Then integrate only the supplied changes:</p>
+<ul>
+<li>Apply report-to-incident matching in <code>reconcile.py</code>.</li>
+<li>Add the supplied confidence and contradiction fields.</li>
+<li>Apply the supplied truck-vision rules.</li>
+<li>Connect reconciliation in <code>runner._process_tick</code>.</li>
+<li>Resolve conflicts with my Stage 1 and Stage 2 code without changing their behaviour.</li>
+</ul>
+<p>Keep reports as append-only evidence. Keep incidents as mutable beliefs. Do not add a model call, embeddings, a vector store, or another persistence layer.</p>
+<p>Run <code>uv run behave features/reconcile.feature</code>. For one scenario, show the sequence of outcomes and store mutations.</p>
+<p>At the end, explain which intake errors reconciliation can correct and which errors it cannot correct.</p>
+</blockquote>
+<h2 id="check-the-result" tabindex="-1"><a class="header-anchor" href="#check-the-result">Check the result</a></h2>
+<p>Run:</p>
+<pre><code class="language-bash">uv run behave features/reconcile.feature
 uv run hadr-runner stage3-partial@londone
 </code></pre>
-<p>Both functions return their <code>Outcome</code> list and the runner throws it away, so bind it and print it while you tune. A run full of <code>OPEN</code> means your radius is too small; one incident swallowing the map means it is too large.</p>
-</li>
-<li>
-<p><strong>Checkpoint.</strong> The <a href="helper-prompt/">reconciliation helper-prompt stub</a> is the intermediate checker for this stage - use it to confirm reconciliation really is in code and not smuggled into a prompt.</p>
-</li>
-</ol>
-<h3 id="when-you%E2%80%99re-done" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done">When you’re done</a></h3>
-<ol>
-<li><strong>Open a pull request</strong> referencing the <code>REC-*</code> scenario IDs it satisfies, and have a teammate review the <em>thresholds</em> as well as the code. Two numbers with no argument behind them are the most likely thing on this page to be wrong, and the person who did not pick them is the one who will notice.</li>
-<li><strong>Post your <code>MATCH_RADIUS</code> and <code>TIME_WINDOW</code> on the Padlet</strong>, with the casualties and buildings lost they produced on <code>stage3-partial@londone</code>. Everyone tuned against the same map: if someone’s radius is an order of magnitude off yours and scores better, that is worth more than any amount of arguing about it in the abstract.</li>
-<li><strong>Trade fixtures.</strong> Post your single best one from step 5 and take a couple from other people into your own suite. Expect at least one adopted fixture to fail on first run, that is the whole point of the trade.</li>
-</ol>
+<p>Inspect the outcomes from one episode.</p>
+<ul>
+<li>Many <code>OPEN</code> outcomes can mean that matching failed.</li>
+<li>One incident with many unrelated reports can mean that matching is too broad.</li>
+</ul>
+<p>Use the <a href="helper-prompt/">reconciliation review prompt</a> to check for hidden model calls or policy in the wrong layer.</p>
+<h2 id="completion-criteria" tabindex="-1"><a class="header-anchor" href="#completion-criteria">Completion criteria</a></h2>
+<ul>
+<li>The supplied solution is integrated.</li>
+<li>All <code>REC-*</code> scenarios pass.</li>
+<li>Reports remain separate from incident beliefs.</li>
+<li>You can explain why reconciliation is deterministic code.</li>
+</ul>
 
           
           

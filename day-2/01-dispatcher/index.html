@@ -105,7 +105,13 @@
               <a href="/day-2/05-evaluation/" class="sidebar-sublink">Model comparisons</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-2/06-finale/" class="sidebar-sublink">Presentation and finale</a>
+              <a href="/day-2/06-llm-app/" class="sidebar-sublink">Build an LLM-based app</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/07-presentation/" class="sidebar-sublink">Prepare the presentation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/08-finale/" class="sidebar-sublink">HADR finale</a>
             </li>
           </ul>
         </li>
@@ -167,7 +173,7 @@
   <figcaption>Cheat Code Entered</figcaption>
   <img src="tralalero-tralala-dispatch.png" alt="Tralalero Tralala sprinting to the fire">
 </figure>
-<p>Yesterday you built the general agent loop and proved it on toy tools. Today you configure it into a dispatcher. Nothing about the loop changes: everything task-specific lives in <code>dispatch.py</code> and <code>prompts/dispatch_system.md</code> - the state message, the system prompt, the typed tools - and <code>run_dispatch</code> wires them into the loop you already wrote.</p>
+<p>Stage 1 changes the general agent loop into a fire dispatcher. The loop stays the same. A system prompt, a state message, and typed tools give the loop its task.</p>
 <pre class="mermaid">flowchart LR
     subgraph Intake[&quot;Intake (Agents)&quot;]
         i1[&quot;'smoke near the&lt;br/&gt;school on 5th'&quot;]
@@ -201,67 +207,91 @@
     n2 --&gt; plan
     act &lt;--&gt; t1
     act &lt;--&gt; t2
-</pre><p>Now, we will build and test the dispatcher. Stage 1 hands you exact structured reports, one per incident, so we can skip intake and reconciliation.</p>
-<p><strong>TIP:</strong> If you want to see the exact data that your agent gets from the simulation, connect to it via Claude Code and <a href="/game/play/">play a Stage 1 level by hand</a>. Ask your agent to describe the data going in and out.</p>
-<h2 id="what-needs-to-be-built" tabindex="-1"><a class="header-anchor" href="#what-needs-to-be-built">What needs to be built</a></h2>
-<p><code>run_dispatch</code> and <code>_run_tool</code> in <code>dispatch.py</code> are already working. You need to complete these four:</p>
-<ol>
-<li><code>_state_message(incidents, trucks, tick)</code> in <code>dispatch.py</code> - the user message the model reasons over each tick. This is the one that decides your casualty count.</li>
-<li><code>prompts/dispatch_system.md</code> - five TODO sections: what you control, the world is uncertain, priorities, committing vs holding, and the rules.</li>
-<li><code>_finalize</code> in <code>intake.py</code>, at least the parts <code>_project_claim</code> needs. The projection itself ships working: a <code>structured_report</code> payload becomes a report with no model call and zero tokens, but it exits through <code>_finalize</code>, so nothing reaches your stores until you write that gate.</li>
-<li>The intake and reconcile holes in <code>runner._process_tick</code> - build a <code>Report</code> per contact and, for this stage only, open one incident per report through <code>IncidentStore.open</code>. Deterministic matching arrives in <a href="/day-2/03-reconciliation/">Stage 3</a>.</li>
-</ol>
-<h3 id="the-state-message-is-the-lesson" tabindex="-1"><a class="header-anchor" href="#the-state-message-is-the-lesson">The state message is the lesson</a></h3>
-<p><code>_state_message</code> receives the live vehicle observations, each shaped <code>{vehicle_id, status, position: {x, y}, incident_id, route: {eta_ticks, ...}, ...}</code>. Three things:</p>
+</pre><p>All contacts in this stage are structured reports. Each report describes a separate incident. The dispatcher must assign the trucks to the incidents.</p>
+<h2 id="what-is-provided" tabindex="-1"><a class="header-anchor" href="#what-is-provided">What is provided</a></h2>
+<p>The starter provides:</p>
 <ul>
-<li>Coordinates are nested under <code>position</code>, not flat top-level <code>x</code>/<code>y</code>.</li>
-<li><code>route</code> is <code>null</code> unless the truck is moving - a stationary vehicle has no route - so reaching straight for <code>route[&quot;eta_ticks&quot;]</code> dies on the first idle truck.</li>
-<li><code>incident_id</code> is the incident of that truck’s <em>most recent</em> dispatch. A <code>status=idle</code> truck that put its fire out keeps the old <code>incident_id</code> still attached.</li>
+<li>the agent loop;</li>
+<li>the report and incident stores;</li>
+<li>the dispatch tools and tool runner;</li>
+<li>structured contact data; and</li>
+<li>the <code>DISP-*</code> and <code>INT-*</code> scenarios.</li>
 </ul>
-<p>You should present the model with the data pre-structured and have it make just the dispatch decision.</p>
-<p>Build a state message containing:</p>
+<h2 id="what-claude-implements" tabindex="-1"><a class="header-anchor" href="#what-claude-implements">What Claude implements</a></h2>
+<p>Claude changes only these parts:</p>
 <ol>
-<li>each open incident,
-a. whether its COVERED or UNCOVERED (i.e. if a truck is assigned to it)
-b. order the incidents people-first, and</li>
-<li>each truck, whether it is FREE or committed,</li>
-<li>one line of instruction.</li>
+<li>Claude completes the minimum <code>_finalize</code> code in <code>intake.py</code>.</li>
+<li>Claude connects structured reports to incidents in <code>runner._process_tick</code>.</li>
+<li>Claude writes <code>_state_message</code> in <code>dispatch.py</code>.</li>
+<li>Claude completes <code>prompts/dispatch_system.md</code>.</li>
+<li>Claude runs the focused scenarios and fixes failures in this stage.</li>
 </ol>
-<p>If your model sends both trucks to the same fire, this is typically a failure of the state message system. You can fix it by using a much more expensive model, or by improving your state message here.</p>
-<h2 id="activity%3A-configure-the-dispatcher" tabindex="-1"><a class="header-anchor" href="#activity%3A-configure-the-dispatcher">Activity: Configure the dispatcher</a></h2>
-<details class="spoiler" data-gate="tralalero" hidden><summary>Spoiler: stuck on Stage 1?</summary><p><a href="reference-solution/">Stage 1 reference solution</a></p></details>
-<ol>
-<li>
-<p><strong>Write <code>_state_message</code>.</strong> Pre-reconcile coverage and priority as above, and read truck coordinates from <code>position</code>.</p>
-</li>
-<li>
-<p><strong>Fill <code>prompts/dispatch_system.md</code>.</strong> The allocation rule under “Committing vs holding” is the key section that changes outcomes. A good place to start is “one free truck to the highest-priority uncovered incident, no more than one truck per incident.”</p>
-</li>
-<li>
-<p><strong>Open the gate.</strong> Implement enough of <code>_finalize</code> to satisfy <code>uv run behave features/intake.feature</code>. Envelope authority is the rule being tested: <code>contact_id</code> and <code>reported_location</code> are copied from the contact and never invented, and a <code>none</code> claim carries no severity or headcount - and note that INT-3 feeds you a claim that <em>does</em> carry both, so the gate has to strip them even though a machine sent them.</p>
-</li>
-<li>
-<p><strong>Pin the enforcement.</strong> <code>uv run behave features/dispatch.feature</code> runs <code>run_dispatch</code> end to end against a fake LLM. <code>DISP-2</code> checks that your code only dispatches trucks to incidents that exist.</p>
-</li>
-<li>
-<p><strong>Run it live.</strong> Fill the two holes in <code>runner._process_tick</code>, bring an engine up, and run a full episode:</p>
-<pre><code class="language-bash">uv run https://dl.hadr.ocelliq.com/hadr-engine.py serve --port 8000   # in its own terminal
+<p>The state message must:</p>
+<ul>
+<li>rank open incidents by risk to people;</li>
+<li>mark each incident as <code>COVERED</code> or <code>UNCOVERED</code>;</li>
+<li>mark each truck as <code>FREE</code> or committed; and</li>
+<li>give one clear allocation instruction.</li>
+</ul>
+<h2 id="what-you-decide-and-check" tabindex="-1"><a class="header-anchor" href="#what-you-decide-and-check">What you decide and check</a></h2>
+<p>You decide the dispatch policy. Review these choices before Claude edits the prompt:</p>
+<ul>
+<li>How does the system rank people, severity, and uncertainty?</li>
+<li>When does the system hold a free truck?</li>
+<li>How does the system prevent duplicate coverage?</li>
+<li>What information must a dispatch rationale contain?</li>
+</ul>
+<p>Check the final state message. Ask Claude to show why the first incident has the highest rank. Do not accept a policy that you cannot explain.</p>
+<h2 id="what-you-do-not-build" tabindex="-1"><a class="header-anchor" href="#what-you-do-not-build">What you do not build</a></h2>
+<p>Do not add:</p>
+<ul>
+<li>natural-language intake;</li>
+<li>duplicate reconciliation;</li>
+<li>replanning rules; or</li>
+<li>a new agent loop.</li>
+</ul>
+<p>Later stages add these functions.</p>
+<h2 id="prompt-claude" tabindex="-1"><a class="header-anchor" href="#prompt-claude">Prompt Claude</a></h2>
+<p>Open the HADR repository in Claude Code. Paste this prompt:</p>
+<blockquote>
+<p>Complete Stage 1 of the HADR dispatcher.</p>
+<p>First, read <code>CLAUDE.md</code>, <code>dispatch.py</code>, <code>runner.py</code>, <code>intake.py</code>, both stores, and the <code>DISP-*</code> and <code>INT-*</code> scenarios.</p>
+<p>Before you edit, show the path from one structured contact to one dispatch tool call. List the code holes on this path. Stop if a required part is outside Stage 1.</p>
+<p>Implement only these items:</p>
+<ul>
+<li>Complete the minimum <code>_finalize</code> path for structured reports.</li>
+<li>Connect each fire or unknown report to one incident in <code>runner._process_tick</code>.</li>
+<li>Write <code>_state_message</code> in <code>dispatch.py</code>.</li>
+<li>Complete <code>prompts/dispatch_system.md</code>.</li>
+</ul>
+<p>Keep the general agent loop unchanged. Copy <code>contact_id</code> and <code>reported_location</code> from the contact envelope. Make each dispatch refer to a filed incident.</p>
+<p>In <code>_state_message</code>, read truck coordinates from <code>position</code>. Permit a null <code>route</code>. Do not treat the old <code>incident_id</code> on an idle truck as a current commitment.</p>
+<p>Show me the dispatch policy before you put it in the system prompt. Use this initial rule unless I change it: assign one free truck to each highest-priority uncovered incident. Do not issue a command that changes nothing. Wait for my approval.</p>
+<p>Run <code>uv run behave features/dispatch.feature features/intake.feature</code>. Inspect the recorded request when a scenario fails. Do not change code before you understand the failure.</p>
+<p>At the end, show one complete state message. Explain what code decides and what the model decides.</p>
+</blockquote>
+<h2 id="check-the-result" tabindex="-1"><a class="header-anchor" href="#check-the-result">Check the result</a></h2>
+<p>Run:</p>
+<pre><code class="language-bash">uv run behave features/dispatch.feature features/intake.feature
 uv run hadr-runner stage1-basic@londone
 </code></pre>
-<p>Start with <code>minimax-m3</code> as <code>DISPATCH_MODEL</code> (the default).</p>
-</li>
-<li>
-<p><strong>Tune.</strong> <code>run_dispatch</code> hands a <code>DispatchResult</code> back to the runner every tick and nothing prints it, so <code>print</code> its <code>rounds</code> and <code>plan</code> while you work. Hitting <code>MAX_TOOL_ROUNDS</code> or watching both trucks converge on one fire is a state-message problem, not a model problem.</p>
-</li>
-<li>
-<p><strong>Checkpoint.</strong> Paste the <a href="helper-prompt/">skeleton progress checker prompt</a> into Claude Code to verify the complete path and settle the travel-time and dispatch-budget choices.</p>
-</li>
-</ol>
-<h3 id="when-you%E2%80%99re-done" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done">When you’re done</a></h3>
-<ol>
-<li><strong>Open a pull request</strong> with the state message, the prompt, and the runner wiring, and have a teammate review it against a live run rather than against the test output. <code>behave</code> green only means the scripted model was satisfied with a well-formed request; no fixture can tell you whether the state message you handed it makes the right fire come first.</li>
-<li><strong>Post your Stage 1 numbers on the Padlet</strong>: casualties and buildings lost on <code>stage1-basic@londone</code>, plus the dispatch token total. Your teammates ran the same scenario on the same seed, so a wide spread means somebody’s state message is doing far more of the thinking than the others - find out whose, and why.</li>
-</ol>
+<p>Record:</p>
+<ul>
+<li>casualties;</li>
+<li>buildings lost;</li>
+<li>dispatch rounds; and</li>
+<li>dispatch tokens.</li>
+</ul>
+<p>Read one dispatch rationale. If both trucks go to the same fire, first check the state message and the system prompt. Do not change the model first.</p>
+<details class="spoiler" data-gate="tralalero" hidden><summary>Catch-up solution</summary><p>If the vertical slice is still blocked after one focused repair, use the <a href="reference-solution/">Stage 1 reference solution</a>.</p></details>
+<p>The <a href="helper-prompt/">skeleton progress checker</a> gives a more detailed review.</p>
+<h2 id="completion-criteria" tabindex="-1"><a class="header-anchor" href="#completion-criteria">Completion criteria</a></h2>
+<ul>
+<li>A structured contact can cause a valid dispatch.</li>
+<li>The state message prepares the facts before the model call.</li>
+<li>You can explain the dispatch policy.</li>
+<li>You have a live baseline for the next stages.</li>
+</ul>
 
           
           

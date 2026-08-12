@@ -105,7 +105,13 @@
               <a href="/day-2/05-evaluation/" class="sidebar-sublink">Model comparisons</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-2/06-finale/" class="sidebar-sublink">Presentation and finale</a>
+              <a href="/day-2/06-llm-app/" class="sidebar-sublink">Build an LLM-based app</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/07-presentation/" class="sidebar-sublink">Prepare the presentation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/08-finale/" class="sidebar-sublink">HADR finale</a>
             </li>
           </ul>
         </li>
@@ -167,76 +173,112 @@
   <figcaption>Cheat Code Entered</figcaption>
   <img src="brr-brr-patapim-replan.png" alt="Brr Brr Patapim untangling a re-routed dispatch plan">
 </figure>
-<p>Stage 4 is when we introduce changing and contradictory evidence: a responder update overturns the headcount that set your priority, and a large new fire ignites while both trucks are already committed. Both require the agent to change its mind and potentially change which fire a truck is heading towards.</p>
+<p>Stage 4 changes the evidence after trucks start to move. A responder can correct a headcount. A report can be contradicted. A larger fire can start while both trucks are busy.</p>
 <p><img src="/day-2/04-replanning/redirecting-on-new-evidence.png" alt="A fire truck redirected mid-route to a higher-priority fire as new evidence arrives"></p>
-<h2 id="what-needs-to-be-built" tabindex="-1"><a class="header-anchor" href="#what-needs-to-be-built">What needs to be built</a></h2>
+<h2 id="the-design" tabindex="-1"><a class="header-anchor" href="#the-design">The design</a></h2>
+<p>Do not add a second planner. The same dispatch loop runs again on each tick.</p>
+<pre class="mermaid">flowchart LR
+    H[&quot;next tick&quot;] --&gt; S[&quot;new belief state&quot;] --&gt; L[&quot;same dispatch loop&quot;] --&gt; A[&quot;keep or redirect&quot;] --&gt; H
+</pre><p>Replanning needs two things:</p>
+<ul>
+<li>The state message must show the changed beliefs.</li>
+<li>The dispatch prompt must permit a useful redirect.</li>
+</ul>
+<p>A rule that prohibits all redirects keeps bad early decisions. A rule that redirects too often prevents trucks from reaching fires.</p>
+<h2 id="what-is-provided" tabindex="-1"><a class="header-anchor" href="#what-is-provided">What is provided</a></h2>
+<p>The existing system already provides:</p>
+<ul>
+<li>a loop that runs on every tick;</li>
+<li>updated incident beliefs from reconciliation;</li>
+<li>a dispatch tool that can retarget a truck; and</li>
+<li>the <code>stage4-replan</code> scenario.</li>
+</ul>
+<h2 id="what-claude-implements" tabindex="-1"><a class="header-anchor" href="#what-claude-implements">What Claude implements</a></h2>
+<p>Claude makes one focused improvement. Claude does not rewrite the dispatcher.</p>
+<p>Claude changes only these parts:</p>
 <ol>
-<li><code>_state_message</code> in <code>dispatch.py</code>. Stage 1 asked it to describe the current state; Stage 4 asks it to describe <em>change</em> - which beliefs moved this tick, which contradictions are outstanding, and which trucks may be redirected. By showing the changing beliefs, you give the model a reason to revisit its past decisions.</li>
-<li><code>prompts/dispatch_system.md</code>, specifically “Committing vs holding”. The hold heuristic of “one free truck to the highest-priority uncovered incident” no longer applies.
-a. Require the agent to file a <code>rationale</code> on every <code>dispatch</code> that names the trade-off: what is being given up, not just what is being served.</li>
-<li>Scenarios, from scratch. <code>features/</code> ships scenarios tagged <code>@warmup</code>, <code>@stage1</code>, and <code>@stage3</code> - nothing for stage 4, and nothing for stage 2 either, since you wrote those yourself. The tests for this stage do not exist until you write them.</li>
+<li>Claude records a baseline run.</li>
+<li>Claude finds one decision that should change after new evidence.</li>
+<li>Claude changes <code>_state_message</code> or <code>prompts/dispatch_system.md</code>.</li>
+<li>Claude adds one focused scenario for that decision.</li>
+<li>Claude tags the scenario <code>@stage4</code> and updates the CI gate.</li>
+<li>Claude compares the result with the baseline.</li>
 </ol>
-<p>The agent’s tools already support this:</p>
+<h2 id="what-you-decide-and-check" tabindex="-1"><a class="header-anchor" href="#what-you-decide-and-check">What you decide and check</a></h2>
+<p>You approve the redirect rule before Claude implements it.</p>
+<p>The rule must state:</p>
 <ul>
-<li><code>dispatch</code> retargets a truck that is already moving or firefighting. You should call it with the new <code>incident_id</code> for better tracking.</li>
-<li><code>file_incident_update</code> accepts <code>status: closed</code>. Once an incident is closed, the reason  is recorded through <code>IncidentStore.close</code>.</li>
+<li>which current task a truck can leave;</li>
+<li>which new incident justifies the redirect;</li>
+<li>why the new incident is more important; and</li>
+<li>how the system prevents repeated back-and-forth redirects.</li>
 </ul>
-<h2 id="product-check%3A-when-may-the-agent-change-its-mind%3F" tabindex="-1"><a class="header-anchor" href="#product-check%3A-when-may-the-agent-change-its-mind%3F">Product check: when may the agent change its mind?</a></h2>
-<p>Before writing the pull-off rule, revisit the human-agent boundary in your product brief:</p>
+<p>Read one redirect rationale. It must name both sides of the trade. “Going to the highest-priority incident” is not sufficient.</p>
+<h2 id="what-you-do-not-build" tabindex="-1"><a class="header-anchor" href="#what-you-do-not-build">What you do not build</a></h2>
+<p>Do not add:</p>
 <ul>
-<li>When may the agent redirect a truck without asking?</li>
-<li>When should it hold or seek approval?</li>
-<li>What must its explanation contain?</li>
-<li>Which is worse here: a late redirect or a truck that repeatedly changes course?</li>
+<li>a second agent;</li>
+<li>a new planner;</li>
+<li>new reconciliation rules;</li>
+<li>several prompt changes at the same time; or</li>
+<li>a token limit that exists only in a prompt.</li>
 </ul>
-<p>Add the decision to the product brief, then write a scenario for it. Require each redirect <code>rationale</code> to say why the truck changed course and which incident will now wait longer.</p>
-<h2 id="activity%3A-change-your-mind" tabindex="-1"><a class="header-anchor" href="#activity%3A-change-your-mind">Activity: Change your mind</a></h2>
-<details class="spoiler" data-gate="patapim" hidden><summary>Spoiler: stuck on Stage 4?</summary><p><a href="reference-solution/">Stage 4 reference solution</a></p></details>
-<ol>
-<li>
-<p><strong>Write the scenarios first</strong>, since nothing ships. Cover a corrected location, a changed severity, conflicting occupant claims, a false alarm arriving after you dispatched, and a surprise collapse. Tag them <code>@stage4</code> and widen your CI gate to match, as <a href="/day-2/00b-quality-gates/#activity%3A-quality-checks">quality gates and integration</a> set up.</p>
-</li>
-<li>
-<p><strong>Exercise update and close</strong> through the existing CRUD boundary rather than reaching around it. The store is the only record of what your agent believed and when.</p>
-</li>
-<li>
-<p><strong>Extend the state message</strong> so a changed belief is visible as a change. If the model sees an identical-looking state every tick, it will keep making the same decision.</p>
-</li>
-<li>
-<p><strong>Extend “Committing vs holding”</strong> with the pull-off rule, then verify a redirect end to end and pin it with a scenario. Require the logged rationale to name the tradeoff.</p>
-</li>
-<li>
-<p><strong>Run it live:</strong></p>
-<pre><code class="language-bash">uv run https://dl.hadr.ocelliq.com/hadr-engine.py serve --port 8000   # in its own terminal
+<p>The engine enforces the episode tick limit. Code must enforce any model-spend limit.</p>
+<h2 id="prompt-claude" tabindex="-1"><a class="header-anchor" href="#prompt-claude">Prompt Claude</a></h2>
+<p>Paste this prompt into Claude Code:</p>
+<blockquote>
+<p>Improve Stage 4 with one measured replanning change.</p>
+<p>Read <code>_state_message</code>, <code>prompts/dispatch_system.md</code>, the incident belief fields, the dispatch tool, the <code>stage4-replan</code> scenario, and the Stage 4 reference notes.</p>
+<p>First, run <code>stage4-replan@londone</code>. Record the score, dispatch tokens, and run-log path. Do not edit yet.</p>
+<p>Find one point where new evidence should change an earlier truck assignment. Show the state message and dispatch decision before and after the evidence changed.</p>
+<p>Propose one small change to <code>_state_message</code> or <code>prompts/dispatch_system.md</code>. The redirect rule must name the task that a truck leaves, the task that it will serve, and why the trade is useful. The rule must also prevent repeated back-and-forth redirects.</p>
+<p>Show me the rule and wait for approval.</p>
+<p>After approval:</p>
+<ul>
+<li>Implement only the approved change.</li>
+<li>Add one focused scenario for the redirect.</li>
+<li>Run the focused checks.</li>
+<li>Run the same live scenario again.</li>
+</ul>
+<p>Compare casualties, buildings lost, dispatch tokens, and one rationale. If results vary, repeat the scenario before you claim an improvement.</p>
+<p>At the end, recommend that we keep or revert the change. Give the evidence for your recommendation.</p>
+</blockquote>
+<h2 id="check-the-result" tabindex="-1"><a class="header-anchor" href="#check-the-result">Check the result</a></h2>
+<p>Run:</p>
+<pre><code class="language-bash">uv run behave
 uv run hadr-runner stage4-replan@londone
 </code></pre>
-<p>Read the rationales afterwards. A run where every rationale is “dispatching to highest priority incident” is a run where nothing was actually reconsidered.</p>
-</li>
-</ol>
-<h2 id="safety-rails" tabindex="-1"><a class="header-anchor" href="#safety-rails">Safety rails</a></h2>
-<p>From this stage on the loop runs increasingly unattended, so bound it like one: it may touch its own stores and the typed control surface, nothing else.</p>
+<p>Check:</p>
 <ul>
-<li>A tick cap, so a stuck episode ends.</li>
-<li>A token-count cap, in case a replanning agent burns tokens at full speed.</li>
+<li>New evidence can change a dispatch decision.</li>
+<li>The rationale names the task that the truck leaves.</li>
+<li>The truck does not change direction repeatedly.</li>
+<li>The before-and-after evidence supports the change.</li>
 </ul>
-<p>These caps must be enforced by code, not by prompt. One of these two caps is already enforced for you elsewhere in the stack and the other has no instrument at all; find out which is which before you build.</p>
-<h3 id="when-you%E2%80%99re-done" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done">When you’re done</a></h3>
+<details class="spoiler" data-gate="patapim" hidden><summary>Catch-up solution</summary><p>Use the <a href="reference-solution/">Stage 4 reference solution</a> if the state message does not show redirectable trucks.</p></details>
+<h2 id="tune-the-complete-pipeline" tabindex="-1"><a class="header-anchor" href="#tune-the-complete-pipeline">Tune the complete pipeline</a></h2>
+<p>After all four stages work, ask Claude to tune one prompt. Paste:</p>
+<blockquote>
+<p>Run the HADR scenarios in stage order. Make a table with the score, tokens, and first important failure for each run.</p>
+<p>For each failure, inspect this path:</p>
 <ol>
-<li><strong>Check the stage actually holds</strong>, not just that the tests are green:
-<ul>
-<li>New evidence can change an earlier dispatch decision.</li>
-<li>Contradictions, and your own confidence or belief-strength signal, remain visible in the incident belief state.</li>
-<li>A truck stays in one of the three public states: <code>idle</code>, <code>moving</code>, or <code>firefighting</code>.</li>
-</ul>
-</li>
-<li><strong>Open a pull request</strong> with the scenarios, the state message, and the prompt change.
-<ul>
-<li>Have a teammate review the pull-off rule specifically. It can make your score much <em>worse</em>, because a truck that keeps getting redirected never puts out anything.</li>
-</ul>
-</li>
-<li><strong>Post a redirect on the Padlet</strong>: one logged rationale from your live run where the agent gave something up, plus your <code>stage4-replan@londone</code> casualties. The interesting posts are the ones where the redirect turned out to be wrong.</li>
-<li><strong>Run stage 5 now</strong>: play <code>stage5-triage</code> on all three maps (<code>uv run hadr-runner stage5-triage@londone</code>, then <code>@stockhome</code> and <code>@feeladelphia</code>), because <a href="/day-2/06-finale/">the finale</a> is one of those three announced on the day, and this is your last chance to find out which one your agent is bad at while you can still change the code.</li>
+<li>original contact;</li>
+<li>finalized report;</li>
+<li>reconciled incident;</li>
+<li>dispatch state message;</li>
+<li>tool calls; and</li>
+<li>final outcome.</li>
 </ol>
+<p>Classify each failure as intake, reconciliation, dispatch state, or dispatch prompt. Do not fix an intake error in the dispatch prompt. Do not replace reconciliation code with model judgement.</p>
+<p>Choose one high-value prompt change. State a hypothesis. Change only the intake prompt or the dispatch prompt. Run the same evidence again. Compare before and after. Stop if the evidence does not support the change.</p>
+</blockquote>
+<h2 id="completion-criteria" tabindex="-1"><a class="header-anchor" href="#completion-criteria">Completion criteria</a></h2>
+<ul>
+<li>One decision changes after the evidence changes.</li>
+<li>One focused scenario checks the redirect.</li>
+<li>One prompt or state change has before-and-after evidence.</li>
+<li>The complete pipeline is ready for <a href="/day-2/05-evaluation/">model comparison</a>.</li>
+</ul>
 
           
           

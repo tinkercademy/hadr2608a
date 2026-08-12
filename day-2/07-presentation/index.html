@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Presentation and finale</title>
+    <title>Prepare the presentation</title>
     <meta name="description" content="Course notes for the DSTA Agentic AI for HADR Workshop." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -105,7 +105,13 @@
               <a href="/day-2/05-evaluation/" class="sidebar-sublink">Model comparisons</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-2/06-finale/" class="sidebar-sublink" aria-current="page">Presentation and finale</a>
+              <a href="/day-2/06-llm-app/" class="sidebar-sublink">Build an LLM-based app</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/07-presentation/" class="sidebar-sublink" aria-current="page">Prepare the presentation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/08-finale/" class="sidebar-sublink">HADR finale</a>
             </li>
           </ul>
         </li>
@@ -154,119 +160,24 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Presentation and finale</h1>
+          <h1 class="page-title">Prepare the presentation</h1>
           <p class="page-subtitle">Day 2</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="presentation-and-finale" tabindex="-1"><a class="header-anchor" href="#presentation-and-finale">Presentation and finale</a></h1>
-<p>Publish what you built, show one thing you learned building it, then prove it on the challenge map.</p>
-<h2 id="your-solution-page" tabindex="-1"><a class="header-anchor" href="#your-solution-page">Your solution page</a></h2>
-<p>Everyone publishes their own page on GitHub Pages, from the agent’s own repository: the repo that does the work also explains it.</p>
-<p>Required content:</p>
-<ul>
-<li>The intake skill: how natural-language contacts become typed reports, and the evidence that your chosen model preserves accuracy.</li>
-<li>The reconciliation process: your matching rules and thresholds, and how conflicting claims survive.</li>
-<li>The dispatcher loop: standing orders, prioritization, and how new evidence changes an earlier decision.</li>
-<li>The stores: reports as append-only evidence, incidents as mutable beliefs.</li>
-<li>The evidence: model comparison results and your baseline against the greedy dispatcher.</li>
-</ul>
-<h3 id="the-quiz-gate" tabindex="-1"><a class="header-anchor" href="#the-quiz-gate">The quiz gate</a></h3>
-<p>Before you publish, prove you understand your own system. Ask Claude, with this prompt exactly:</p>
-<blockquote>
-<p>Give me an HTML report on this system with context and intuition, and a five-question quiz at the bottom. I will not present until I score five out of five.</p>
-</blockquote>
-<p>Take the quiz on your own page. Fail? Read properly, retake. It happens to all of us.</p>
-<h3 id="activity" tabindex="-1"><a class="header-anchor" href="#activity">Activity</a></h3>
-<ol>
-<li>Have Claude generate the page from your repo - it knows what you built, so make it explain why.</li>
-<li>Tell Claude to wire up GitHub Pages internally, so the page publishes from the same repository as the agent.</li>
-<li>Review every word and make it yours. The why is the part an agent cannot write for you.</li>
-<li>Post the link on the Padlet - the GitHub Pages page, not an artifact.</li>
-</ol>
-<p>The test: someone who has never seen your repo should understand your agent without you in the room.</p>
-<h2 id="show-and-tell" tabindex="-1"><a class="header-anchor" href="#show-and-tell">Show and tell</a></h2>
-<p>Time decides the format; the instructor calls it on the day.</p>
-<ul>
-<li><strong>If there is time:</strong> a team walks the class through its loop from its published page.</li>
-<li><strong>If there is not:</strong> each person takes ninety seconds for two things - the <em>one</em> tweak, change, or design decision that made the biggest difference to your score, and one thing Claude did that surprised you.</li>
-</ul>
-<p>Either way, bring the number that proves it: what the score was before the change and after.</p>
-<h2 id="the-finale" tabindex="-1"><a class="header-anchor" href="#the-finale">The finale</a></h2>
-<p>Each group runs its agent on the finale scenario through the complete outer runner, without operator intervention. The finale is one of the stage-5 scenarios (<code>stage5-triage@londone</code>, <code>stage5-triage@stockhome</code>, or <code>stage5-triage@feeladelphia</code>), announced by the instructor on the day; the maps and scenarios are known in advance.</p>
-<p>Stage 5 is beatable outright: a careful dispatcher can finish it with zero casualties and zero buildings lost. If you are losing a building, the problem is your triage, not the scenario.</p>
-<h3 id="before-the-run" tabindex="-1"><a class="header-anchor" href="#before-the-run">Before the run</a></h3>
-<ul>
-<li>Freeze the group branch, configuration, runtime model IDs, and assigned seed.</li>
-<li>Run deterministic checks from a clean worktree.</li>
-<li>Confirm that no extraction labels, hidden truth, or end-of-episode metrics reach the agent’s context during play. The engine’s own display shows the live score on the wall, but your agent never reads that surface - if your code does, that is the bug this check exists to find.</li>
-<li>Confirm the episode stops when no fires remain and none are scheduled, or at its tick limit.</li>
-</ul>
-<p>Use the <a href="helper-prompt/">finale helper-prompt stub</a> as the placeholder for the last readiness check.</p>
-<h3 id="submission" tabindex="-1"><a class="header-anchor" href="#submission">Submission</a></h3>
-<ul>
-<li>Casualties.</li>
-<li>Buildings lost.</li>
-<li>Self-reported total runtime tokens.</li>
-<li>Intake and dispatch model IDs.</li>
-<li>A short demonstration of one observation, reconciliation, and replan from the run.</li>
-</ul>
-<h2 id="discussion" tabindex="-1"><a class="header-anchor" href="#discussion">Discussion</a></h2>
-<p>Three rounds, with the finale numbers in front of you. Argue each one out before opening its spoiler - those are where the discussion tends to land, not the answers.</p>
-<h3 id="score-against-budget" tabindex="-1"><a class="header-anchor" href="#score-against-budget">Score against budget</a></h3>
-<ul>
-<li>What is a casualty worth in tokens? Put a number on it, then defend it.</li>
-<li>Where did your tokens actually go - intake, dispatch, or retries? Did you guess right before you looked?</li>
-<li>Name a change that improved the score <em>and</em> cut tokens. What made it different from the ones that only did one?</li>
-<li>Whose scores would you trade for whose token totals?</li>
-<li>Which constraint would bind harder in a real deployment, and does that change what you would have built?</li>
-</ul>
-<details class="spoiler"><summary>Where this usually lands</summary>
-<p>The room will not agree on what a casualty costs, and that is the finding: without a stated exchange rate, “optimize the agent” has no meaning, and every group has silently picked one. The cheapest wins are almost always structural rather than model-side - work moved out of the context window, a tool call that did not have to happen, a state message that stopped shipping the whole world every tick. A change that improves the score <em>and</em> cuts tokens usually did so by giving the model less to be wrong about.</p>
-</details>
-<h3 id="picking-models-with-evals" tabindex="-1"><a class="header-anchor" href="#picking-models-with-evals">Picking models with evals</a></h3>
-<ul>
-<li>Which model won for each role, and on which metric? Would a different metric have flipped it?</li>
-<li>How many samples did you look at before you believed the result?</li>
-<li>What did the cheaper model get wrong - the same thing every time, or something new each time? Which of those is easier to engineer around?</li>
-<li>Could you have picked the winner without running the eval? Would you have been right?</li>
-<li>What did the finale expose that your eval never measured?</li>
-</ul>
-<details class="spoiler"><summary>Where this usually lands</summary>
-<p>Somebody’s ranking will flip when the metric changes, which is the point: the eval encodes a choice about what matters, so disagreeing with a result usually means disagreeing with its metric. Sample counts tend to be embarrassingly small once said out loud. The most useful distinction is systematic error versus random error - a model that is wrong the same way every time can be prompted or post-processed around, one that is wrong differently every time cannot. Expect the finale to surface something no fixture covered; that gap is the argument for running both offline evals and live episodes rather than trusting either alone.</p>
-</details>
-<h3 id="separation-of-concerns" tabindex="-1"><a class="header-anchor" href="#separation-of-concerns">Separation of concerns</a></h3>
-<ul>
-<li>Which parts of your system decide, and which only report? Where is that line drawn, and what happens if something crosses it?</li>
-<li>Which parts are deterministic and which are model calls? Would you move any of them now?</li>
-<li><code>contact_id</code> and <code>reported_location</code> come from the envelope, never from the model. Where else does that argument apply in what you built?</li>
-<li>If you had to swap the intake model tomorrow, what else would have to change?</li>
-<li>What did you end up fixing in two places? What should that have told you?</li>
-</ul>
-<details class="spoiler"><summary>Where this usually lands</summary>
-<p>The shape the course is pushing: models propose, deterministic code disposes. Intake claims, reconciliation decides, the stores hold evidence separately from belief, and the envelope - not the model - owns identity and location, because those are facts about the contact rather than judgments about its content. The test of the boundary is the swap: if replacing a model forces changes outside its own module and prompt, the boundary was in the wrong place. Anything fixed in two places was one concern living in two.</p>
-</details>
-<h2 id="close" tabindex="-1"><a class="header-anchor" href="#close">Close</a></h2>
-<p>Discuss where the same inner loop, outer runner, deterministic policy, and eval separation apply at work. On-prem models and scheduling are reference topics, not live exercises.</p>
-<p><img src="/day-2/06-finale/idea-to-action-journey.png" alt="From idea to action"></p>
-<p>To close, here’s (part of) a talk by Anthropic’s Thariq Shihipar that serves as a final reflection of how the work changes.</p>
-<div class="video-embed">
-  <iframe
-    src="https://www.youtube-nocookie.com/embed/9fubhllmsBU?start=869"
-    title="Field Guide to Fable — Thariq Shihipar, Anthropic"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen></iframe>
-</div>
+          <h1 id="prepare-the-presentation" tabindex="-1"><a class="header-anchor" href="#prepare-the-presentation">Prepare the presentation</a></h1>
+<p>Prepare to present your work to the class with your group.</p>
+<p>A short slide deck can help you explain the work. You can use Claude Design to draft the deck or its visual style. Review all generated text and images before you present them.</p>
+<p>Your presentation must make the result easy to understand. Show the working app if possible. Explain the three course techniques that you used and one thing that you learned.</p>
 
           
           
           
           <hr />
           <nav aria-label="Course sequence">
-            <p><a href="/day-2/05-evaluation/">Previous: Model comparisons</a> | <a href="/future/">Next: The future</a></p>
+            <p><a href="/day-2/06-llm-app/">Previous: Build an LLM-based app</a> | <a href="/day-2/08-finale/">Next: HADR finale</a></p>
           </nav>
           
         </article>

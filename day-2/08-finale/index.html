@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Helper prompt: finale readiness</title>
+    <title>HADR finale</title>
     <meta name="description" content="Course notes for the DSTA Agentic AI for HADR Workshop." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -105,7 +105,13 @@
               <a href="/day-2/05-evaluation/" class="sidebar-sublink">Model comparisons</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-2/06-finale/" class="sidebar-sublink">Presentation and finale</a>
+              <a href="/day-2/06-llm-app/" class="sidebar-sublink">Build an LLM-based app</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/07-presentation/" class="sidebar-sublink">Prepare the presentation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/08-finale/" class="sidebar-sublink" aria-current="page">HADR finale</a>
             </li>
           </ul>
         </li>
@@ -154,30 +160,24 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Helper prompt: finale readiness</h1>
+          <h1 class="page-title">HADR finale</h1>
           <p class="page-subtitle">Day 2</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="helper-prompt%3A-finale-readiness" tabindex="-1"><a class="header-anchor" href="#helper-prompt%3A-finale-readiness">Helper prompt: finale readiness</a></h1>
-<p>Paste this into Claude Code for the last readiness check before the canonical challenge run.</p>
-<blockquote>
-<p>You are running my group’s finale readiness check for the HADR dispatch agent. Do not modify the branch - inspect and report only.</p>
-<p>Work only against the frozen candidate branch and the named configuration (runtime model IDs and assigned seed); ignore anything outside them.</p>
-<p>Confirm, with exact evidence:</p>
-<ul>
-<li>the deterministic checks pass from a clean worktree, and one permitted practice smoke run completes - both before the single canonical challenge run;</li>
-<li>the outer runner owns exactly one <code>next_tick()</code> per tick and can reach an episode terminal condition (no fires left and none scheduled, or the tick limit) with no operator intervention;</li>
-<li>extraction labels, hidden simulator truth, and end-of-episode metrics cannot enter the agent’s context during play;</li>
-<li>the intake and dispatch model IDs are pinned and the runtime token-reporting path produces totals by role.</li>
-</ul>
-<p>Do not promise a score or compare us to another group. Do not verify the token numbers themselves - only that the reporting path exists. Do not do or suggest any feature work; the integration freeze is in effect. Return a short readiness verdict, each blocker, and the evidence for each.</p>
-</blockquote>
+          <h1 id="hadr-finale" tabindex="-1"><a class="header-anchor" href="#hadr-finale">HADR finale</a></h1>
+<p>Return to the HADR agent as a group. The instructor will give you the finale scenario.</p>
+<p>Run the complete agent without operator changes during the episode. Record the result. Use it to close the HADR case study and compare the different group approaches.</p>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/day-2/07-presentation/">Previous: Prepare the presentation</a> | <a href="/future/">Next: The future</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">
