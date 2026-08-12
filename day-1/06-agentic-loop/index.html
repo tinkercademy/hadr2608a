@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agentic loop</title>
+    <meta name="description" content="Course notes for the DSTA Agentic AI for HADR Workshop." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=Rubik:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
+  </head>
+  <body class="theme-tt">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    
+<aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+  <div class="sidebar-brand">
+    <a href="/" class="sidebar-brand-link">
+      <img class="sidebar-brand-sticker" src="/assets/tkrobot-fingerguns.png" alt="" />
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-title">Agentic Engineering with Claude Code</span>
+        <span class="sidebar-brand-sub">HADR Edition</span>
+      </span>
+    </a>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="sidebar-list">
+        <li class="sidebar-item">
+          <a href="/" class="sidebar-link">
+            <span class="sidebar-link-label">Home</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/preflight/" class="sidebar-link">
+            <span class="sidebar-link-label">Preflight</span>
+          </a>
+        </li>
+        <li class="sidebar-item is-open">
+          <a href="/day-1/" class="sidebar-link">
+            <span class="sidebar-link-label">Day 1</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-1/00-background/" class="sidebar-sublink">Background</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/00a-crud-warmup/" class="sidebar-sublink">Claude Code warm-up</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/01-hadr/" class="sidebar-sublink">The HADR game</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/02-plan-build-review/" class="sidebar-sublink">Plan, build, review</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/03-skills-tools-mcps/" class="sidebar-sublink">Skills, tools, and MCPs</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/04-tokens/" class="sidebar-sublink">Tokens and costing</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/05-evaluation/" class="sidebar-sublink">Subagents and Evals</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/06-agentic-loop/" class="sidebar-sublink" aria-current="page">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/07-checkpoint/" class="sidebar-sublink">Checkpoint</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/08-show-and-tell/" class="sidebar-sublink">Show and tell</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/day-2/" class="sidebar-link">
+            <span class="sidebar-link-label">Day 2</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-2/00-starter/" class="sidebar-sublink">Starter: CLAUDE.md safari</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/02-intake/" class="sidebar-sublink">Stage 2: intake</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/03-reconciliation/" class="sidebar-sublink">Stage 3: reconciliation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/04-replanning/" class="sidebar-sublink">Stage 4: replanning</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/05-evaluation/" class="sidebar-sublink">Model comparisons</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/06-finale/" class="sidebar-sublink">Presentation and finale</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/future/" class="sidebar-link">
+            <span class="sidebar-link-label">The future</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/game/" class="sidebar-link">
+            <span class="sidebar-link-label">Game reference</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/game/api/" class="sidebar-sublink">API</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/maps/" class="sidebar-sublink">Maps</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/play/" class="sidebar-sublink">MCP Play</a>
+            </li>
+          </ul>
+        </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-foot">
+    <a class="tinkercademy-brand" href="https://tinkercademy.com" rel="noopener" target="_blank" aria-label="Visit Tinkercademy">
+      <img src="/assets/tinkercademy-logo-white.png" alt="Tinkercademy" />
+    </a>
+    <div class="license-lockup">
+      <span class="license-label">Licensed from</span>
+      <a class="ocelliq-brand" href="https://ocelliq.com" rel="noopener" target="_blank" aria-label="Visit OcelliQ">
+        <img class="ocelliq-brand-mark" src="/assets/ocelliq-mark.svg" alt="" />
+        <span>OcelliQ</span>
+      </a>
+    </div>
+  </div>
+</aside>
+
+<button class="sidebar-toggle-btn" type="button" aria-label="Toggle navigation" aria-controls="sidebar">&#9776;</button>
+
+
+    <div class="layout">
+      <header class="page-header">
+        <div class="page-header-inner">
+          <h1 class="page-title">Agentic loop</h1>
+          <p class="page-subtitle">Day 1</p>
+        </div>
+      </header>
+
+      <main id="main" class="page-main">
+        <article class="content">
+          <h1 id="agentic-loop" tabindex="-1"><a class="header-anchor" href="#agentic-loop">Agentic loop</a></h1>
+<!-- markdownlint-disable MD033 -->
+<figure class="cheat-image" data-gate="ballerina" hidden>
+  <figcaption>Cheat Code Entered</figcaption>
+  <img src="ballerina-cappuccina-agentic-loop.png" alt="Ballerina Cappuccina pirouetting through the four steps of the agentic loop">
+</figure>
+<p>We’re going to build an entire agent now, in under a hundred lines of python. The heart of the kit is <code>agent_loop</code> in <code>agent.py</code>: the agentic tool loop, task-agnostic by design. We’ll build it once here, test it interactively, and then use it as the basis of the the dispatcher tomorrow. (Ignore the other files in the starter for now, we’ll work on them tomorrow.)</p>
+<pre class="mermaid">---
+config:
+  layout: elk
+---
+flowchart LR
+    u[&quot;user turn&quot;] --&gt; m[&quot;message history&quot;]
+    m --&gt; llm[&quot;model call&quot;]
+    llm -- &quot;no tool_calls&quot; --&gt; y[&quot;yield: final message&quot;]
+    llm -- &quot;tool_calls&quot; --&gt; t[&quot;run each tool&quot;]
+    t -- &quot;one result per tool_call_id&quot; --&gt; m
+</pre><p>Four invariants the loop must hold:</p>
+<ol>
+<li>Feed the assistant turn back <em>verbatim</em> - content including the <code>&lt;think&gt;</code> block, <code>tool_calls</code> unchanged. Anything you rewrite breaks the provider’s implicit prompt cache, and <code>cached_tokens</code> stays at zero.</li>
+<li>Exactly one <code>role: &quot;tool&quot;</code> message per <code>tool_call_id</code>. The API rejects a mismatched transcript.</li>
+<li>Rounds are bounded (<code>max_rounds</code>), to prevent runaway token burn.</li>
+<li>The loop never calls <code>next_tick()</code>, that is the responsibility of the outer runner.</li>
+</ol>
+<h2 id="activity%3A-one-llm-call" tabindex="-1"><a class="header-anchor" href="#activity%3A-one-llm-call">Activity: One LLM call</a></h2>
+<details class="spoiler" data-gate="ballerina" hidden><summary>Spoiler: stuck on phase 1?</summary><p><a href="phase-1-solution/">Phase 1 reference solution</a></p></details>
+<p>We’re going to begin without any tools or loop. We will send the system prompt and the task to the model and return the output, including the <code>&lt;think&gt;</code> block, as the final message.</p>
+<p>Implement that much of <code>agent_loop</code> in <code>agent.py</code>. Note that the docstring contract describes the finished loop, which strips the think block on yield - for this phase, return the content unstripped. One pyright friction you will hit, expected and not a mistake on your part: <code>message.content</code> is typed <code>str | None</code>, so read it as <code>message.content or &quot;&quot;</code>.</p>
+<p>Then check it against the scripted model:</p>
+<pre><code class="language-bash">uv run behave features/agent_loop.feature -n LOOP-1
+</code></pre>
+<p>Once it works, run the same loop interactively against the real model with a question that needs no tools:</p>
+<pre><code class="language-bash">uv run hadr-agent &quot;in one sentence, why is the sky blue?&quot;
+</code></pre>
+<p>The answer arrives wrapped in a <code>&lt;think&gt;...&lt;/think&gt;</code> block - that is expected, and worth reading. Read the output: the <code>&lt;think&gt;</code> reasoning, the yielded answer, and <code>rounds: 1</code>.</p>
+<h3 id="the-%3Cthink%3E-tags" tabindex="-1"><a class="header-anchor" href="#the-%3Cthink%3E-tags">The <code>&lt;think&gt;</code> tags</a></h3>
+<p>Most models you use, including <code>minimax-m3</code>, are reasoning models. They are trained to emit a chain-of-thought before the answer. This measurably improves multi-step decisions at the cost of more tokens, spent in the <code>&lt;think&gt;...&lt;/think&gt;</code> block. Read it to see <em>how</em> the model decided, not just what it concluded.</p>
+<p>Phase 1 returns it as-is, so you can see it. Later phases strip it for display with <code>strip_think</code>, but still feed the assistant turn back into the history <em>verbatim</em> - <code>&lt;think&gt;</code> block included - so the provider’s implicit prompt cache keeps hitting (invariant 1).</p>
+<h3 id="when-you%E2%80%99re-done" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done">When you’re done</a></h3>
+<ol>
+<li><strong>Open a pull request and have a teammate review it.</strong> This is the smallest diff you will ship all course, so use it to prove the review flow actually works: branch protection stops you merging your own, <code>@claude</code> leaves a review, and a teammate approves before it lands. Fix the plumbing now, not tomorrow afternoon.</li>
+<li><strong>Post the strangest <code>&lt;think&gt;</code> block you got to the Padlet.</strong> A one-sentence question about the sky can produce a startling amount of deliberation, and the shape of that reasoning is what you will be budgeting for in the next session.</li>
+</ol>
+<h2 id="activity%3A-the-agentic-loop" tabindex="-1"><a class="header-anchor" href="#activity%3A-the-agentic-loop">Activity: The agentic loop</a></h2>
+<details class="spoiler" data-gate="ballerina" hidden><summary>Spoiler: stuck on phase 2?</summary><p><a href="phase-2-solution/">Phase 2 reference solution</a></p></details>
+<p>Now we add the loop and the tool_calls.</p>
+<ol>
+<li>Run inference in a loop, terminating when the model stops asking for tools (it yields) or <code>max_rounds</code> is hit.</li>
+</ol>
+<p>Now the <code>tool_calls</code> branch: run each tool the model asked for, append exactly one <code>role: &quot;tool&quot;</code> result per <code>tool_call_id</code>, feed the assistant turn back verbatim, and go round again until the model stops asking - bounded by <code>max_rounds</code>. That is invariants 1-3, and <code>LOOP-2</code> through <code>LOOP-5</code> check them. One more expected pyright friction: <code>message.tool_calls</code> is a union type and only function calls carry <code>.function</code>, so narrow with <code>tc.type == &quot;function&quot;</code> before touching it:</p>
+<pre><code class="language-bash">uv run behave features/agent_loop.feature
+</code></pre>
+<details class="spoiler">
+<summary>Hint: if your model emits invalid tool-call arguments.</summary>
+<p>Models occasionally emit tool-call <code>arguments</code> that are not valid JSON. Your loop already handles that, but you need to fix this when sending the broken string back in the assistant turn, otherwise the provider rejects the entire request. Here’s one way to do this:</p>
+<pre><code class="language-python">def _replayable_args(raw: str | None) -&gt; str:
+    &quot;&quot;&quot;Tool-call arguments as the provider will accept them back.&quot;&quot;&quot;
+    try:
+        json.loads(raw or &quot;{}&quot;)
+    except json.JSONDecodeError:
+        return &quot;{}&quot;
+    return raw or &quot;{}&quot;
+</code></pre>
+<p>Then use <code>_replayable_args(tc.function.arguments)</code> where you rebuild the assistant turn. Valid JSON passes through untouched, so the cache invariant still holds.</p>
+</details>
+<p>All green? <code>hadr-agent</code> wires the same loop to a set of toy tools - watch it actually think:</p>
+<pre><code class="language-bash">uv run hadr-agent &quot;roll two dice and tell me the time&quot;
+</code></pre>
+<p>Then push it harder and read the <code>rounds</code> count and the model’s <code>&lt;think&gt;</code> reasoning as it plans and acts across rounds:</p>
+<pre><code class="language-sh"># offloading math to a tool.
+uv run hadr-agent &quot;what is 2**31 - 1?&quot;
+# chaining fetch then decode across rounds.
+uv run hadr-agent &quot;what's the secret message?&quot;
+# tools touching the real world.
+uv run hadr-agent &quot;what files are in this project and what is it for?&quot;
+</code></pre>
+<p>Watch <code>rounds</code> climb when a task forces tool chaining, and watch the loop yield once the model stops asking for tools. This is the exact machine tomorrow’s dispatcher runs on - only the tools, prompt, and state message change.</p>
+<h3 id="when-you%E2%80%99re-done-1" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done-1">When you’re done</a></h3>
+<ol>
+<li><strong>Open a pull request and have a teammate review it against the four invariants</strong>, not against the test output: <code>behave</code> passing means the scripted client was satisfied, not that you feed the assistant turn back verbatim or bound your rounds. Get it reviewed carefully - the rest of this course hinges on this.</li>
+<li><strong>Post your <code>rounds</code> count for <code>what's the secret message?</code> on the Padlet.</strong> Same tools, same model, different loops: if someone’s is consistently lower, ask them what their system prompt says.</li>
+</ol>
+<h2 id="activity%3A-grow-the-scenarios-(optional)" tabindex="-1"><a class="header-anchor" href="#activity%3A-grow-the-scenarios-(optional)">Activity: Grow the scenarios (Optional)</a></h2>
+<details class="spoiler" data-gate="ballerina" hidden><summary>Spoiler: stuck on phase 3?</summary><p><a href="phase-3-solution/">Phase 3 reference solution</a></p></details>
+<p>Add one <code>LOOP-*</code> scenario of your own for an edge you fear - malformed tool arguments, an unknown tool name, a tool that raises.</p>
+<p>Tip: the scripted client in <code>features/steps/agent_loop_steps.py</code> records every request your loop makes - read a failing scenario’s transcript before guessing.</p>
+<h2 id="this-is%2C-roughly%2C-how-claude-code-works" tabindex="-1"><a class="header-anchor" href="#this-is%2C-roughly%2C-how-claude-code-works">This is, roughly, how Claude Code works</a></h2>
+<p>There is no second, cleverer mechanism hiding inside the tools you have been using all day. Claude Code, OpenCode, Cursor, and the rest run exactly what you just built: history in, one model call, tool calls out, one result appended per call, repeat until the model stops asking. The four invariants above are their invariants too.</p>
+<p>What separates a hundred-line loop from a shipped product is not a better loop. It is the engineering stacked around it, wringing every bit of performance out of a model you can call yourself - and you have already seen most of these layers:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>What you built today</th>
+<th>What a shipped harness adds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tools</td>
+<td>A handful of toy tools</td>
+<td>Dozens of typed tools (edit, shell, search, web), plus <a href="/day-1/03-skills-tools-mcps/">any MCP server you attach</a>, each behind a permission prompt</td>
+</tr>
+<tr>
+<td>Context</td>
+<td>One system prompt</td>
+<td><code>CLAUDE.md</code>, memory, <a href="/day-1/04-tokens/"><code>/context</code> and <code>/compact</code></a>, and subagents that do the reading in their own window so yours stays lean</td>
+</tr>
+<tr>
+<td>Caching</td>
+<td>Feeding the assistant turn back verbatim</td>
+<td>A prompt deliberately ordered so the prefix is byte-identical on every call - <a href="/day-1/04-tokens/">the difference between $1 and $7 for one session</a></td>
+</tr>
+<tr>
+<td>Models</td>
+<td>One model for everything</td>
+<td><a href="/day-2/05-evaluation/">A model per job</a>: a cheap one to search and summarize, an expensive one for the turn that decides something</td>
+</tr>
+<tr>
+<td>Failure</td>
+<td><code>max_rounds</code></td>
+<td>Retries, timeouts, truncation of oversized tool results, and sessions you can resume</td>
+</tr>
+<tr>
+<td>Quality</td>
+<td>Your <code>LOOP-*</code> scenarios</td>
+<td>Eval suites re-run on every model and prompt change</td>
+</tr>
+</tbody>
+</table>
+<p>That is the good news for tomorrow. You will not out-train a frontier lab, but the loop is a hundred lines and everything above it is ordinary engineering - which is exactly where your dispatcher’s casualty count is won or lost.</p>
+<p>If you want to go deeper:</p>
+<ul>
+<li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a> - curating what goes in the window, and why more context is not better context.</li>
+<li><a href="https://www.anthropic.com/engineering/writing-tools-for-agents">Writing effective tools for AI agents</a> - tool descriptions and return values as a contract you design, not an afterthought.</li>
+<li><a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">Effective harnesses for long-running agents</a> - what breaks when the loop runs for hours instead of rounds.</li>
+<li><a href="https://github.com/humanlayer/12-factor-agents">12-factor agents</a> - a non-Anthropic take on the same problem: own your prompt, your control flow, and your state.</li>
+<li><a href="https://github.com/sst/opencode">OpenCode’s source</a> - a production harness you can read. Find its loop and compare it to yours.</li>
+</ul>
+
+          
+          
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/day-1/05-evaluation/">Previous: Subagents and Evals</a> | <a href="/day-1/07-checkpoint/">Next: Checkpoint</a></p>
+          </nav>
+          
+        </article>
+        <footer class="page-foot">
+          <p>Agentic AI for HADR Workshop | Notes rendered with <a href="https://www.11ty.dev/">Eleventy</a>.</p>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        document.querySelectorAll(".sidebar-item").forEach(function (li) {
+          var link = li.querySelector(".sidebar-link");
+          var toggle = li.querySelector(".sidebar-toggle");
+          if (!link || !toggle) return;
+          toggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            li.classList.toggle("is-open");
+          });
+        });
+
+        var btn = document.querySelector(".sidebar-toggle-btn");
+        var body = document.body;
+        if (btn) {
+          btn.addEventListener("click", function () {
+            body.classList.toggle("sidebar-open");
+          });
+        }
+        document.addEventListener("click", function (e) {
+          if (
+            body.classList.contains("sidebar-open") &&
+            !e.target.closest(".sidebar") &&
+            !e.target.closest(".sidebar-toggle-btn")
+          ) {
+            body.classList.remove("sidebar-open");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Cheatcode gate: visiting any page with #somecode (or ?code=somecode) unlocks
+      // every element carrying data-gate="somecode", tab-session-wide. Content authors
+      // add a gate by wrapping content in any element with a data-gate attribute
+      // (plus `hidden`, so it stays invisible even before site.css loads).
+      // Codes are listed on the unlisted instructor notes page.
+      (() => {
+        const code = location.hash.slice(1) || new URLSearchParams(location.search).get("code");
+        if (code) sessionStorage.setItem("unlock-" + code, "1");
+        document.querySelectorAll("[data-gate]").forEach((el) => {
+          if (sessionStorage.getItem("unlock-" + el.dataset.gate)) {
+            el.removeAttribute("data-gate");
+            el.removeAttribute("hidden");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Copy button on every multiline fenced code block.
+      (() => {
+        const icon = (paths) =>
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+          'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + "</svg>";
+        const copyIcon = icon(
+          '<rect x="9" y="9" width="11" height="11" rx="2"/>' +
+            '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>'
+        );
+        const doneIcon = icon('<path d="M20 6 9 17l-5-5"/>');
+
+        document.querySelectorAll("pre:not(.mermaid)").forEach((pre) => {
+          const code = pre.querySelector("code");
+          if (!code || !code.textContent.trim().includes("\n")) return;
+
+          const wrap = document.createElement("div");
+          wrap.className = "code-wrap";
+          pre.replaceWith(wrap);
+          wrap.appendChild(pre);
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "copy-btn";
+          btn.innerHTML = copyIcon + "<span>Copy</span>";
+          wrap.appendChild(btn);
+
+          let timer;
+          btn.addEventListener("click", () => {
+            navigator.clipboard.writeText(code.textContent).then(
+              () => {
+                btn.innerHTML = doneIcon + "<span>Copied!</span>";
+                btn.classList.add("is-done");
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                  btn.innerHTML = copyIcon + "<span>Copy</span>";
+                  btn.classList.remove("is-done");
+                }, 2000);
+              },
+              () => {
+                btn.innerHTML = copyIcon + "<span>Press Ctrl+C</span>";
+                getSelection().selectAllChildren(code);
+              }
+            );
+          });
+        });
+      })();
+    </script>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2/dist/mermaid-layout-elk.esm.min.mjs";
+      mermaid.registerLayoutLoaders(elkLayouts);
+      mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+    </script>
+  </body>
+</html>

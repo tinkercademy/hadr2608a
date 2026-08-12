@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Instructor notes</title>
+    <meta name="description" content="Course notes for the DSTA Agentic AI for HADR Workshop." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=Rubik:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
+  </head>
+  <body class="theme-tt">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    
+<aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+  <div class="sidebar-brand">
+    <a href="/" class="sidebar-brand-link">
+      <img class="sidebar-brand-sticker" src="/assets/tkrobot-fingerguns.png" alt="" />
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-title">Agentic Engineering with Claude Code</span>
+        <span class="sidebar-brand-sub">HADR Edition</span>
+      </span>
+    </a>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="sidebar-list">
+        <li class="sidebar-item">
+          <a href="/" class="sidebar-link">
+            <span class="sidebar-link-label">Home</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/preflight/" class="sidebar-link">
+            <span class="sidebar-link-label">Preflight</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/day-1/" class="sidebar-link">
+            <span class="sidebar-link-label">Day 1</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-1/00-background/" class="sidebar-sublink">Background</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/00a-crud-warmup/" class="sidebar-sublink">Claude Code warm-up</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/01-hadr/" class="sidebar-sublink">The HADR game</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/02-plan-build-review/" class="sidebar-sublink">Plan, build, review</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/03-skills-tools-mcps/" class="sidebar-sublink">Skills, tools, and MCPs</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/04-tokens/" class="sidebar-sublink">Tokens and costing</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/05-evaluation/" class="sidebar-sublink">Subagents and Evals</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/06-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/07-checkpoint/" class="sidebar-sublink">Checkpoint</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/08-show-and-tell/" class="sidebar-sublink">Show and tell</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/day-2/" class="sidebar-link">
+            <span class="sidebar-link-label">Day 2</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-2/00-starter/" class="sidebar-sublink">Starter: CLAUDE.md safari</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/02-intake/" class="sidebar-sublink">Stage 2: intake</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/03-reconciliation/" class="sidebar-sublink">Stage 3: reconciliation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/04-replanning/" class="sidebar-sublink">Stage 4: replanning</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/05-evaluation/" class="sidebar-sublink">Model comparisons</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/06-finale/" class="sidebar-sublink">Presentation and finale</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/future/" class="sidebar-link">
+            <span class="sidebar-link-label">The future</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/game/" class="sidebar-link">
+            <span class="sidebar-link-label">Game reference</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/game/api/" class="sidebar-sublink">API</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/maps/" class="sidebar-sublink">Maps</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/play/" class="sidebar-sublink">MCP Play</a>
+            </li>
+          </ul>
+        </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-foot">
+    <a class="tinkercademy-brand" href="https://tinkercademy.com" rel="noopener" target="_blank" aria-label="Visit Tinkercademy">
+      <img src="/assets/tinkercademy-logo-white.png" alt="Tinkercademy" />
+    </a>
+    <div class="license-lockup">
+      <span class="license-label">Licensed from</span>
+      <a class="ocelliq-brand" href="https://ocelliq.com" rel="noopener" target="_blank" aria-label="Visit OcelliQ">
+        <img class="ocelliq-brand-mark" src="/assets/ocelliq-mark.svg" alt="" />
+        <span>OcelliQ</span>
+      </a>
+    </div>
+  </div>
+</aside>
+
+<button class="sidebar-toggle-btn" type="button" aria-label="Toggle navigation" aria-controls="sidebar">&#9776;</button>
+
+
+    <div class="layout">
+      <header class="page-header">
+        <div class="page-header-inner">
+          <h1 class="page-title">Instructor notes</h1>
+          
+        </div>
+      </header>
+
+      <main id="main" class="page-main">
+        <article class="content">
+          <h1 id="instructor-notes" tabindex="-1"><a class="header-anchor" href="#instructor-notes">Instructor notes</a></h1>
+<p>This page is not linked from the course navigation.</p>
+<!--
+To gate new content, wrap it in any element with data-gate="<code>" hidden - the hidden attribute keeps it invisible even before CSS loads; the unlock script removes both. Pick distinctive codes (hash collisions with heading anchors would unlock them). Presentation-only: gated pages are still reachable by direct URL.
+-->
+<h2 id="what-each-scenario-drills" tabindex="-1"><a class="header-anchor" href="#what-each-scenario-drills">What each scenario drills</a></h2>
+<p>The catalogue students see (<code>list_scenarios</code>) carries flavour only: modality and mood, no mechanics. This is the instructor-facing version - what is actually in each scenario and what it is meant to teach.</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>What is in it</th>
+<th>The lesson</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stage1-basic</td>
+<td>Perfect structured reports: three fires, two trucks.</td>
+<td>Rank by people at risk, not by reported severity alone.</td>
+</tr>
+<tr>
+<td>stage2-language</td>
+<td>Free-text calls around two real fires, one loud false alarm, and a cat-in-a-tree.</td>
+<td>Extract the claim; do not spend a truck on smoke.</td>
+</tr>
+<tr>
+<td>stage3-partial</td>
+<td>An alarm and a smoke call for the same block, a duplicate, a wrong address, and a delayed second fire.</td>
+<td>Merge before you dispatch.</td>
+</tr>
+<tr>
+<td>stage4-replan</td>
+<td>A responder correction, contradictory headcounts, and a big new fire that ignites while both trucks are committed.</td>
+<td>Revise the plan.</td>
+</tr>
+<tr>
+<td>stage5-triage</td>
+<td>High call volume with uncertain times and a wrong address; a crowded building burns but is claimed only medium severity.</td>
+<td>Reach it before it collapses; do not trust the loudest or the latest.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="expected-scores" tabindex="-1"><a class="header-anchor" href="#expected-scores">Expected scores</a></h2>
+<p>The reference solution’s numbers for every scenario and map, plus how to read them, live on a page of their own: <a href="/instructor/expected-scores/">expected scores</a>.</p>
+<h2 id="submission-list" tabindex="-1"><a class="header-anchor" href="#submission-list">Submission list</a></h2>
+<p>What each chapter expects to come back. Chapters with neither column (background, HADR intro, tokens) are omitted. “Merge as code” always means a pull request into the participant’s own <code>master</code>, approved by a teammate; the only cross-repository pull request is the one marked as such.</p>
+<p>“Work” is how the chapter is actually run, taking the broadest mode it contains: <strong>group</strong> if any part is decided or performed together, <strong>pair</strong> if two people have to produce something jointly, otherwise <strong>individual</strong>. Every merge is reviewed by a teammate regardless - that is the standing rule, not a mode, so a chapter is never pair work merely because someone reviews the pull request.</p>
+<table>
+<thead>
+<tr>
+<th>Chapter</th>
+<th>Work</th>
+<th>Merge as code</th>
+<th>Post to the Padlet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/preflight/">Preflight</a></td>
+<td>individual</td>
+<td>The <code>/install-github-app</code> setup PR; branch protection active</td>
+<td>-</td>
+</tr>
+<tr>
+<td><a href="/day-1/02-plan-build-review/">Plan, build, review</a></td>
+<td>group</td>
+<td>The team’s agreed Gherkin scenarios; the four store units (reports, open/close, get/find, update/link) as four reviewed PRs</td>
+<td>The most surprising blindspot unknown; the destructive PR you planted in a teammate’s repo and whether <code>@claude</code> caught it</td>
+</tr>
+<tr>
+<td><a href="/day-1/03-skills-tools-mcps/">Skills, tools, MCPs</a></td>
+<td>pair</td>
+<td>The play skill, traded as a PR with a teammate</td>
+<td><code>/context</code> screenshot</td>
+</tr>
+<tr>
+<td><a href="/day-1/05-evaluation/">Subagents and evals</a></td>
+<td>group</td>
+<td><strong>Cross-repo:</strong> the driver opens one PR into every teammate’s repo carrying the prompt, synthesized skill, rubric, and accepted labels</td>
+<td><code>npx ccusage</code> screenshot (driver only)</td>
+</tr>
+<tr>
+<td><a href="/day-1/06-agentic-loop/">Agentic loop</a></td>
+<td>individual</td>
+<td>Phase 1 (one model call) and phase 2 (the full loop) as two separate reviewed PRs</td>
+<td>Strangest <code>&lt;think&gt;</code> block; <code>rounds</code> for “what’s the secret message?”</td>
+</tr>
+<tr>
+<td><a href="/day-1/07-checkpoint/">Checkpoint</a></td>
+<td>group</td>
+<td><code>ruff</code>, <code>pyright</code>, <code>pytest</code>, <code>behave</code> as a pre-commit hook plus the CI tag gate; everything still open merged</td>
+<td>The pre-commit hook list; <code>rounds</code>, total tokens, and <code>cache_read</code> from the live run</td>
+</tr>
+<tr>
+<td><a href="/day-1/08-show-and-tell/">Show and tell</a></td>
+<td>group</td>
+<td>-</td>
+<td>The artifact</td>
+</tr>
+<tr>
+<td><a href="/day-2/00-starter/">Starter: CLAUDE.md safari</a></td>
+<td>individual</td>
+<td>Your own <code>CLAUDE.md</code></td>
+<td>A <code>CLAUDE.md</code> convention worth stealing</td>
+</tr>
+<tr>
+<td><a href="/day-2/01-dispatcher/">Stage 1: dispatcher</a></td>
+<td>individual</td>
+<td><code>_state_message</code>, <code>dispatch_system.md</code>, the minimal <code>_finalize</code>, the runner wiring</td>
+<td>Casualties, buildings lost, and dispatch tokens on <code>stage1-basic@londone</code></td>
+</tr>
+<tr>
+<td><a href="/day-2/02-intake/">Stage 2: intake</a></td>
+<td>individual</td>
+<td><code>intake_system.md</code>, <code>_finalize</code>, new <code>human_text</code> scenarios</td>
+<td>Per-field extraction accuracy and tokens per contact</td>
+</tr>
+<tr>
+<td><a href="/day-2/03-reconciliation/">Stage 3: reconciliation</a></td>
+<td>individual</td>
+<td>The belief-strength PRD; <code>reconcile.py</code>; the <code>contradiction</code> flag and confidence field on <code>Incident</code>; own fixtures</td>
+<td><code>MATCH_RADIUS</code> and <code>TIME_WINDOW</code>, with the numbers they produced on <code>stage3-partial@londone</code>; one high-value fixture, traded (each person adopts a couple of others’)</td>
+</tr>
+<tr>
+<td><a href="/day-2/04-replanning/">Stage 4: replanning</a></td>
+<td>individual</td>
+<td><code>@stage4</code> scenarios (none ship); the state-message and prompt changes</td>
+<td>One redirect rationale where the agent gave something up, plus <code>stage4-replan@londone</code> casualties</td>
+</tr>
+<tr>
+<td><a href="/day-2/05-evaluation/">Evaluation</a></td>
+<td>group</td>
+<td>Model configuration and the prompt tweaks each model needed</td>
+<td>Two artifact links: dispatch-model comparison, then intake-model comparison</td>
+</tr>
+<tr>
+<td><a href="/day-2/06-finale/">Presentation and finale</a></td>
+<td>group</td>
+<td>The GitHub Pages site, published from each participant’s own agent repo; frozen branch, configuration, and runtime model IDs</td>
+<td>The GitHub Pages link; casualties, buildings lost, self-reported tokens, and both model IDs</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cheatcodes" tabindex="-1"><a class="header-anchor" href="#cheatcodes">Cheatcodes</a></h2>
+<p>Visit any page with <code>#&lt;code&gt;</code> (or <code>?code=&lt;code&gt;</code>) to unlock it for the rest of the browser tab session; unlocked content then shows on every page that gates on that code.</p>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Cheatcode</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/game/">Gameplay Scores</a></td>
+<td><code>tungtung</code></td>
+<td>Reveals the expected-scores tables to students.</td>
+</tr>
+<tr>
+<td><a href="/day-1/06-agentic-loop/">Agentic loop</a></td>
+<td><code>ballerina</code></td>
+<td>Reveals the phase reference-solution spoilers.</td>
+</tr>
+<tr>
+<td><a href="/day-2/01-dispatcher/">Stage 1: dispatcher</a></td>
+<td><code>tralalero</code></td>
+<td>Reveals the Stage 1 reference solution.</td>
+</tr>
+<tr>
+<td><a href="/day-2/02-intake/">Stage 2: intake</a></td>
+<td><code>bombardiro</code></td>
+<td>Reveals the Stage 2 reference solution.</td>
+</tr>
+<tr>
+<td><a href="/day-2/03-reconciliation/">Stage 3: reconciliation</a></td>
+<td><code>lirili</code></td>
+<td>Reveals the Stage 3 reference solution.</td>
+</tr>
+<tr>
+<td><a href="/day-2/04-replanning/">Stage 4: replanning</a></td>
+<td><code>patapim</code></td>
+<td>Reveals the Stage 4 reference solution.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="running-many-sessions-in-parallel" tabindex="-1"><a class="header-anchor" href="#running-many-sessions-in-parallel">Running many sessions in parallel</a></h2>
+<p>The engine writes run logs to a machine-wide state dir (<code>~/.local/state/hadr-engine/</code> by default), so parallel graders/students share one pile of <code>run-*.jsonl</code> files. Each run still gets a unique filename, but set <code>HADR_ENGINE_STATE_DIR</code> to a per-session path to keep logs isolated and easy to find. The no-LLM runner smoke test already spawns its engine on a free ephemeral port, so it never collides with a dev engine on 8000.</p>
+
+          
+          
+          
+        </article>
+        <footer class="page-foot">
+          <p>Agentic AI for HADR Workshop | Notes rendered with <a href="https://www.11ty.dev/">Eleventy</a>.</p>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        document.querySelectorAll(".sidebar-item").forEach(function (li) {
+          var link = li.querySelector(".sidebar-link");
+          var toggle = li.querySelector(".sidebar-toggle");
+          if (!link || !toggle) return;
+          toggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            li.classList.toggle("is-open");
+          });
+        });
+
+        var btn = document.querySelector(".sidebar-toggle-btn");
+        var body = document.body;
+        if (btn) {
+          btn.addEventListener("click", function () {
+            body.classList.toggle("sidebar-open");
+          });
+        }
+        document.addEventListener("click", function (e) {
+          if (
+            body.classList.contains("sidebar-open") &&
+            !e.target.closest(".sidebar") &&
+            !e.target.closest(".sidebar-toggle-btn")
+          ) {
+            body.classList.remove("sidebar-open");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Cheatcode gate: visiting any page with #somecode (or ?code=somecode) unlocks
+      // every element carrying data-gate="somecode", tab-session-wide. Content authors
+      // add a gate by wrapping content in any element with a data-gate attribute
+      // (plus `hidden`, so it stays invisible even before site.css loads).
+      // Codes are listed on the unlisted instructor notes page.
+      (() => {
+        const code = location.hash.slice(1) || new URLSearchParams(location.search).get("code");
+        if (code) sessionStorage.setItem("unlock-" + code, "1");
+        document.querySelectorAll("[data-gate]").forEach((el) => {
+          if (sessionStorage.getItem("unlock-" + el.dataset.gate)) {
+            el.removeAttribute("data-gate");
+            el.removeAttribute("hidden");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Copy button on every multiline fenced code block.
+      (() => {
+        const icon = (paths) =>
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+          'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + "</svg>";
+        const copyIcon = icon(
+          '<rect x="9" y="9" width="11" height="11" rx="2"/>' +
+            '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>'
+        );
+        const doneIcon = icon('<path d="M20 6 9 17l-5-5"/>');
+
+        document.querySelectorAll("pre:not(.mermaid)").forEach((pre) => {
+          const code = pre.querySelector("code");
+          if (!code || !code.textContent.trim().includes("\n")) return;
+
+          const wrap = document.createElement("div");
+          wrap.className = "code-wrap";
+          pre.replaceWith(wrap);
+          wrap.appendChild(pre);
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "copy-btn";
+          btn.innerHTML = copyIcon + "<span>Copy</span>";
+          wrap.appendChild(btn);
+
+          let timer;
+          btn.addEventListener("click", () => {
+            navigator.clipboard.writeText(code.textContent).then(
+              () => {
+                btn.innerHTML = doneIcon + "<span>Copied!</span>";
+                btn.classList.add("is-done");
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                  btn.innerHTML = copyIcon + "<span>Copy</span>";
+                  btn.classList.remove("is-done");
+                }, 2000);
+              },
+              () => {
+                btn.innerHTML = copyIcon + "<span>Press Ctrl+C</span>";
+                getSelection().selectAllChildren(code);
+              }
+            );
+          });
+        });
+      })();
+    </script>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2/dist/mermaid-layout-elk.esm.min.mjs";
+      mermaid.registerLayoutLoaders(elkLayouts);
+      mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+    </script>
+  </body>
+</html>

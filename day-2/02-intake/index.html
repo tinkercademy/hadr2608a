@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stage 2: intake</title>
+    <meta name="description" content="Course notes for the DSTA Agentic AI for HADR Workshop." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=Rubik:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
+  </head>
+  <body class="theme-tt">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    
+<aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+  <div class="sidebar-brand">
+    <a href="/" class="sidebar-brand-link">
+      <img class="sidebar-brand-sticker" src="/assets/tkrobot-fingerguns.png" alt="" />
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-title">Agentic Engineering with Claude Code</span>
+        <span class="sidebar-brand-sub">HADR Edition</span>
+      </span>
+    </a>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="sidebar-list">
+        <li class="sidebar-item">
+          <a href="/" class="sidebar-link">
+            <span class="sidebar-link-label">Home</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/preflight/" class="sidebar-link">
+            <span class="sidebar-link-label">Preflight</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/day-1/" class="sidebar-link">
+            <span class="sidebar-link-label">Day 1</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-1/00-background/" class="sidebar-sublink">Background</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/00a-crud-warmup/" class="sidebar-sublink">Claude Code warm-up</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/01-hadr/" class="sidebar-sublink">The HADR game</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/02-plan-build-review/" class="sidebar-sublink">Plan, build, review</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/03-skills-tools-mcps/" class="sidebar-sublink">Skills, tools, and MCPs</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/04-tokens/" class="sidebar-sublink">Tokens and costing</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/05-evaluation/" class="sidebar-sublink">Subagents and Evals</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/06-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/07-checkpoint/" class="sidebar-sublink">Checkpoint</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/08-show-and-tell/" class="sidebar-sublink">Show and tell</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item is-open">
+          <a href="/day-2/" class="sidebar-link">
+            <span class="sidebar-link-label">Day 2</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-2/00-starter/" class="sidebar-sublink">Starter: CLAUDE.md safari</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/02-intake/" class="sidebar-sublink" aria-current="page">Stage 2: intake</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/03-reconciliation/" class="sidebar-sublink">Stage 3: reconciliation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/04-replanning/" class="sidebar-sublink">Stage 4: replanning</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/05-evaluation/" class="sidebar-sublink">Model comparisons</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/06-finale/" class="sidebar-sublink">Presentation and finale</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/future/" class="sidebar-link">
+            <span class="sidebar-link-label">The future</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/game/" class="sidebar-link">
+            <span class="sidebar-link-label">Game reference</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/game/api/" class="sidebar-sublink">API</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/maps/" class="sidebar-sublink">Maps</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/play/" class="sidebar-sublink">MCP Play</a>
+            </li>
+          </ul>
+        </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-foot">
+    <a class="tinkercademy-brand" href="https://tinkercademy.com" rel="noopener" target="_blank" aria-label="Visit Tinkercademy">
+      <img src="/assets/tinkercademy-logo-white.png" alt="Tinkercademy" />
+    </a>
+    <div class="license-lockup">
+      <span class="license-label">Licensed from</span>
+      <a class="ocelliq-brand" href="https://ocelliq.com" rel="noopener" target="_blank" aria-label="Visit OcelliQ">
+        <img class="ocelliq-brand-mark" src="/assets/ocelliq-mark.svg" alt="" />
+        <span>OcelliQ</span>
+      </a>
+    </div>
+  </div>
+</aside>
+
+<button class="sidebar-toggle-btn" type="button" aria-label="Toggle navigation" aria-controls="sidebar">&#9776;</button>
+
+
+    <div class="layout">
+      <header class="page-header">
+        <div class="page-header-inner">
+          <h1 class="page-title">Stage 2: intake</h1>
+          <p class="page-subtitle">Day 2</p>
+        </div>
+      </header>
+
+      <main id="main" class="page-main">
+        <article class="content">
+          <h1 id="stage-2%3A-intake" tabindex="-1"><a class="header-anchor" href="#stage-2%3A-intake">Stage 2: intake</a></h1>
+<!-- markdownlint-disable MD033 -->
+<figure class="cheat-image" data-gate="bombardiro" hidden>
+  <figcaption>Cheat Code Entered</figcaption>
+  <img src="bombardiro-crocodilo-intake.png" alt="Bombardiro Crocodilo bombing transcripts into JSON">
+</figure>
+<p>Stage 1 handed you claims already in JSON. From stage 2 onwards, contacts arrive as human-generated text, so somebody has to read the sentence and turn it into something understandable. That somebody is <code>intake</code>, a stateless model call that takes one transcript in and produces one report out. It has no memory between contacts and no access to your stores.</p>
+<p>For now, each incident is reported only once. In <a href="/day-2/03-reconciliation/">Stage 3</a>, you’ll start reconciling duplicates.</p>
+<p><img src="/day-2/02-intake/global-data-analytics-pipeline.png" alt="From raw contacts to structured reports"></p>
+<h2 id="what-needs-to-be-built" tabindex="-1"><a class="header-anchor" href="#what-needs-to-be-built">What needs to be built</a></h2>
+<p><code>extract_report</code> in <code>intake.py</code> is ready. It picks the model, sends the system prompt with the contact text, and budgets the completion. Smaller models occasionally struggle with structured output, so <code>_parse</code> helps with that. You need to:</p>
+<ol>
+<li><code>prompts/intake_system.md</code> - five TODO sections: output structure, <code>incident_type</code>, severity, headcount, and event time with confidence. This governs how the model turns text into a structure.</li>
+<li><code>_finalize(fields, contact)</code> in <code>intake.py</code> - The <code>TODO (stage 2)</code> at the end of <code>extract_report</code> needs to check and validate the model output. Flip that line to <code>return _finalize(fields, contact), usage</code>.</li>
+</ol>
+<p>As you build the prompt, you’ll need to grade it against the fixtures your team <a href="/day-1/05-evaluation/">developed on day 1</a>.</p>
+<h3 id="envelope-authority" tabindex="-1"><a class="header-anchor" href="#envelope-authority">Envelope authority</a></h3>
+<p><code>_finalize</code> is where the report structure is enforced. You can design your own report schema, but maintain these four invariants:</p>
+<ul>
+<li><code>contact_id</code> and <code>reported_location</code> are copied from the contact object, never taken from the model. Never give an LLM the opportunity to invent something when you can just copy the ground truth.</li>
+<li><code>incident_type</code> is exactly one of <code>fire</code>, <code>none</code>, <code>unknown</code>. Anything else coerces to <code>unknown</code>.</li>
+<li><code>notes</code> is <code>&quot;&quot;</code> when absent.</li>
+<li>A <code>none</code> report carries no fire severity and no headcount: force both to null.</li>
+</ul>
+<p>Everything else - severity, headcount and its qualifier, event time, and how confident your intake bot is in each field - comes from the model.</p>
+<h3 id="the-model-is-small" tabindex="-1"><a class="header-anchor" href="#the-model-is-small">The model is small</a></h3>
+<p><code>INTAKE_MODEL</code> defaults to <code>mimo-v2.5</code>. It follows explicit rules well and guesses unstated ones badly, so a clearly-stated decision ladder beats a pile of few-shot examples: say what you mean rather than hoping it infers the convention. If you have the examples and want to build the ladder, use Opus to do that; it is a much more powerful model and excels at such tasks.</p>
+<p><code>MAX_TOKENS</code> is 1400 and that is deliberate. If you enable reasoning (or swap to a reasoning model later), it needs enough token output to complete its reasoning trace before it ever emits the JSON. A tight budget truncates the response to empty content and your accuracy collapses to zero.</p>
+<h2 id="activity%3A-extract-the-claim" tabindex="-1"><a class="header-anchor" href="#activity%3A-extract-the-claim">Activity: Extract the claim</a></h2>
+<details class="spoiler" data-gate="bombardiro" hidden><summary>Spoiler: stuck on Stage 2?</summary><p><a href="reference-solution/">Stage 2 reference solution</a></p></details>
+<ol>
+<li>
+<p><strong>Write the prompt.</strong> Fill the five sections of <code>prompts/intake_system.md</code>. <code>incident_type</code> is the one that moves the score: explicit flame or fire words are <code>fire</code>; an explicit denial or a clearly non-fire request is <code>none</code>; smoke, a smell, an alarm, or plain ambiguity is <code>unknown</code>. Absence of the word “fire” is not a denial.</p>
+</li>
+<li>
+<p><strong>Implement <code>_finalize</code></strong> to the envelope-authority rules above, then flip the <code>TODO (stage 2)</code> line so raw model output stops escaping unvalidated.</p>
+</li>
+<li>
+<p><strong>Keep the free paths free.</strong> Typed truck observations and Stage 1 structured claims must not reach the model - <code>extract_report</code> already routes <code>structured_report</code> to <code>_project_claim</code> at zero tokens, and <code>runner._process_tick</code> already splits truck observations out before intake sees them. Neither should cost you a model call.</p>
+</li>
+<li>
+<p><strong>Grade it</strong> against the fixtures in your repository - the accepted labels Day 1’s <a href="/day-1/05-evaluation/">evaluation session</a> produced over <code>datasets/contacts_unlabeled.jsonl</code>, which the driver’s pull request merged into every teammate’s repo. Score against the claim the caller expressed, never against hidden simulator truth. Give severity, headcount, and event time a tolerance band, because the model is reading prose and a defensible reading can differ from your labeller’s. Treat per-field <code>confidence</code> as advisory and directional rather than a number to match: it carries generation jitter and is not worth chasing. The instructor’s own labeled corpus is a different, unseen set of contacts and stays sealed until <a href="/day-2/05-evaluation/">model comparison</a>, where you unseal it as a held-out test set - so do not tune against it, because you cannot.</p>
+</li>
+<li>
+<p><strong>Add the scenarios.</strong> <code>features/intake.feature</code> ships only INT-2 and INT-3, both on the structured path. Add <code>human_text</code> scenarios of your own for the cases you just argued about in the prompt - a denial, ambiguous smoke, a red herring, a caller who hedges - and record the new baseline.</p>
+</li>
+<li>
+<p><strong>Run it live.</strong> Point the runner at a stage-2 scenario, where every contact is a panicked sentence rather than a structured claim:</p>
+<pre><code class="language-bash">uv run hadr-runner stage2-language@londone
+</code></pre>
+<p>Your Stage 1 dispatcher is unchanged, so any drop against Stage 1 is intake losing information the dispatcher used to get for free.</p>
+</li>
+</ol>
+<h3 id="boundaries" tabindex="-1"><a class="header-anchor" href="#boundaries">Boundaries</a></h3>
+<ul>
+<li>Intake has no incident-store access and no memory across contacts.</li>
+<li>Ambiguous smoke is <code>unknown</code>, not a confirmed fire or an explicit false alarm.</li>
+<li>A clearly non-fire red herring such as a cat rescue or a neighbour dispute is <code>none</code>, not <code>unknown</code>.</li>
+<li>Every human contact supplies exact coordinates or an exact <code>l...</code> building ID. It may still be wrong relative to the real fire. The runner converts buildings to locations for you. The <a href="helper-prompt/">intake helper-prompt stub</a> still asks you to say why, not to pick freely.</li>
+<li>Do not add duplicate reconciliation yet.</li>
+</ul>
+<h3 id="when-you%E2%80%99re-done" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done">When you’re done</a></h3>
+<ol>
+<li><strong>Open a pull request</strong> with the prompt and <code>_finalize</code>, and have a teammate review the prompt as prose, not as code. It is the part of your system a reviewer can actually read end to end, and a rule that is ambiguous to your teammate is ambiguous to <code>mimo-v2.5</code>.</li>
+<li><strong>Post your extraction accuracy on the Padlet</strong>: the per-field breakdown, not one aggregate number, plus tokens per contact. Your team graded against the same fixtures, so the field where your numbers diverge is the field where your prompts disagree - and one of you is wrong.
+a. If you spot your accuracy as unusually high, ask yourself if that is because your intake bot is good, or because your fixtures are missing details, and too easy to predict.</li>
+</ol>
+
+          
+          
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/day-2/01-dispatcher/">Previous: Stage 1: dispatcher</a> | <a href="/day-2/03-reconciliation/">Next: Stage 3: reconciliation</a></p>
+          </nav>
+          
+        </article>
+        <footer class="page-foot">
+          <p>Agentic AI for HADR Workshop | Notes rendered with <a href="https://www.11ty.dev/">Eleventy</a>.</p>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        document.querySelectorAll(".sidebar-item").forEach(function (li) {
+          var link = li.querySelector(".sidebar-link");
+          var toggle = li.querySelector(".sidebar-toggle");
+          if (!link || !toggle) return;
+          toggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            li.classList.toggle("is-open");
+          });
+        });
+
+        var btn = document.querySelector(".sidebar-toggle-btn");
+        var body = document.body;
+        if (btn) {
+          btn.addEventListener("click", function () {
+            body.classList.toggle("sidebar-open");
+          });
+        }
+        document.addEventListener("click", function (e) {
+          if (
+            body.classList.contains("sidebar-open") &&
+            !e.target.closest(".sidebar") &&
+            !e.target.closest(".sidebar-toggle-btn")
+          ) {
+            body.classList.remove("sidebar-open");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Cheatcode gate: visiting any page with #somecode (or ?code=somecode) unlocks
+      // every element carrying data-gate="somecode", tab-session-wide. Content authors
+      // add a gate by wrapping content in any element with a data-gate attribute
+      // (plus `hidden`, so it stays invisible even before site.css loads).
+      // Codes are listed on the unlisted instructor notes page.
+      (() => {
+        const code = location.hash.slice(1) || new URLSearchParams(location.search).get("code");
+        if (code) sessionStorage.setItem("unlock-" + code, "1");
+        document.querySelectorAll("[data-gate]").forEach((el) => {
+          if (sessionStorage.getItem("unlock-" + el.dataset.gate)) {
+            el.removeAttribute("data-gate");
+            el.removeAttribute("hidden");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Copy button on every multiline fenced code block.
+      (() => {
+        const icon = (paths) =>
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+          'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + "</svg>";
+        const copyIcon = icon(
+          '<rect x="9" y="9" width="11" height="11" rx="2"/>' +
+            '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>'
+        );
+        const doneIcon = icon('<path d="M20 6 9 17l-5-5"/>');
+
+        document.querySelectorAll("pre:not(.mermaid)").forEach((pre) => {
+          const code = pre.querySelector("code");
+          if (!code || !code.textContent.trim().includes("\n")) return;
+
+          const wrap = document.createElement("div");
+          wrap.className = "code-wrap";
+          pre.replaceWith(wrap);
+          wrap.appendChild(pre);
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "copy-btn";
+          btn.innerHTML = copyIcon + "<span>Copy</span>";
+          wrap.appendChild(btn);
+
+          let timer;
+          btn.addEventListener("click", () => {
+            navigator.clipboard.writeText(code.textContent).then(
+              () => {
+                btn.innerHTML = doneIcon + "<span>Copied!</span>";
+                btn.classList.add("is-done");
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                  btn.innerHTML = copyIcon + "<span>Copy</span>";
+                  btn.classList.remove("is-done");
+                }, 2000);
+              },
+              () => {
+                btn.innerHTML = copyIcon + "<span>Press Ctrl+C</span>";
+                getSelection().selectAllChildren(code);
+              }
+            );
+          });
+        });
+      })();
+    </script>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2/dist/mermaid-layout-elk.esm.min.mjs";
+      mermaid.registerLayoutLoaders(elkLayouts);
+      mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+    </script>
+  </body>
+</html>

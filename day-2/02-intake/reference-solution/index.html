@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reference solution: Stage 2 intake</title>
+    <meta name="description" content="Course notes for the DSTA Agentic AI for HADR Workshop." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=Rubik:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
+  </head>
+  <body class="theme-tt">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    
+<aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+  <div class="sidebar-brand">
+    <a href="/" class="sidebar-brand-link">
+      <img class="sidebar-brand-sticker" src="/assets/tkrobot-fingerguns.png" alt="" />
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-title">Agentic Engineering with Claude Code</span>
+        <span class="sidebar-brand-sub">HADR Edition</span>
+      </span>
+    </a>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="sidebar-list">
+        <li class="sidebar-item">
+          <a href="/" class="sidebar-link">
+            <span class="sidebar-link-label">Home</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/preflight/" class="sidebar-link">
+            <span class="sidebar-link-label">Preflight</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/day-1/" class="sidebar-link">
+            <span class="sidebar-link-label">Day 1</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-1/00-background/" class="sidebar-sublink">Background</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/00a-crud-warmup/" class="sidebar-sublink">Claude Code warm-up</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/01-hadr/" class="sidebar-sublink">The HADR game</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/02-plan-build-review/" class="sidebar-sublink">Plan, build, review</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/03-skills-tools-mcps/" class="sidebar-sublink">Skills, tools, and MCPs</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/04-tokens/" class="sidebar-sublink">Tokens and costing</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/05-evaluation/" class="sidebar-sublink">Subagents and Evals</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/06-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/07-checkpoint/" class="sidebar-sublink">Checkpoint</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/08-show-and-tell/" class="sidebar-sublink">Show and tell</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item is-open">
+          <a href="/day-2/" class="sidebar-link">
+            <span class="sidebar-link-label">Day 2</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-2/00-starter/" class="sidebar-sublink">Starter: CLAUDE.md safari</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/02-intake/" class="sidebar-sublink">Stage 2: intake</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/03-reconciliation/" class="sidebar-sublink">Stage 3: reconciliation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/04-replanning/" class="sidebar-sublink">Stage 4: replanning</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/05-evaluation/" class="sidebar-sublink">Model comparisons</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/06-finale/" class="sidebar-sublink">Presentation and finale</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/future/" class="sidebar-link">
+            <span class="sidebar-link-label">The future</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/game/" class="sidebar-link">
+            <span class="sidebar-link-label">Game reference</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/game/api/" class="sidebar-sublink">API</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/maps/" class="sidebar-sublink">Maps</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/play/" class="sidebar-sublink">MCP Play</a>
+            </li>
+          </ul>
+        </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-foot">
+    <a class="tinkercademy-brand" href="https://tinkercademy.com" rel="noopener" target="_blank" aria-label="Visit Tinkercademy">
+      <img src="/assets/tinkercademy-logo-white.png" alt="Tinkercademy" />
+    </a>
+    <div class="license-lockup">
+      <span class="license-label">Licensed from</span>
+      <a class="ocelliq-brand" href="https://ocelliq.com" rel="noopener" target="_blank" aria-label="Visit OcelliQ">
+        <img class="ocelliq-brand-mark" src="/assets/ocelliq-mark.svg" alt="" />
+        <span>OcelliQ</span>
+      </a>
+    </div>
+  </div>
+</aside>
+
+<button class="sidebar-toggle-btn" type="button" aria-label="Toggle navigation" aria-controls="sidebar">&#9776;</button>
+
+
+    <div class="layout">
+      <header class="page-header">
+        <div class="page-header-inner">
+          <h1 class="page-title">Reference solution: Stage 2 intake</h1>
+          <p class="page-subtitle">Day 2</p>
+        </div>
+      </header>
+
+      <main id="main" class="page-main">
+        <article class="content">
+          <h1 id="stage-2-reference-solution" tabindex="-1"><a class="header-anchor" href="#stage-2-reference-solution">Stage 2 reference solution</a></h1>
+<!-- markdownlint-disable MD033 -->
+<p>Two code holes (<code>_finalize</code> and enabling the human-text path) plus the intake prompt and your own eval. <code>_project_claim</code> and the runner already work, and Stage 1 left you a minimal <code>_finalize</code> to extend.</p>
+<h2 id="_finalize%3A-envelope-authority-%2B-schema" tabindex="-1"><a class="header-anchor" href="#_finalize%3A-envelope-authority-%2B-schema"><code>_finalize</code>: envelope authority + schema</a></h2>
+<p>The model reads the free text; the envelope owns identity and location. Copy <code>contact_id</code> and <code>reported_location</code> from the contact, never from the model. Coerce <code>incident_type</code> to the three legal values, default <code>notes</code>, and null out fire fields on a <code>none</code> report.</p>
+<pre><code class="language-python">def _finalize(fields: dict, contact: dict) -&gt; dict:
+    it = fields.get(&quot;incident_type&quot;)
+    if it not in (&quot;fire&quot;, &quot;none&quot;, &quot;unknown&quot;):
+        it = &quot;unknown&quot;
+    report = {
+        &quot;contact_id&quot;: contact[&quot;contact_id&quot;],
+        &quot;reported_location&quot;: contact[&quot;reported_location&quot;],
+        &quot;incident_type&quot;: it,
+        &quot;severity&quot;: fields.get(&quot;severity&quot;),
+        &quot;headcount&quot;: fields.get(&quot;headcount&quot;),
+        &quot;event_time&quot;: fields.get(&quot;event_time&quot;),
+        &quot;notes&quot;: fields.get(&quot;notes&quot;) or &quot;&quot;,
+    }
+    if it == &quot;none&quot;:
+        report[&quot;severity&quot;] = None
+        report[&quot;headcount&quot;] = None
+    return report
+</code></pre>
+<p>Because <code>reported_location</code> is copied verbatim and the report schema has no coordinate field, a <code>building_to_coords</code> call inside intake would have nowhere to put its result: the location conversion belongs to deterministic reconciliation (Stage 3), and intake stays pure text-to-JSON.</p>
+<h2 id="enable-the-human-text-path" tabindex="-1"><a class="header-anchor" href="#enable-the-human-text-path">Enable the human-text path</a></h2>
+<p>In <code>extract_report</code>, the raw model output is returned unvalidated until you finalize it. Replace the <code># TODO (stage 2)</code> return with:</p>
+<pre><code class="language-python">    return _finalize(fields, contact), usage
+</code></pre>
+<h2 id="the-prompt" tabindex="-1"><a class="header-anchor" href="#the-prompt">The prompt</a></h2>
+<p><code>mimo-v2.5</code> is a small model in JSON mode. A single crisp decision ladder outperforms few-shots (few-shots measurably hurt it). The load-bearing section is <code>incident_type</code>, decided by the words present:</p>
+<ul>
+<li>fire/flame words (“on fire”, “flames”, “well alight”, “it’s burning”) -&gt; <code>fire</code>; panic or vagueness does not downgrade a stated fire.</li>
+<li>an explicit denial or a clearly non-fire matter (BBQ, steam, cat, dispute) -&gt; <code>none</code>.</li>
+<li>smoke alone, a burning smell alone, a bare alarm, “might be nothing” -&gt; <code>unknown</code>.</li>
+</ul>
+<p>Absence of the word “fire” is not a denial. Severity drops one notch for panicked callers; headcount carries a qualifier (<code>confirmed_trapped</code> / <code>possibly_trapped</code> / <code>all_out</code> / <code>unknown</code>); firm first-hand claims get higher confidence than hedged or second-hand ones.</p>
+<p><code>event_time</code> is the field that most rewards an explicit rule. Left to its own judgement the model reads any present-tense report of an ongoing fire as a past event and sets a tick on all of them; naming the convention per source_type moved that field from 57% to 100%.</p>
+<p>The completed prompt:</p>
+<pre><code class="language-markdown">You classify ONE emergency contact (a transcribed call or an automatic alarm) into a structured report. Output ONLY a JSON object, no prose, no code fence.
+
+Keys:
+- `incident_type`: &quot;fire&quot; | &quot;unknown&quot; | &quot;none&quot;
+- `severity`: null, or {&quot;value&quot;: &quot;low&quot;|&quot;medium&quot;|&quot;high&quot;, &quot;confidence&quot;: 0-1}
+- `headcount`: null, or {&quot;value&quot;: int&gt;=0, &quot;qualifier&quot;: &quot;possibly_trapped&quot;|&quot;confirmed_trapped&quot;|&quot;all_out&quot;|&quot;unknown&quot;, &quot;confidence&quot;: 0-1}
+- `event_time`: null, or {&quot;tick&quot;: int&gt;=0, &quot;confidence&quot;: 0-1}
+- `notes`: short string (&quot;&quot; if none)
+
+Do NOT output contact_id or reported_location; those come from the envelope.
+
+## incident_type (most important - decide by the words present)
+
+- `fire`: the text states a fire, flames, or a building burning/ablaze - &quot;there's a fire&quot;, &quot;on fire&quot;, &quot;flames&quot;, &quot;open flames&quot;, &quot;flames out the window&quot;, &quot;it's burning&quot;, &quot;well alight&quot;, an explosion with flames. Panic, vagueness, or few details do NOT downgrade a stated fire; a panicked caller who mentions flames is still reporting `fire`.
+- `none`: the caller DENIES a fire - &quot;no fire&quot;, &quot;not a fire&quot;, &quot;nothing on fire&quot;, &quot;nothing serious&quot; - or reports a non-fire matter: BBQ/steam/toast/vent smoke, a party, noise, a leak, a stuck cat, a lockout, a dispute.
+- `unknown`: a possible fire NOT confirmed by any fire/flame word - smoke alone, a burning SMELL alone, an alarm sounding with no flames, &quot;might be nothing&quot;, &quot;hard to say&quot;, &quot;can't tell&quot;.
+
+Rule of thumb: flame/fire words -&gt; fire; an explicit denial or clearly non-fire request -&gt; none; otherwise smoke/smell/alarm/ambiguity -&gt; unknown. Absence of the word &quot;fire&quot; is not a denial.
+
+## severity (fire/unknown only; null for none and for bare alarms)
+
+- high: &quot;serious&quot;, &quot;spreading fast&quot;, &quot;getting worse quickly&quot;, &quot;really bad&quot;, &quot;it looks bad&quot;, huge, explosion, or people trapped.
+- medium: a real but limited-sounding fire, mixed cues.
+- low: &quot;small&quot;, &quot;minor&quot;, &quot;just a bit&quot;.
+Panicked callers exaggerate: drop their severity one notch and lower confidence.
+
+## headcount (null unless people are mentioned)
+
+Set value (0 for &quot;empty&quot;/&quot;everyone out&quot;) and qualifier: confirmed_trapped (definitely inside), possibly_trapped (maybe inside/unaccounted), all_out (everyone evacuated, value 0), unknown (a count given but status unclear). Vague counts -&gt; best integer estimate, low confidence.
+
+## event_time
+
+When you set it, tick is ALWAYS the occurred_at you were given, copied verbatim. Never do arithmetic: &quot;started 6 ticks back&quot; at occurred_at 14 is still tick 14, not 8.
+
+Decide by source_type:
+
+- `automatic_alarm`: always set it. An alarm has been sounding since before it reached you.
+- `responder_update`: always null. A responder is talking to you live from the scene.
+- `public_call`: set it only if the text carries a time reference - &quot;earlier&quot;, &quot;a while ago&quot;, &quot;a moment ago&quot;, &quot;not long ago&quot;, &quot;just now&quot;, &quot;as I speak&quot;, &quot;started N ticks back&quot;. Otherwise null.
+
+Describing a fire in the present tense (&quot;it's burning&quot;, &quot;there's a fire&quot;, &quot;spreading fast&quot;, &quot;smoke's coming out&quot;) is NOT a time reference. Vaguer wording lowers confidence, it does not change whether you set the field.
+
+## confidence
+
+Firm first-hand claims high (0.7-0.9); hedged, panicked, or second-hand claims lower (0.3-0.5).
+
+Output valid JSON only.
+</code></pre>
+<h2 id="eval" tabindex="-1"><a class="header-anchor" href="#eval">Eval</a></h2>
+<p>No harness ships in starter - build a small grader over your Day 1 accepted-label fixture (the evaluation session manufactured it from <code>contacts_unlabeled.jsonl</code>); the instructor <code>contacts_labeled.jsonl</code> stays sealed until <a href="/day-2/05-evaluation/">model comparisons</a>. Grade the field values with a tolerance band (severity ±1 band, headcount ±2, event_time tick ±2); the per-field <code>confidence</code> is advisory and carries fixture jitter, so do not match it exactly. Target incident_type &gt;=85%.</p>
+<p>Verified: <code>INT-2</code>/<code>INT-3</code> green against the solution (<code>cd starter &amp;&amp; uv run --project ../solution behave features/intake.feature</code>); the reference eval (<code>solution/evals/extraction.py --n 42</code>) scores incident_type 100%, reported_location 100%, severity(±1) 95.2%, headcount(±2) 100%, event_time 100%; live <code>stage2-language@londone</code> episodes resolve at casualties 5 / buildings_lost 1 (intake ~5 K tokens) on all four runs, improving on the greedy baseline of 40 / 1.</p>
+
+          
+          
+          
+        </article>
+        <footer class="page-foot">
+          <p>Agentic AI for HADR Workshop | Notes rendered with <a href="https://www.11ty.dev/">Eleventy</a>.</p>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        document.querySelectorAll(".sidebar-item").forEach(function (li) {
+          var link = li.querySelector(".sidebar-link");
+          var toggle = li.querySelector(".sidebar-toggle");
+          if (!link || !toggle) return;
+          toggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            li.classList.toggle("is-open");
+          });
+        });
+
+        var btn = document.querySelector(".sidebar-toggle-btn");
+        var body = document.body;
+        if (btn) {
+          btn.addEventListener("click", function () {
+            body.classList.toggle("sidebar-open");
+          });
+        }
+        document.addEventListener("click", function (e) {
+          if (
+            body.classList.contains("sidebar-open") &&
+            !e.target.closest(".sidebar") &&
+            !e.target.closest(".sidebar-toggle-btn")
+          ) {
+            body.classList.remove("sidebar-open");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Cheatcode gate: visiting any page with #somecode (or ?code=somecode) unlocks
+      // every element carrying data-gate="somecode", tab-session-wide. Content authors
+      // add a gate by wrapping content in any element with a data-gate attribute
+      // (plus `hidden`, so it stays invisible even before site.css loads).
+      // Codes are listed on the unlisted instructor notes page.
+      (() => {
+        const code = location.hash.slice(1) || new URLSearchParams(location.search).get("code");
+        if (code) sessionStorage.setItem("unlock-" + code, "1");
+        document.querySelectorAll("[data-gate]").forEach((el) => {
+          if (sessionStorage.getItem("unlock-" + el.dataset.gate)) {
+            el.removeAttribute("data-gate");
+            el.removeAttribute("hidden");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Copy button on every multiline fenced code block.
+      (() => {
+        const icon = (paths) =>
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+          'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + "</svg>";
+        const copyIcon = icon(
+          '<rect x="9" y="9" width="11" height="11" rx="2"/>' +
+            '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>'
+        );
+        const doneIcon = icon('<path d="M20 6 9 17l-5-5"/>');
+
+        document.querySelectorAll("pre:not(.mermaid)").forEach((pre) => {
+          const code = pre.querySelector("code");
+          if (!code || !code.textContent.trim().includes("\n")) return;
+
+          const wrap = document.createElement("div");
+          wrap.className = "code-wrap";
+          pre.replaceWith(wrap);
+          wrap.appendChild(pre);
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "copy-btn";
+          btn.innerHTML = copyIcon + "<span>Copy</span>";
+          wrap.appendChild(btn);
+
+          let timer;
+          btn.addEventListener("click", () => {
+            navigator.clipboard.writeText(code.textContent).then(
+              () => {
+                btn.innerHTML = doneIcon + "<span>Copied!</span>";
+                btn.classList.add("is-done");
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                  btn.innerHTML = copyIcon + "<span>Copy</span>";
+                  btn.classList.remove("is-done");
+                }, 2000);
+              },
+              () => {
+                btn.innerHTML = copyIcon + "<span>Press Ctrl+C</span>";
+                getSelection().selectAllChildren(code);
+              }
+            );
+          });
+        });
+      })();
+    </script>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2/dist/mermaid-layout-elk.esm.min.mjs";
+      mermaid.registerLayoutLoaders(elkLayouts);
+      mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Game API</title>
+    <meta name="description" content="Course notes for the DSTA Agentic AI for HADR Workshop." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=Rubik:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
+  </head>
+  <body class="theme-tt">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    
+<aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+  <div class="sidebar-brand">
+    <a href="/" class="sidebar-brand-link">
+      <img class="sidebar-brand-sticker" src="/assets/tkrobot-fingerguns.png" alt="" />
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-title">Agentic Engineering with Claude Code</span>
+        <span class="sidebar-brand-sub">HADR Edition</span>
+      </span>
+    </a>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="sidebar-list">
+        <li class="sidebar-item">
+          <a href="/" class="sidebar-link">
+            <span class="sidebar-link-label">Home</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/preflight/" class="sidebar-link">
+            <span class="sidebar-link-label">Preflight</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/day-1/" class="sidebar-link">
+            <span class="sidebar-link-label">Day 1</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-1/00-background/" class="sidebar-sublink">Background</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/00a-crud-warmup/" class="sidebar-sublink">Claude Code warm-up</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/01-hadr/" class="sidebar-sublink">The HADR game</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/02-plan-build-review/" class="sidebar-sublink">Plan, build, review</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/03-skills-tools-mcps/" class="sidebar-sublink">Skills, tools, and MCPs</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/04-tokens/" class="sidebar-sublink">Tokens and costing</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/05-evaluation/" class="sidebar-sublink">Subagents and Evals</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/06-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/07-checkpoint/" class="sidebar-sublink">Checkpoint</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/08-show-and-tell/" class="sidebar-sublink">Show and tell</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/day-2/" class="sidebar-link">
+            <span class="sidebar-link-label">Day 2</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-2/00-starter/" class="sidebar-sublink">Starter: CLAUDE.md safari</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/02-intake/" class="sidebar-sublink">Stage 2: intake</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/03-reconciliation/" class="sidebar-sublink">Stage 3: reconciliation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/04-replanning/" class="sidebar-sublink">Stage 4: replanning</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/05-evaluation/" class="sidebar-sublink">Model comparisons</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/06-finale/" class="sidebar-sublink">Presentation and finale</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/future/" class="sidebar-link">
+            <span class="sidebar-link-label">The future</span>
+          </a>
+        </li>
+        <li class="sidebar-item is-open">
+          <a href="/game/" class="sidebar-link">
+            <span class="sidebar-link-label">Game reference</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/game/api/" class="sidebar-sublink" aria-current="page">API</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/maps/" class="sidebar-sublink">Maps</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/play/" class="sidebar-sublink">MCP Play</a>
+            </li>
+          </ul>
+        </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-foot">
+    <a class="tinkercademy-brand" href="https://tinkercademy.com" rel="noopener" target="_blank" aria-label="Visit Tinkercademy">
+      <img src="/assets/tinkercademy-logo-white.png" alt="Tinkercademy" />
+    </a>
+    <div class="license-lockup">
+      <span class="license-label">Licensed from</span>
+      <a class="ocelliq-brand" href="https://ocelliq.com" rel="noopener" target="_blank" aria-label="Visit OcelliQ">
+        <img class="ocelliq-brand-mark" src="/assets/ocelliq-mark.svg" alt="" />
+        <span>OcelliQ</span>
+      </a>
+    </div>
+  </div>
+</aside>
+
+<button class="sidebar-toggle-btn" type="button" aria-label="Toggle navigation" aria-controls="sidebar">&#9776;</button>
+
+
+    <div class="layout">
+      <header class="page-header">
+        <div class="page-header-inner">
+          <h1 class="page-title">Game API</h1>
+          <p class="page-subtitle">MCP control surface reference</p>
+        </div>
+      </header>
+
+      <main id="main" class="page-main">
+        <article class="content">
+          <h1 id="game-api" tabindex="-1"><a class="header-anchor" href="#game-api">Game API</a></h1>
+<p>The engine exposes one control surface: MCP over the official Python SDK’s stateful Streamable HTTP transport at <code>http://127.0.0.1:&lt;port&gt;/mcp</code>. There is no REST or WebSocket gameplay surface. Ordinary HTTP serves only the browser display, health, and a read-only snapshot. <code>serve</code> prints the MCP URL, the display URL, and the run-log directory at startup. For the game’s objective, layers, and mechanics see the <a href="/game/">overview</a>.</p>
+<h2 id="connecting" tabindex="-1"><a class="header-anchor" href="#connecting">Connecting</a></h2>
+<ul>
+<li>One MCP session is one controller. A session may span several HTTP requests; they share one session identity and count as one controller.</li>
+<li>Newest connection wins. Every successful MCP initialization takes a process-wide controller lease, displacing any previous holder. There is no busy rejection and no server restart is ever needed to clear a stale controller.</li>
+<li>Displacement archives the displaced controller’s active run as <code>aborted:displaced</code> and advances no simulated time. The new controller starts in the lobby and inherits nothing.</li>
+<li>Displaced sessions get <code>CONTROLLER_DISPLACED</code> on every tool call. The remedy is to reconnect, which takes the lease back.</li>
+<li>Restart anytime. Reconnecting is always allowed; it just starts fresh in the lobby.</li>
+<li>No resume. Session termination or transport loss archives the active run as aborted and releases the lease. There is no resume, no retry-across-disconnect, and no session-resume token. A lost response is recovered by calling <code>status</code> and reconciling within the same live session.</li>
+<li>On process restart, any unfinalized run log is finalized as <code>aborted:process_restart</code> before a new controller is accepted.</li>
+</ul>
+<p>Display polling never acquires the lease and cannot reach any mutation.</p>
+<h2 id="episode-lifecycle" tabindex="-1"><a class="header-anchor" href="#episode-lifecycle">Episode lifecycle</a></h2>
+<p>Lifecycle is <code>lobby</code>, <code>running</code>, <code>terminal</code>, or <code>aborted</code>.</p>
+<pre><code class="language-text">initialize MCP session          # acquires the controller lease
+list_scenarios                  # lobby
+observation = start_episode     # -&gt; running, tick 0
+while observation.lifecycle == &quot;running&quot;:
+    # inner tool loop: intake, reconciliation, map queries, dispatch
+    observation = next_tick(expected_tick = observation.tick)
+terminate the MCP session
+read the run log from the state directory
+</code></pre>
+<ul>
+<li>Ticks are zero-based integers. <code>next_tick(expected_tick=t)</code> commits the interval <code>[t, t+1)</code> and publishes stable tick <code>t+1</code>.</li>
+<li>Only the participant’s outer runner calls <code>next_tick</code>. Intake, reconciliation, and any inner model or tool loop must not. The server cannot tell callers apart, so this ownership is enforced by participant architecture and tests.</li>
+<li>The episode ends <code>resolved</code> (no active fires and no future ignitions) or <code>tick_limit</code> (reached the limit). There is no grading operation: extraction is graded offline against the published labeled datasets, and the engine never sees the participant report schema.</li>
+</ul>
+<h3 id="observations-are-frozen" tabindex="-1"><a class="header-anchor" href="#observations-are-frozen">Observations are frozen</a></h3>
+<p><code>start_episode</code>, <code>next_tick</code>, and <code>status</code> return the same stored observation for the current tick. Repeated reads within a tick are byte-identical: the engine never regenerates contacts or truck vision mid-tick. Pending commands are deliberately not part of the observation, so queueing a dispatch does not make a later read differ; pending summaries live on the command responses, <code>status</code>, and the display.</p>
+<h2 id="request-rules" tabindex="-1"><a class="header-anchor" href="#request-rules">Request rules</a></h2>
+<ul>
+<li>JSON is UTF-8, snake_case, with explicit <code>{&quot;x&quot;: ..., &quot;y&quot;: ...}</code> point objects (never two-item arrays).</li>
+<li>Unknown request fields are rejected to catch typos early.</li>
+<li>IDs are opaque nonblank strings with conservative length limits. The engine validates syntax and length but only checks IDs it owns.</li>
+<li><code>incident_id</code> is the exception: required and nonblank, then logged and echoed without any lookup (see <a href="#no-incident-endpoints">No incident endpoints</a>).</li>
+<li>Rationales are nonblank plain text with a bounded length; they are never parsed as commands.</li>
+<li>Mutation calls carry <code>expected_tick</code>. A stale or future tick is rejected, never guessed.</li>
+<li>Requests carry no client command ID; the engine assigns a run-unique <code>command_id</code>. A retried dispatch is just a new command, and per-vehicle supersession makes the retry harmless.</li>
+<li>Every result carries <code>api_version: 1</code>, and <code>run_id</code>, <code>lifecycle</code>, and <code>tick</code> where applicable.</li>
+<li>There are no wall-clock times in game payloads.</li>
+</ul>
+<h2 id="tools" tabindex="-1"><a class="header-anchor" href="#tools">Tools</a></h2>
+<p>Errors below are the machine <code>code</code>; see the <a href="#error-catalogue">error catalogue</a>.</p>
+<h3 id="list_scenarios" tabindex="-1"><a class="header-anchor" href="#list_scenarios">list_scenarios</a></h3>
+<p>Available after connection. Returns public catalogue entries only (no truth, occupants, or tuning). Each <code>scenario_id</code> is a <code>&lt;template&gt;@&lt;map&gt;</code> pair, so the catalogue is every stage template instantiated against every packaged map.</p>
+<p>Request:</p>
+<pre><code class="language-json">{}
+</code></pre>
+<p>Response:</p>
+<pre><code class="language-json">{
+  &quot;api_version&quot;: 1,
+  &quot;lifecycle&quot;: &quot;lobby&quot;,
+  &quot;run_id&quot;: null,
+  &quot;tick&quot;: null,
+  &quot;scenarios&quot;: [
+    {
+      &quot;scenario_id&quot;: &quot;stage1-basic@londone&quot;,
+      &quot;title&quot;: &quot;Structured reports from the call centre&quot;,
+      &quot;difficulty_stage&quot;: 1,
+      &quot;map_id&quot;: &quot;londone&quot;,
+      &quot;tick_limit&quot;: 100,
+      &quot;default_seed&quot;: 51001,
+      &quot;public_description&quot;: &quot;The call centre hands you clean, structured reports. Two engines are on the board and the shift is yours to run.&quot;
+    }
+  ]
+}
+</code></pre>
+<h3 id="start_episode" tabindex="-1"><a class="header-anchor" href="#start_episode">start_episode</a></h3>
+<p>Mutating; available whenever you hold the lease. <code>seed</code> is optional (defaults to the scenario’s published seed). Starting while a run is live first archives that run as <code>aborted:replaced</code>; rerunning the same scenario and seed reproduces the same episode under a new <code>run_id</code>. Safe to retry: a lost response is recovered by <code>status</code> or by calling <code>start_episode</code> again.</p>
+<p>Request:</p>
+<pre><code class="language-json">{&quot;scenario_id&quot;: &quot;stage1-basic@londone&quot;, &quot;seed&quot;: 51001}
+</code></pre>
+<p>Response:</p>
+<pre><code class="language-json">{
+  &quot;api_version&quot;: 1,
+  &quot;lifecycle&quot;: &quot;running&quot;,
+  &quot;run_id&quot;: &quot;run-8f2a&quot;,
+  &quot;tick&quot;: 0,
+  &quot;observation&quot;: {
+    &quot;observation_id&quot;: &quot;run-8f2a:0&quot;,
+    &quot;tick&quot;: 0,
+    &quot;lifecycle&quot;: &quot;running&quot;,
+    &quot;tick_limit&quot;: 100,
+    &quot;terminal_reason&quot;: null,
+    &quot;contacts&quot;: [
+      {
+        &quot;contact_id&quot;: &quot;contact-017&quot;,
+        &quot;source_type&quot;: &quot;public_call&quot;,
+        &quot;occurred_at&quot;: 0,
+        &quot;delivered_at&quot;: 0,
+        &quot;reported_location&quot;: {&quot;kind&quot;: &quot;building_id&quot;, &quot;building_id&quot;: &quot;l41&quot;},
+        &quot;payload_type&quot;: &quot;structured_report&quot;,
+        &quot;payload&quot;: {
+          &quot;claim&quot;: {
+            &quot;incident_type&quot;: &quot;fire&quot;,
+            &quot;severity&quot;: {&quot;value&quot;: &quot;high&quot;, &quot;confidence&quot;: 0.7},
+            &quot;headcount&quot;: {&quot;value&quot;: 2, &quot;qualifier&quot;: &quot;possibly_trapped&quot;, &quot;confidence&quot;: 0.4},
+            &quot;event_time&quot;: {&quot;tick&quot;: 0, &quot;confidence&quot;: 0.8},
+            &quot;source_reliability&quot;: &quot;medium&quot;,
+            &quot;evidence&quot;: [&quot;smoke&quot;],
+            &quot;negations&quot;: []
+          }
+        }
+      }
+    ],
+    &quot;vehicles&quot;: [
+      {
+        &quot;vehicle_id&quot;: &quot;truck-1&quot;,
+        &quot;label&quot;: &quot;Engine 1&quot;,
+        &quot;position&quot;: {&quot;x&quot;: 700.0, &quot;y&quot;: 310.0},
+        &quot;status&quot;: &quot;idle&quot;,
+        &quot;route&quot;: null,
+        &quot;destination&quot;: null,
+        &quot;incident_id&quot;: null,
+        &quot;last_rationale&quot;: null
+      }
+    ]
+  }
+}
+</code></pre>
+<p>Stage 2+ human contacts arrive as <code>payload_type: &quot;human_text&quot;</code> with the exact <code>reported_location</code> alongside; the canonical claim is withheld:</p>
+<pre><code class="language-json">{&quot;payload_type&quot;: &quot;human_text&quot;, &quot;payload&quot;: {&quot;text&quot;: &quot;Thick smoke at the Old Market &lt;l41&gt;, maybe people inside.&quot;}}
+</code></pre>
+<p>Truck sensors arrive as <code>payload_type: &quot;truck_observation&quot;</code>: one observation per truck each tick listing every building within <code>radius</code>, in <code>(distance, building_id)</code> order, with the exact observed <code>status</code>. For a burning building it also carries derived tick countdowns <code>ticks_to_extinguish</code> and <code>ticks_to_collapse</code> (whichever the fire is heading toward under current suppression; the other is <code>null</code>); both are <code>null</code> for non-burning buildings. Sensors are exact and never pass through the language renderer:</p>
+<pre><code class="language-json">{&quot;payload_type&quot;: &quot;truck_observation&quot;, &quot;payload&quot;: {&quot;observer_id&quot;: &quot;truck-1&quot;, &quot;observer_position&quot;: {&quot;x&quot;: 700.0, &quot;y&quot;: 310.0}, &quot;tick&quot;: 3, &quot;radius&quot;: 80.0, &quot;buildings&quot;: [{&quot;building_id&quot;: &quot;l41&quot;, &quot;status&quot;: &quot;burning&quot;, &quot;ticks_to_extinguish&quot;: null, &quot;ticks_to_collapse&quot;: 12}, {&quot;building_id&quot;: &quot;l42&quot;, &quot;status&quot;: &quot;normal&quot;, &quot;ticks_to_extinguish&quot;: null, &quot;ticks_to_collapse&quot;: null}]}}
+</code></pre>
+<h3 id="status" tabindex="-1"><a class="header-anchor" href="#status">status</a></h3>
+<p>Available after connection. Reports lifecycle, run/scenario/map IDs when public, current tick and tick limit, pending command summaries, and the current frozen observation when running or terminal. While running it omits score, hidden state, canonical claims, and the future schedule. At terminal it adds <code>terminal_reason</code> and <code>outcome</code>.</p>
+<p>Request:</p>
+<pre><code class="language-json">{}
+</code></pre>
+<p>Terminal response (excerpt):</p>
+<pre><code class="language-json">{
+  &quot;api_version&quot;: 1,
+  &quot;lifecycle&quot;: &quot;terminal&quot;,
+  &quot;run_id&quot;: &quot;run-8f2a&quot;,
+  &quot;tick&quot;: 22,
+  &quot;tick_limit&quot;: 100,
+  &quot;scenario_id&quot;: &quot;stage1-basic@londone&quot;,
+  &quot;map_id&quot;: &quot;londone&quot;,
+  &quot;terminal_reason&quot;: &quot;resolved&quot;,
+  &quot;pending&quot;: [],
+  &quot;observation&quot;: {&quot;observation_id&quot;: &quot;run-8f2a:22&quot;, &quot;tick&quot;: 22, &quot;lifecycle&quot;: &quot;terminal&quot;, &quot;tick_limit&quot;: 100, &quot;terminal_reason&quot;: &quot;resolved&quot;, &quot;contacts&quot;: [], &quot;vehicles&quot;: []},
+  &quot;outcome&quot;: {
+    &quot;terminal_reason&quot;: &quot;resolved&quot;,
+    &quot;casualties&quot;: 0,
+    &quot;buildings_lost&quot;: 0,
+    &quot;tokens&quot;: null,
+    &quot;tokens_note&quot;: &quot;participant-reported; the engine never measures tokens&quot;
+  }
+}
+</code></pre>
+<p><code>tokens</code> is always <code>null</code>: the engine never measures it. What your runner reports on <code>next_tick</code> does not change that - the engine stores those numbers for the wall and never reads them back into the game. <code>casualties</code> and <code>buildings_lost</code> appear only at terminal.</p>
+<h3 id="building_to_coords" tabindex="-1"><a class="header-anchor" href="#building_to_coords">building_to_coords</a></h3>
+<p>Running or terminal. Converts one public building ID (<code>l&lt;integer&gt;</code>, learned only from contacts) to its exact public point. Unknown IDs return <code>UNKNOWN_BUILDING</code>. The conversion is one-way: no operation resolves coordinates back to a building, and there is no name, alias, search, radius, or enumeration query. It exists to force one design decision: whether the intake model calls it as a tool or deterministic reconciliation converts IDs afterward.</p>
+<p>Request:</p>
+<pre><code class="language-json">{&quot;building_id&quot;: &quot;l41&quot;}
+</code></pre>
+<p>Response:</p>
+<pre><code class="language-json">{&quot;api_version&quot;: 1, &quot;lifecycle&quot;: &quot;running&quot;, &quot;run_id&quot;: &quot;run-8f2a&quot;, &quot;tick&quot;: 4, &quot;building_id&quot;: &quot;l41&quot;, &quot;point&quot;: {&quot;x&quot;: 713.8, &quot;y&quot;: 303.1}}
+</code></pre>
+<h3 id="travel_time" tabindex="-1"><a class="header-anchor" href="#travel_time">travel_time</a></h3>
+<p>Running or terminal. <code>from</code> and <code>to</code> are each exactly one of <code>{&quot;vehicle_id&quot;: ...}</code> or <code>{&quot;point&quot;: {...}}</code>. A vehicle uses its exact current point; a point snaps to the nearest routable edge; convert building reports through <code>building_to_coords</code> first. Read-only: it reserves no route and queues no command.</p>
+<p>Request:</p>
+<pre><code class="language-json">{&quot;from&quot;: {&quot;vehicle_id&quot;: &quot;truck-1&quot;}, &quot;to&quot;: {&quot;point&quot;: {&quot;x&quot;: 714.2, &quot;y&quot;: 302.9}}}
+</code></pre>
+<p>Response:</p>
+<pre><code class="language-json">{
+  &quot;api_version&quot;: 1,
+  &quot;lifecycle&quot;: &quot;running&quot;,
+  &quot;run_id&quot;: &quot;run-8f2a&quot;,
+  &quot;tick&quot;: 4,
+  &quot;distance&quot;: 214.6,
+  &quot;eta_ticks&quot;: 3,
+  &quot;edges&quot;: [&quot;e12&quot;, &quot;e13&quot;, &quot;e40&quot;],
+  &quot;polyline&quot;: [{&quot;x&quot;: 700.0, &quot;y&quot;: 310.0}, {&quot;x&quot;: 714.2, &quot;y&quot;: 302.9}]
+}
+</code></pre>
+<h3 id="dispatch" tabindex="-1"><a class="header-anchor" href="#dispatch">dispatch</a></h3>
+<p>Mutating; running only. Sends one vehicle to a world-coordinate <code>destination</code>; there is no building destination, so convert building reports through <code>building_to_coords</code> first. <code>incident_id</code> and <code>rationale</code> are required and nonblank. The engine validates the vehicle, bounds, snap distance, and route, and returns the requested and snapped points plus the route summary. State changes take effect atomically at <code>next_tick</code>. Dispatching a moving or firefighting truck is a retarget; a later command for the same vehicle in the same tick supersedes this one. There is no recall: repositioning or standing a truck down is an ordinary dispatch to a point.</p>
+<p>Request:</p>
+<pre><code class="language-json">{
+  &quot;expected_tick&quot;: 4,
+  &quot;vehicle_id&quot;: &quot;truck-1&quot;,
+  &quot;incident_id&quot;: &quot;participant-incident-9&quot;,
+  &quot;destination&quot;: {&quot;x&quot;: 714.2, &quot;y&quot;: 302.9},
+  &quot;rationale&quot;: &quot;Reliable alarm and two callers report people inside.&quot;
+}
+</code></pre>
+<p>Response:</p>
+<pre><code class="language-json">{
+  &quot;api_version&quot;: 1,
+  &quot;lifecycle&quot;: &quot;running&quot;,
+  &quot;run_id&quot;: &quot;run-8f2a&quot;,
+  &quot;tick&quot;: 4,
+  &quot;accepted&quot;: true,
+  &quot;command&quot;: {
+    &quot;command_id&quot;: &quot;cmd-11&quot;,
+    &quot;vehicle_id&quot;: &quot;truck-1&quot;,
+    &quot;incident_id&quot;: &quot;participant-incident-9&quot;,
+    &quot;rationale&quot;: &quot;Reliable alarm and two callers report people inside.&quot;,
+    &quot;requested&quot;: {&quot;x&quot;: 714.2, &quot;y&quot;: 302.9},
+    &quot;snapped&quot;: {&quot;x&quot;: 713.8, &quot;y&quot;: 303.1},
+    &quot;route&quot;: {&quot;remaining&quot;: 214.6, &quot;total&quot;: 214.6, &quot;eta_ticks&quot;: 3, &quot;edges&quot;: [&quot;e12&quot;, &quot;e13&quot;], &quot;polyline&quot;: [{&quot;x&quot;: 700.0, &quot;y&quot;: 310.0}, {&quot;x&quot;: 713.8, &quot;y&quot;: 303.1}]}
+  },
+  &quot;pending&quot;: [
+    {&quot;command_id&quot;: &quot;cmd-11&quot;, &quot;vehicle_id&quot;: &quot;truck-1&quot;, &quot;incident_id&quot;: &quot;participant-incident-9&quot;, &quot;rationale&quot;: &quot;Reliable alarm and two callers report people inside.&quot;, &quot;destination&quot;: {&quot;requested&quot;: {&quot;x&quot;: 714.2, &quot;y&quot;: 302.9}, &quot;snapped&quot;: {&quot;x&quot;: 713.8, &quot;y&quot;: 303.1}}, &quot;eta_ticks&quot;: 3, &quot;status&quot;: &quot;accepted&quot;, &quot;superseded_by&quot;: null}
+  ],
+  &quot;superseded&quot;: []
+}
+</code></pre>
+<p><code>superseded</code> lists any earlier same-vehicle command IDs this call replaced. The engine never resolves a destination back to a building; whether an arrived truck fights a fire is decided by the suppression proximity rule in the <a href="/game/">overview</a>.</p>
+<h3 id="next_tick" tabindex="-1"><a class="header-anchor" href="#next_tick">next_tick</a></h3>
+<p>Mutating; running only, and owned exclusively by the outer runner (see <a href="#episode-lifecycle">Episode lifecycle</a>). Applies pending commands and advances the simulation exactly one tick. A stale <code>expected_tick</code> returns <code>TICK_MISMATCH</code> with the current tick and never advances; recover through <code>status</code>.</p>
+<p>Request:</p>
+<pre><code class="language-json">{&quot;expected_tick&quot;: 4}
+</code></pre>
+<p><code>tokens</code> is optional and display-only: your running provider-reported totals per role, for the wall display. It changes nothing about the tick, is never measured, never verified, and never scored - the engine stores what you send and shows it. Omit it and the tick is identical, which is what you do when playing by hand, since you have no such number to report. Each role defaults to zero, and a tick that omits <code>tokens</code> leaves the previous totals standing rather than resetting them.</p>
+<pre><code class="language-json">{
+  &quot;expected_tick&quot;: 4,
+  &quot;tokens&quot;: {
+    &quot;intake&quot;: {&quot;read&quot;: 4900, &quot;write&quot;: 310, &quot;cache_read&quot;: 3100},
+    &quot;dispatch&quot;: {&quot;read&quot;: 51900, &quot;write&quot;: 2900, &quot;cache_read&quot;: 37000}
+  }
+}
+</code></pre>
+<p>Response:</p>
+<pre><code class="language-json">{
+  &quot;api_version&quot;: 1,
+  &quot;lifecycle&quot;: &quot;running&quot;,
+  &quot;run_id&quot;: &quot;run-8f2a&quot;,
+  &quot;tick&quot;: 5,
+  &quot;committed_commands&quot;: [
+    {&quot;command_id&quot;: &quot;cmd-11&quot;, &quot;vehicle_id&quot;: &quot;truck-1&quot;, &quot;incident_id&quot;: &quot;participant-incident-9&quot;, &quot;rationale&quot;: &quot;Reliable alarm and two callers report people inside.&quot;, &quot;destination&quot;: {&quot;requested&quot;: {&quot;x&quot;: 714.2, &quot;y&quot;: 302.9}, &quot;snapped&quot;: {&quot;x&quot;: 713.8, &quot;y&quot;: 303.1}}, &quot;eta_ticks&quot;: 3, &quot;status&quot;: &quot;accepted&quot;, &quot;superseded_by&quot;: null}
+  ],
+  &quot;events&quot;: [{&quot;type&quot;: &quot;arrival&quot;, &quot;vehicle_id&quot;: &quot;truck-1&quot;}],
+  &quot;observation&quot;: {&quot;observation_id&quot;: &quot;run-8f2a:5&quot;, &quot;tick&quot;: 5, &quot;lifecycle&quot;: &quot;running&quot;, &quot;tick_limit&quot;: 100, &quot;terminal_reason&quot;: null, &quot;contacts&quot;: [], &quot;vehicles&quot;: []},
+  &quot;terminal_reason&quot;: null,
+  &quot;outcome&quot;: null
+}
+</code></pre>
+<p><code>events</code> carries arrivals and public vehicle changes only; suppression, intensity, collapse, ignition, and sensor events stay in the run log. On the terminal tick, <code>terminal_reason</code> and <code>outcome</code> are populated as in <code>status</code>.</p>
+<h2 id="no-incident-endpoints" tabindex="-1"><a class="header-anchor" href="#no-incident-endpoints">No incident endpoints</a></h2>
+<p>The incident store is participant code; the simulator hosts no beliefs. Filed incidents are agent beliefs the simulator never sees, so there are no incident endpoints. <code>dispatch</code> requires <code>incident_id</code> and logs and echoes it in truck state and the run log, but never validates it against any store. Pick your own opaque convention.</p>
+<h2 id="error-catalogue" tabindex="-1"><a class="header-anchor" href="#error-catalogue">Error catalogue</a></h2>
+<p>Tool errors carry a stable machine <code>code</code>; messages may improve without breaking clients. Internal failures never leak tracebacks, paths, run-log contents, or hidden state.</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+<th>Retry</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INVALID_REQUEST</code></td>
+<td>Schema, bounds, or unknown-field error</td>
+<td>No; fix the request</td>
+</tr>
+<tr>
+<td><code>CONTROLLER_DISPLACED</code></td>
+<td>A newer MCP session took the lease</td>
+<td>No; reconnect to reacquire</td>
+</tr>
+<tr>
+<td><code>EPISODE_NOT_RUNNING</code></td>
+<td>Operation requires a running episode</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>TICK_MISMATCH</code></td>
+<td><code>expected_tick</code> differs from the current tick</td>
+<td>Yes, after <code>status</code></td>
+</tr>
+<tr>
+<td><code>UNKNOWN_VEHICLE</code></td>
+<td>Engine-owned vehicle ID absent</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>UNKNOWN_BUILDING</code></td>
+<td>Public building ID absent</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>INVALID_DESTINATION</code></td>
+<td>Point outside bounds or snap distance exceeded</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>NO_ROUTE</code></td>
+<td>Valid endpoints are disconnected</td>
+<td>No for the same endpoints</td>
+</tr>
+<tr>
+<td><code>COMMAND_REJECTED</code></td>
+<td>Lifecycle or state-specific command rule failed</td>
+<td>Depends; details say why</td>
+</tr>
+<tr>
+<td><code>DATA_INVALID</code></td>
+<td>Packaged map/scenario inconsistency</td>
+<td>No; operator defect</td>
+</tr>
+<tr>
+<td><code>INTERNAL_ERROR</code></td>
+<td>Unexpected server failure; state not committed unless the result says so</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="run-logs-are-files" tabindex="-1"><a class="header-anchor" href="#run-logs-are-files">Run logs are files</a></h2>
+<p>There is no export or download operation. Each run is one append-only JSONL file in the runtime state directory (<code>serve</code> prints the path). Students read the files directly. The finalized log includes truth, canonical claims, and extraction labels in its terminal record, and never includes participant model credentials.</p>
+<h2 id="display-and-http-routes" tabindex="-1"><a class="header-anchor" href="#display-and-http-routes">Display and HTTP routes</a></h2>
+<p>The server binds to loopback only; there is no remote-serving or token option. These routes are for spectators and health checks, not gameplay.</p>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Purpose</th>
+<th>Data policy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /</code></td>
+<td>Browser display shell</td>
+<td>Static</td>
+</tr>
+<tr>
+<td><code>GET /assets/...</code></td>
+<td>Hashed static JS and CSS</td>
+<td>Static</td>
+</tr>
+<tr>
+<td><code>GET /api/v1/maps/{map_id}/display.svg</code></td>
+<td>Sanitized curated display SVG</td>
+<td>Public geometry only</td>
+</tr>
+<tr>
+<td><code>GET /api/v1/maps/{map_id}/buildings.json</code></td>
+<td>Public building directory (ID, name, point)</td>
+<td>Public geometry only; never occupants</td>
+</tr>
+<tr>
+<td><code>GET /healthz</code></td>
+<td>Liveness and engine revision</td>
+<td>No episode details</td>
+</tr>
+<tr>
+<td><code>GET /api/v1/snapshot</code></td>
+<td>Read-only full display snapshot</td>
+<td>Scenario policy: <code>public_only</code> or <code>full_state</code></td>
+</tr>
+<tr>
+<td><code>Mount /mcp</code></td>
+<td>MCP Streamable HTTP control surface</td>
+<td>Controller only</td>
+</tr>
+</tbody>
+</table>
+<p>The display is polled, not pushed: the browser fetches <code>/api/v1/snapshot</code> on a short interval and re-renders when <code>display_revision</code> increases. The snapshot schema is chosen by the immutable scenario display policy: <code>public_only</code> redacts the hidden truth block, while <code>full_state</code> adds current building, fire, occupant, and casualty state (including an <code>ever_burned</code> flag per building). Both policies carry <code>scenario_id</code>, a live <code>metrics</code> block (<code>casualties</code>, <code>buildings_lost</code>), and the participant-reported <code>tokens</code> block (per role, as last sent to <code>next_tick</code>) - a scoreboard for the room, on a surface the agent never reads. Both policies also always carry <code>vision_radius</code> (the truck vision radius, for drawing view rings) and a <code>fire_eta</code> block of per-fire <code>ticks_to_extinguish</code> / <code>ticks_to_collapse</code> countdowns for every fire currently within some truck’s vision (the direction a fire is not heading toward is <code>null</code>). Each <code>pending</code> entry additionally carries its command’s full <code>route</code> polyline so the display can draw an accepted-but-uncommitted dispatch dashed before it commits. These are display-route fields, truth-gated exactly as the rest of the snapshot; the snapshot carries no building points (the display joins it against <code>buildings.json</code>) and never adds future events, canonical claims, or controller internals.</p>
+<p>WSL2 users: the display URL is normally reachable from a Windows browser via localhost forwarding. If it is not, forward the port with the VS Code Ports tab.</p>
+<p>All examples above use synthetic data and never embed credentials.</p>
+
+          
+          
+          
+        </article>
+        <footer class="page-foot">
+          <p>Agentic AI for HADR Workshop | Notes rendered with <a href="https://www.11ty.dev/">Eleventy</a>.</p>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        document.querySelectorAll(".sidebar-item").forEach(function (li) {
+          var link = li.querySelector(".sidebar-link");
+          var toggle = li.querySelector(".sidebar-toggle");
+          if (!link || !toggle) return;
+          toggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            li.classList.toggle("is-open");
+          });
+        });
+
+        var btn = document.querySelector(".sidebar-toggle-btn");
+        var body = document.body;
+        if (btn) {
+          btn.addEventListener("click", function () {
+            body.classList.toggle("sidebar-open");
+          });
+        }
+        document.addEventListener("click", function (e) {
+          if (
+            body.classList.contains("sidebar-open") &&
+            !e.target.closest(".sidebar") &&
+            !e.target.closest(".sidebar-toggle-btn")
+          ) {
+            body.classList.remove("sidebar-open");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Cheatcode gate: visiting any page with #somecode (or ?code=somecode) unlocks
+      // every element carrying data-gate="somecode", tab-session-wide. Content authors
+      // add a gate by wrapping content in any element with a data-gate attribute
+      // (plus `hidden`, so it stays invisible even before site.css loads).
+      // Codes are listed on the unlisted instructor notes page.
+      (() => {
+        const code = location.hash.slice(1) || new URLSearchParams(location.search).get("code");
+        if (code) sessionStorage.setItem("unlock-" + code, "1");
+        document.querySelectorAll("[data-gate]").forEach((el) => {
+          if (sessionStorage.getItem("unlock-" + el.dataset.gate)) {
+            el.removeAttribute("data-gate");
+            el.removeAttribute("hidden");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Copy button on every multiline fenced code block.
+      (() => {
+        const icon = (paths) =>
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+          'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + "</svg>";
+        const copyIcon = icon(
+          '<rect x="9" y="9" width="11" height="11" rx="2"/>' +
+            '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>'
+        );
+        const doneIcon = icon('<path d="M20 6 9 17l-5-5"/>');
+
+        document.querySelectorAll("pre:not(.mermaid)").forEach((pre) => {
+          const code = pre.querySelector("code");
+          if (!code || !code.textContent.trim().includes("\n")) return;
+
+          const wrap = document.createElement("div");
+          wrap.className = "code-wrap";
+          pre.replaceWith(wrap);
+          wrap.appendChild(pre);
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "copy-btn";
+          btn.innerHTML = copyIcon + "<span>Copy</span>";
+          wrap.appendChild(btn);
+
+          let timer;
+          btn.addEventListener("click", () => {
+            navigator.clipboard.writeText(code.textContent).then(
+              () => {
+                btn.innerHTML = doneIcon + "<span>Copied!</span>";
+                btn.classList.add("is-done");
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                  btn.innerHTML = copyIcon + "<span>Copy</span>";
+                  btn.classList.remove("is-done");
+                }, 2000);
+              },
+              () => {
+                btn.innerHTML = copyIcon + "<span>Press Ctrl+C</span>";
+                getSelection().selectAllChildren(code);
+              }
+            );
+          });
+        });
+      })();
+    </script>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2/dist/mermaid-layout-elk.esm.min.mjs";
+      mermaid.registerLayoutLoaders(elkLayouts);
+      mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+    </script>
+  </body>
+</html>

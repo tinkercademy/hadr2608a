@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Game guide</title>
+    <meta name="description" content="Course notes for the DSTA Agentic AI for HADR Workshop." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=Rubik:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
+  </head>
+  <body class="theme-tt">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    
+<aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+  <div class="sidebar-brand">
+    <a href="/" class="sidebar-brand-link">
+      <img class="sidebar-brand-sticker" src="/assets/tkrobot-fingerguns.png" alt="" />
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-title">Agentic Engineering with Claude Code</span>
+        <span class="sidebar-brand-sub">HADR Edition</span>
+      </span>
+    </a>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="sidebar-list">
+        <li class="sidebar-item">
+          <a href="/" class="sidebar-link">
+            <span class="sidebar-link-label">Home</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/preflight/" class="sidebar-link">
+            <span class="sidebar-link-label">Preflight</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/day-1/" class="sidebar-link">
+            <span class="sidebar-link-label">Day 1</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-1/00-background/" class="sidebar-sublink">Background</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/00a-crud-warmup/" class="sidebar-sublink">Claude Code warm-up</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/01-hadr/" class="sidebar-sublink">The HADR game</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/02-plan-build-review/" class="sidebar-sublink">Plan, build, review</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/03-skills-tools-mcps/" class="sidebar-sublink">Skills, tools, and MCPs</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/04-tokens/" class="sidebar-sublink">Tokens and costing</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/05-evaluation/" class="sidebar-sublink">Subagents and Evals</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/06-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/07-checkpoint/" class="sidebar-sublink">Checkpoint</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/08-show-and-tell/" class="sidebar-sublink">Show and tell</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/day-2/" class="sidebar-link">
+            <span class="sidebar-link-label">Day 2</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-2/00-starter/" class="sidebar-sublink">Starter: CLAUDE.md safari</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/02-intake/" class="sidebar-sublink">Stage 2: intake</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/03-reconciliation/" class="sidebar-sublink">Stage 3: reconciliation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/04-replanning/" class="sidebar-sublink">Stage 4: replanning</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/05-evaluation/" class="sidebar-sublink">Model comparisons</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/06-finale/" class="sidebar-sublink">Presentation and finale</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/future/" class="sidebar-link">
+            <span class="sidebar-link-label">The future</span>
+          </a>
+        </li>
+        <li class="sidebar-item is-active is-open">
+          <a href="/game/" class="sidebar-link">
+            <span class="sidebar-link-label">Game reference</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/game/api/" class="sidebar-sublink">API</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/maps/" class="sidebar-sublink">Maps</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/play/" class="sidebar-sublink">MCP Play</a>
+            </li>
+          </ul>
+        </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-foot">
+    <a class="tinkercademy-brand" href="https://tinkercademy.com" rel="noopener" target="_blank" aria-label="Visit Tinkercademy">
+      <img src="/assets/tinkercademy-logo-white.png" alt="Tinkercademy" />
+    </a>
+    <div class="license-lockup">
+      <span class="license-label">Licensed from</span>
+      <a class="ocelliq-brand" href="https://ocelliq.com" rel="noopener" target="_blank" aria-label="Visit OcelliQ">
+        <img class="ocelliq-brand-mark" src="/assets/ocelliq-mark.svg" alt="" />
+        <span>OcelliQ</span>
+      </a>
+    </div>
+  </div>
+</aside>
+
+<button class="sidebar-toggle-btn" type="button" aria-label="Toggle navigation" aria-controls="sidebar">&#9776;</button>
+
+
+    <div class="layout">
+      <header class="page-header">
+        <div class="page-header-inner">
+          <h1 class="page-title">Game guide</h1>
+          <p class="page-subtitle">HADR game overview</p>
+        </div>
+      </header>
+
+      <main id="main" class="page-main">
+        <article class="content">
+          <h1 id="game-guide" tabindex="-1"><a class="header-anchor" href="#game-guide">Game guide</a></h1>
+<p>The HADR game is a deterministic, lockstep, fire-only dispatch simulation. Contacts report fires around a city; you run intake, reconcile the reports into beliefs, and dispatch fire trucks to save lives and buildings. The engine owns hidden truth, emits imperfect evidence, accepts typed vehicle commands, and scores outcomes. It never owns your reports, incidents, reconciliation policy, prompts, or model calls. The typed control surface is documented separately in the <a href="/game/api/">API guide</a>.</p>
+<h2 id="objective-and-measures" tabindex="-1"><a class="header-anchor" href="#objective-and-measures">Objective and measures</a></h2>
+<p>Protect people and buildings from fire within the tick limit. The engine reports three measures at the end of an episode:</p>
+<ul>
+<li><code>casualties</code>: the fixed occupants of every building that collapsed.</li>
+<li><code>buildings_lost</code>: the number of collapsed buildings.</li>
+<li><code>tokens</code>: always reported as <code>null</code>. Runtime token cost is participant self-reported and never measured by the engine.</li>
+</ul>
+<p>There is no composite score.</p>
+<h2 id="four-layers" tabindex="-1"><a class="header-anchor" href="#four-layers">Four layers</a></h2>
+<p>The engine keeps four values strictly separate; the boundary is enforced in code, not by convention:</p>
+<ol>
+<li>Hidden true state: real building, fire, and occupant state that you never see directly during play.</li>
+<li>Imperfect contacts: the public evidence delivered to you. A report’s location or claim may be stale, exaggerated, wrong, or a false alarm.</li>
+<li>Filed agent beliefs: incidents your code derives from contacts. These live entirely in participant code; the simulator hosts none of them.</li>
+<li>Typed actions: <code>dispatch</code> and <code>next_tick</code>, the only ways you change the world.</li>
+</ol>
+<p><img src="/game/00-overview/four-layers-separation.png" alt="Hidden truth, imperfect contacts, filed beliefs, and typed actions kept in separate layers"></p>
+<p><code>dispatch</code> requires an opaque <code>incident_id</code>, logs and echoes it, and never validates it against any store: filed incidents are your beliefs, and the simulator never sees them. Deterministic reconciliation sits between stateless intake and model-driven dispatch so that reruns are reproducible and auditable.</p>
+<h2 id="world-mechanics" tabindex="-1"><a class="header-anchor" href="#world-mechanics">World mechanics</a></h2>
+<ul>
+<li>Buildings have fixed occupants and a status of <code>normal</code>, <code>burning</code>, or <code>collapsed</code>. Collapse is irreversible and adds the building’s occupants to casualties exactly once. Extinguishing restores a building to <code>normal</code> with no casualties.</li>
+<li>Fires grow by a per-tick rate. A stationary truck within the scenario’s suppression radius of a burning building fights the nearest one (ties broken by building ID) and reduces its intensity; multiple trucks stack. A fire that reaches full intensity collapses its building; one driven to zero is extinguished.</li>
+<li>Fire spread between adjacent buildings is an isolated extension flag, disabled by default for the first release.</li>
+<li>Trucks have a <code>vehicle_id</code>, a public position, and a status of <code>idle</code>, <code>moving</code>, or <code>firefighting</code>. They have no home station and roam freely; repositioning is just a dispatch to a point.</li>
+</ul>
+<h2 id="what-you-can-see" tabindex="-1"><a class="header-anchor" href="#what-you-can-see">What you can see</a></h2>
+<ul>
+<li>A public map with a road graph and building display geometry. Building coordinates come only from converting IDs you learned from contacts; there is no building enumeration or search.</li>
+<li>Truck vision: each truck truthfully reports the buildings within its radius as a typed observation contact each tick, carrying a per-fire tick countdown for each burning one.</li>
+<li>Human contacts as evidence, which may be imperfect. Partial observability is the point: uncertainty comes from the contacts, not from sensor noise on truck vision.</li>
+</ul>
+<p>Play is lockstep. You reason about a frozen observation for the current tick, queue commands, then call <code>next_tick</code> to advance exactly one tick. An episode ends when it is <code>resolved</code> (no active fires and none scheduled) or hits its <code>tick_limit</code>. Scenarios use published seeds, and you may restart at any time; the same scenario and seed reproduce the same episode.</p>
+<h2 id="difficulty-stages" tabindex="-1"><a class="header-anchor" href="#difficulty-stages">Difficulty stages</a></h2>
+<p>Scenarios share one engine; difficulty stages do not fork simulation code. They change what evidence looks like:</p>
+<ul>
+<li>Stage 1 delivers perfect <code>structured_report</code> contacts directly.</li>
+<li>Stage 2+ delivers rendered <code>human_text</code> plus the exact reported location, withholding the canonical claim so intake must extract it.</li>
+<li>Typed sensor contacts (truck observations) always bypass language rendering.</li>
+</ul>
+<p>Every stage runs on the same trap: there are always fewer trucks than fires, suppression is slow so a truck committed to a fire stays on it, and the most crowded building is under-claimed as only medium severity. The fire you lose is the one you never dispatched to, so difficulty is a prioritization-and-reconciliation problem, not a geometry one. Each stage keeps that trap and layers on one new demand:</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>What makes it hard</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Nothing is hidden and the reports are perfect. This is as easy as it gets.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Reports arrive as panicked human-language calls.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Separate calls describe the same fire; they are not always accurate. Merge before you dispatch.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Reports contradict each other, and you have to react to changing situations. Revise the plan and redirect a truck if you need to.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>The ultimate challenge. High call volume, duplicates, false alarms, a wrong address, and callers who misremember when the fire started. Triage signal from noise and trust neither the loudest report nor the stated time.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="display-and-scoring" tabindex="-1"><a class="header-anchor" href="#display-and-scoring">Display and scoring</a></h2>
+<p>An ordinary browser display polls a read-only snapshot. Each scenario sets an immutable display policy: <code>full_state</code> scenarios expose current truth and live metrics for teaching or spectating, while <code>public_only</code> scenarios (including assessment scenarios) show only public facts, so the room display reveals no truth either.</p>
+<p>A deterministic greedy baseline, using only public evidence, sits on the scoreboard as the bar to beat. Scoring is honor-system: extraction is graded offline in your own tests against published labeled datasets, the engine has no grading operation and never sees your report schema, and self-reported tokens and model IDs remain visibly unverified and cannot affect the simulation.</p>
+<p>The <a href="/game/api/">API guide</a> documents the typed control surface, connection rules, every tool, and the error catalogue.</p>
+<h2 id="maps" tabindex="-1"><a class="header-anchor" href="#maps">Maps</a></h2>
+<p>The <code>@map</code> half of a scenario ID picks one of three cities; the <a href="/game/maps/">map guide</a> describes each one in full.</p>
+<table>
+<thead>
+<tr>
+<th>Londone</th>
+<th>Feeladelphia</th>
+<th>Stockhome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/game/03-maps/map-londone.png" alt="Map of Londone: crooked lanes around a green, a river across the north-east, and a canal through the middle"></td>
+<td><img src="/game/03-maps/map-feeladelphia.png" alt="Map of Feeladelphia: a vast street grid along a south-east waterfront, crossed by a canal"></td>
+<td><img src="/game/03-maps/map-stockhome.png" alt="Map of Stockhome: a radial old-town core ringed by grid districts, wrapped around a bay"></td>
+</tr>
+</tbody>
+</table>
+<!-- markdownlint-disable MD033 -->
+<div data-gate="tungtung" hidden>
+<figure class="cheat-image" data-gate="tungtung" hidden>
+  <figcaption>Cheat Code Entered</figcaption>
+  <img src="/game/00-overview/thats-not-very-tung-tung-sahur.png" alt="That&#39;s not very Tung Tung Sahur of you">
+</figure>
+<h2 id="expected-scores" tabindex="-1"><a class="header-anchor" href="#expected-scores">Expected scores</a></h2>
+<p>The <strong>baseline</strong> is the simplest dispatcher, <strong>perfect</strong> makes the best possible decision with perfect understanding. Students should exceed the baseline and get as close to perfect as possible. All figures are <code>casualties</code>/<code>buildings lost</code>; lower is better.</p>
+<p>Last run 2026-08-10 at <code>temperature=0</code>: intake <code>mimo-v2.5</code> (JSON mode), dispatch <code>minimax-m3</code> (tool loop), deterministic reconciliation. Three runs per scenario; tokens are means.</p>
+<h3 id="londone" tabindex="-1"><a class="header-anchor" href="#londone">londone</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Baseline</th>
+<th>Perfect</th>
+<th>Our Solution</th>
+<th>Intake tokens</th>
+<th>Dispatch tokens</th>
+<th>of which cached</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stage1-basic</td>
+<td>40/1</td>
+<td>5/1</td>
+<td>5/1</td>
+<td>0</td>
+<td>51.9 K</td>
+<td>37.0 K (71%)</td>
+</tr>
+<tr>
+<td>stage2-language</td>
+<td>40/1</td>
+<td>5/1</td>
+<td>5/1</td>
+<td>4.9 K</td>
+<td>51.0 K</td>
+<td>36.8 K (72%)</td>
+</tr>
+<tr>
+<td>stage3-partial</td>
+<td>26/1</td>
+<td>0/0</td>
+<td>0/0</td>
+<td>4.9 K</td>
+<td>61.5 K</td>
+<td>44.8 K (73%)</td>
+</tr>
+<tr>
+<td>stage4-replan</td>
+<td>40/1</td>
+<td>5/1</td>
+<td>5/1</td>
+<td>4.0 K</td>
+<td>93.6 K</td>
+<td>72.9 K (78%)</td>
+</tr>
+<tr>
+<td>stage5-triage</td>
+<td>40/1</td>
+<td>0/0</td>
+<td>0/0</td>
+<td>23.3 K</td>
+<td>94.1 K</td>
+<td>59.3 K (63%)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="stockhome" tabindex="-1"><a class="header-anchor" href="#stockhome">stockhome</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Baseline</th>
+<th>Perfect</th>
+<th>Our Solution</th>
+<th>Intake tokens</th>
+<th>Dispatch tokens</th>
+<th>of which cached</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stage1-basic</td>
+<td>34/1</td>
+<td>5/1</td>
+<td>5/1</td>
+<td>0</td>
+<td>62.1 K</td>
+<td>49.0 K (79%)</td>
+</tr>
+<tr>
+<td>stage2-language</td>
+<td>53/2</td>
+<td>5/1</td>
+<td>5/1</td>
+<td>5.0 K</td>
+<td>60.7 K</td>
+<td>43.6 K (72%)</td>
+</tr>
+<tr>
+<td>stage3-partial</td>
+<td>26/1</td>
+<td>0/0</td>
+<td>0/0</td>
+<td>4.9 K</td>
+<td>54.2 K</td>
+<td>37.7 K (69%)</td>
+</tr>
+<tr>
+<td>stage4-replan</td>
+<td>34/1</td>
+<td>5/1</td>
+<td>5/1</td>
+<td>3.9 K</td>
+<td>102.4 K</td>
+<td>78.5 K (77%)</td>
+</tr>
+<tr>
+<td>stage5-triage</td>
+<td>53/2</td>
+<td>0/0</td>
+<td>0/0</td>
+<td>19.5 K</td>
+<td>73.8 K</td>
+<td>51.7 K (70%)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="feeladelphia" tabindex="-1"><a class="header-anchor" href="#feeladelphia">feeladelphia</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Baseline</th>
+<th>Perfect</th>
+<th>Our Solution</th>
+<th>Intake tokens</th>
+<th>Dispatch tokens</th>
+<th>of which cached</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stage1-basic</td>
+<td>34/1</td>
+<td>5/1</td>
+<td>5/1</td>
+<td>0</td>
+<td>65.6 K</td>
+<td>49.3 K (75%)</td>
+</tr>
+<tr>
+<td>stage2-language</td>
+<td>34/1</td>
+<td>5/1</td>
+<td>5/1</td>
+<td>5.0 K</td>
+<td>70.1 K</td>
+<td>53.2 K (76%)</td>
+</tr>
+<tr>
+<td>stage3-partial</td>
+<td>27/1</td>
+<td>0/0</td>
+<td>0/0</td>
+<td>4.9 K</td>
+<td>71.5 K</td>
+<td>52.8 K (74%)</td>
+</tr>
+<tr>
+<td>stage4-replan</td>
+<td>34/1</td>
+<td>5/1</td>
+<td>5/1</td>
+<td>4.0 K</td>
+<td>64.8 K</td>
+<td>48.6 K (75%)</td>
+</tr>
+<tr>
+<td>stage5-triage</td>
+<td>34/1</td>
+<td>0/0</td>
+<td>0/0</td>
+<td>23.3 K</td>
+<td>122.0 K</td>
+<td>77.7 K (64%)</td>
+</tr>
+</tbody>
+</table>
+<p>Every cell held on every run: 47 episodes, 15 pairs, no disagreement anywhere. So a single run is fair evidence about a team, and a result that differs from this table is a real difference in their policy rather than the dispatch model having an off day.</p>
+<h3 id="how-to-read-the-numbers" tabindex="-1"><a class="header-anchor" href="#how-to-read-the-numbers">How to read the numbers</a></h3>
+<ul>
+<li><strong>Beat the baseline column.</strong> That is the acceptance bar, and it is deliberately loose: improve at least one safety column, be worse on neither.</li>
+<li><strong>Perfect is reachable, but only just.</strong> The reference solution now matches the Perfect column on all 15 pairs. Perfect pays no intake error, so a team that lands on it has both a working extraction prompt and a dispatcher that revises; a team one notch above it has usually lost a single fire to a misread claim, which is a fair result and not a broken pipeline.</li>
+<li><strong>Zero on stage 1, 2, or 4 is suspicious.</strong> Those bottom out at 5 casualties played perfectly; zero means a bug or a cheatcode, not a better policy. Stage 3 and stage 5 do clear outright.</li>
+<li><strong>One run is enough.</strong> The reference solution repeated every cell in this table across three or four runs. A team whose own numbers swing between runs has a policy that is not deciding anything - usually a dispatcher that never revisits a truck already on the road, so which fire it saves depends on what got reported first.</li>
+<li><strong>Watch the cached column.</strong> The reference solution sits at 63-79% of dispatch tokens. A team whose cache reads stay near zero has broken their stable prefix.</li>
+</ul>
+<h3 id="extraction-accuracy" tabindex="-1"><a class="header-anchor" href="#extraction-accuracy">Extraction accuracy</a></h3>
+<p>Upstream of all of that: <code>uv run python evals/extraction.py --n 42</code> over a stratified subset of <code>datasets/contacts_labeled.jsonl</code> (6 per source type), same intake model.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>incident_type (target &gt;=85%)</td>
+<td>100% (42/42)</td>
+</tr>
+<tr>
+<td>reported_location (preserved)</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>severity (±1 band)</td>
+<td>95.2%</td>
+</tr>
+<tr>
+<td>headcount (±2)</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>event_time (tick ±2)</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>all fields</td>
+<td>95.2%</td>
+</tr>
+</tbody>
+</table>
+<p>Roughly 980 tokens per contact (38.3 K read, 2.9 K written): MiMo V2.5 is not a reasoning model, so almost all of the spend is the prompt. If a team’s extraction sits below the 85% incident_type target, their dispatch numbers are not worth reading yet.</p>
+<p>The instructive failure is <code>event_time</code>, which scored 57% before the prompt named the rule per source_type and 100% after. Left to its own judgement the model reads any present-tense report of an ongoing fire as a past event and stamps a tick on all of them. Worth raising with a team whose per-field breakdown has one column dragging the rest down: the fix is usually a stated convention, not a better model.</p>
+</div>
+
+          
+          
+          
+        </article>
+        <footer class="page-foot">
+          <p>Agentic AI for HADR Workshop | Notes rendered with <a href="https://www.11ty.dev/">Eleventy</a>.</p>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        document.querySelectorAll(".sidebar-item").forEach(function (li) {
+          var link = li.querySelector(".sidebar-link");
+          var toggle = li.querySelector(".sidebar-toggle");
+          if (!link || !toggle) return;
+          toggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            li.classList.toggle("is-open");
+          });
+        });
+
+        var btn = document.querySelector(".sidebar-toggle-btn");
+        var body = document.body;
+        if (btn) {
+          btn.addEventListener("click", function () {
+            body.classList.toggle("sidebar-open");
+          });
+        }
+        document.addEventListener("click", function (e) {
+          if (
+            body.classList.contains("sidebar-open") &&
+            !e.target.closest(".sidebar") &&
+            !e.target.closest(".sidebar-toggle-btn")
+          ) {
+            body.classList.remove("sidebar-open");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Cheatcode gate: visiting any page with #somecode (or ?code=somecode) unlocks
+      // every element carrying data-gate="somecode", tab-session-wide. Content authors
+      // add a gate by wrapping content in any element with a data-gate attribute
+      // (plus `hidden`, so it stays invisible even before site.css loads).
+      // Codes are listed on the unlisted instructor notes page.
+      (() => {
+        const code = location.hash.slice(1) || new URLSearchParams(location.search).get("code");
+        if (code) sessionStorage.setItem("unlock-" + code, "1");
+        document.querySelectorAll("[data-gate]").forEach((el) => {
+          if (sessionStorage.getItem("unlock-" + el.dataset.gate)) {
+            el.removeAttribute("data-gate");
+            el.removeAttribute("hidden");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Copy button on every multiline fenced code block.
+      (() => {
+        const icon = (paths) =>
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+          'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + "</svg>";
+        const copyIcon = icon(
+          '<rect x="9" y="9" width="11" height="11" rx="2"/>' +
+            '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>'
+        );
+        const doneIcon = icon('<path d="M20 6 9 17l-5-5"/>');
+
+        document.querySelectorAll("pre:not(.mermaid)").forEach((pre) => {
+          const code = pre.querySelector("code");
+          if (!code || !code.textContent.trim().includes("\n")) return;
+
+          const wrap = document.createElement("div");
+          wrap.className = "code-wrap";
+          pre.replaceWith(wrap);
+          wrap.appendChild(pre);
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "copy-btn";
+          btn.innerHTML = copyIcon + "<span>Copy</span>";
+          wrap.appendChild(btn);
+
+          let timer;
+          btn.addEventListener("click", () => {
+            navigator.clipboard.writeText(code.textContent).then(
+              () => {
+                btn.innerHTML = doneIcon + "<span>Copied!</span>";
+                btn.classList.add("is-done");
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                  btn.innerHTML = copyIcon + "<span>Copy</span>";
+                  btn.classList.remove("is-done");
+                }, 2000);
+              },
+              () => {
+                btn.innerHTML = copyIcon + "<span>Press Ctrl+C</span>";
+                getSelection().selectAllChildren(code);
+              }
+            );
+          });
+        });
+      })();
+    </script>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2/dist/mermaid-layout-elk.esm.min.mjs";
+      mermaid.registerLayoutLoaders(elkLayouts);
+      mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+    </script>
+  </body>
+</html>
