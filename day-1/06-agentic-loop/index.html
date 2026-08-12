@@ -189,9 +189,14 @@ flowchart LR
 </ol>
 <h2 id="activity%3A-one-model-call" tabindex="-1"><a class="header-anchor" href="#activity%3A-one-model-call">Activity: One model call</a></h2>
 <details class="spoiler" data-gate="ballerina" hidden><summary>Help for phase 1</summary><p><a href="phase-1-solution/">Phase 1 reference solution</a></p></details>
-<p>Start with one model call. Do not add tools or a loop.</p>
-<p>Send the system prompt and the task to the model. Return all model output as the final message. The output must include the <code>&lt;think&gt;</code> block.</p>
-<p>Implement this version of <code>agent_loop</code> in <code>agent.py</code>. The docstring describes the completed loop, which removes the <code>&lt;think&gt;</code> block from the final message. Do not remove this block in this phase.</p>
+<p>Complete these steps:</p>
+<ol>
+<li>Start with one model call. Do not add tools or a loop.</li>
+<li>Send the system prompt and the task to the model.</li>
+<li>Return all model output as the final message. Include the <code>&lt;think&gt;</code> block.</li>
+<li>Implement this version of <code>agent_loop</code> in <code>agent.py</code>.</li>
+</ol>
+<p>The docstring describes the completed loop. The completed loop removes the <code>&lt;think&gt;</code> block from the final message. Do not remove this block in this phase.</p>
 <p>Pyright defines <code>message.content</code> as <code>str | None</code>. Read it as <code>message.content or &quot;&quot;</code>.</p>
 <p>Run this test with the scripted model:</p>
 <pre><code class="language-bash">uv run behave features/agent_loop.feature -n LOOP-1
@@ -201,12 +206,32 @@ flowchart LR
 </code></pre>
 <p>The answer is in a <code>&lt;think&gt;...&lt;/think&gt;</code> block. This is correct for this phase. Examine the reasoning, the final answer, and <code>rounds: 1</code>.</p>
 <h3 id="the-%3Cthink%3E-tags" tabindex="-1"><a class="header-anchor" href="#the-%3Cthink%3E-tags">The <code>&lt;think&gt;</code> tags</a></h3>
-<p>Most models in this course are reasoning models. This group includes <code>minimax-m3</code>. These models put reasoning in a <code>&lt;think&gt;...&lt;/think&gt;</code> block before the answer. The reasoning can improve decisions that have multiple steps, but it uses more tokens.</p>
-<p>Phase 1 displays the block so that you can examine it. Later phases use <code>strip_think</code> to remove it from the displayed answer. They still add the complete assistant turn to the history without changes. This includes the <code>&lt;think&gt;</code> block and lets the provider use its prompt cache.</p>
+<p>Reasoning models have these properties:</p>
+<ul>
+<li>Most models in this course are reasoning models. This group includes <code>minimax-m3</code>.</li>
+<li>These models put reasoning in a <code>&lt;think&gt;...&lt;/think&gt;</code> block before the answer.</li>
+<li>The reasoning can improve decisions that have multiple steps, but it uses more tokens.</li>
+</ul>
+<p>The phases use the <code>&lt;think&gt;</code> block as follows:</p>
+<ul>
+<li>Phase 1 displays the block so that you can examine it.</li>
+<li>Later phases use <code>strip_think</code> to remove the block from the displayed answer.</li>
+<li>Later phases add the complete assistant turn to the history without changes. This lets the provider use its prompt cache.</li>
+</ul>
 <h3 id="when-you-finish" tabindex="-1"><a class="header-anchor" href="#when-you-finish">When you finish</a></h3>
 <ol>
-<li><strong>Open a pull request and ask a teammate to review it.</strong> Use this small change to test the review process. Make sure that branch protection prevents you from merging your own change. Make sure that <code>@claude</code> submits a review. Get approval from a teammate before you merge. Resolve process problems before the next activity.</li>
-<li><strong>Post your most unusual <code>&lt;think&gt;</code> block to the Padlet.</strong> In the next session, you will estimate the tokens that this reasoning uses.</li>
+<li>
+<p><strong>Open a pull request and ask a teammate to review it.</strong> Use this small change to confirm that:</p>
+<ul>
+<li>Branch protection prevents you from merging your own change.</li>
+<li><code>@claude</code> submits a review.</li>
+<li>A teammate approves the change before you merge it.</li>
+</ul>
+<p>Resolve process problems before the next activity.</p>
+</li>
+<li>
+<p><strong>Post your most unusual <code>&lt;think&gt;</code> block to the Padlet.</strong> In the next session, you will estimate the tokens that this reasoning uses.</p>
+</li>
 </ol>
 <h2 id="activity%3A-the-agentic-loop" tabindex="-1"><a class="header-anchor" href="#activity%3A-the-agentic-loop">Activity: The agentic loop</a></h2>
 <details class="spoiler" data-gate="ballerina" hidden><summary>Help for phase 2</summary><p><a href="phase-2-solution/">Phase 2 reference solution</a></p></details>
@@ -220,13 +245,23 @@ flowchart LR
 <li>Start the next round.</li>
 </ol>
 <p>Stop when the model does not request a tool or when the loop reaches <code>max_rounds</code>.</p>
-<p>Tests <code>LOOP-2</code> through <code>LOOP-5</code> check the first three requirements. Pyright defines <code>message.tool_calls</code> as a union type. Only function calls have <code>.function</code>. Check <code>tc.type == &quot;function&quot;</code> before you use <code>.function</code>.</p>
+<p>Before you run the tests, note these points:</p>
+<ul>
+<li>Tests <code>LOOP-2</code> through <code>LOOP-5</code> check the first three requirements.</li>
+<li>Pyright defines <code>message.tool_calls</code> as a union type.</li>
+<li>Only function calls have <code>.function</code>. Check <code>tc.type == &quot;function&quot;</code> before you use <code>.function</code>.</li>
+</ul>
 <p>Run all the tests:</p>
 <pre><code class="language-bash">uv run behave features/agent_loop.feature
 </code></pre>
 <details class="spoiler">
 <summary>Help for invalid tool-call arguments</summary>
-<p>A model can return tool-call <code>arguments</code> that are not valid JSON. Your loop handles this when it runs the tool. You must also correct the arguments in the assistant turn that you send to the provider. If you do not correct them, the provider rejects the request.</p>
+<p>A model can return tool-call <code>arguments</code> that are not valid JSON. In this case:</p>
+<ul>
+<li>Handle the invalid arguments when the loop runs the tool.</li>
+<li>Correct the arguments in the assistant turn that you send to the provider.</li>
+<li>Do not send the invalid arguments to the provider. The provider will reject the request.</li>
+</ul>
 <p>You can use this function:</p>
 <pre><code class="language-python">def _replayable_args(raw: str | None) -&gt; str:
     &quot;&quot;&quot;Tool-call arguments as the provider will accept them back.&quot;&quot;&quot;
@@ -253,12 +288,26 @@ uv run hadr-agent &quot;what files are in this project and what is it for?&quot;
 <p>Tomorrow, the dispatcher will use this loop. Only the tools, prompt, and state message will change.</p>
 <h3 id="when-you-finish-1" tabindex="-1"><a class="header-anchor" href="#when-you-finish-1">When you finish</a></h3>
 <ol>
-<li><strong>Open a pull request and ask a teammate to check the four requirements.</strong> The test result does not prove that the code keeps the assistant turn unchanged. It also does not prove that the code limits the rounds. Ask the teammate to examine these parts of the code.</li>
-<li><strong>Post your <code>rounds</code> value for <code>what's the secret message?</code> on the Padlet.</strong> Compare your result with the other results. If another value is usually lower, compare the system prompts.</li>
+<li>
+<p><strong>Open a pull request and ask a teammate to check the four requirements.</strong> Ask the teammate to confirm that:</p>
+<ul>
+<li>The code keeps the assistant turn unchanged.</li>
+<li>The code limits the number of rounds.</li>
+</ul>
+<p>The test result does not prove these two requirements.</p>
+</li>
+<li>
+<p><strong>Post your <code>rounds</code> value for <code>what's the secret message?</code> on the Padlet.</strong> Compare your result with the other results. If another value is usually lower, compare the system prompts.</p>
+</li>
 </ol>
 <h2 id="activity%3A-add-test-scenarios-(optional)" tabindex="-1"><a class="header-anchor" href="#activity%3A-add-test-scenarios-(optional)">Activity: Add test scenarios (Optional)</a></h2>
 <details class="spoiler" data-gate="ballerina" hidden><summary>Help for phase 3</summary><p><a href="phase-3-solution/">Phase 3 reference solution</a></p></details>
-<p>Add one <code>LOOP-*</code> scenario for a possible error. For example, test invalid tool arguments, an unknown tool name, or a tool exception.</p>
+<p>Add one <code>LOOP-*</code> scenario for one of these possible errors:</p>
+<ul>
+<li>Invalid tool arguments</li>
+<li>An unknown tool name</li>
+<li>A tool exception</li>
+</ul>
 <p>The scripted client in <code>features/steps/agent_loop_steps.py</code> records each request from the loop. If a scenario fails, examine its recorded history before you change the code.</p>
 <h2 id="how-coding-agents-use-the-loop" tabindex="-1"><a class="header-anchor" href="#how-coding-agents-use-the-loop">How coding agents use the loop</a></h2>
 <p>Claude Code, OpenCode, Cursor, and similar products use this basic loop:</p>
