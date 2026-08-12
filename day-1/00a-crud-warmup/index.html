@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Claude Code warm-up</title>
+    <title>CRUD app warm-up</title>
     <meta name="description" content="Course notes for the DSTA Agentic AI for HADR Workshop." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -52,7 +52,7 @@
               <a href="/day-1/00-background/" class="sidebar-sublink">Background</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-1/00a-crud-warmup/" class="sidebar-sublink" aria-current="page">Claude Code warm-up</a>
+              <a href="/day-1/00a-crud-warmup/" class="sidebar-sublink" aria-current="page">CRUD app warm-up</a>
             </li>
             <li class="sidebar-subitem">
               <a href="/day-1/01-hadr/" class="sidebar-sublink">The HADR game</a>
@@ -160,15 +160,15 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Claude Code warm-up</h1>
+          <h1 class="page-title">CRUD app warm-up</h1>
           <p class="page-subtitle">Day 1</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="claude-code-warm-up" tabindex="-1"><a class="header-anchor" href="#claude-code-warm-up">Claude Code warm-up</a></h1>
-<p>Before we start the HADR project, build a tiny CRUD app from scratch. This is a one-hour warm-up: enough time to check that Claude Code and your development environment work, and to practise turning a small idea into running software.</p>
+          <h1 id="crud-app-warm-up" tabindex="-1"><a class="header-anchor" href="#crud-app-warm-up">CRUD app warm-up</a></h1>
+<p>Before we start the HADR project, use Claude Code to build a tiny CRUD app from a PRD. This is a one-hour warm-up. Use it to check that Claude Code and your development environment work.</p>
 <p>Keep this app separate from the HADR starter repository. It can be disposable. It only needs to run on your computer; putting it online is a stretch goal.</p>
 <h2 id="the-brief" tabindex="-1"><a class="header-anchor" href="#the-brief">The brief</a></h2>
 <p>Build a <a href="https://vaughntan.org/boringtinytools">“boring tiny tool”</a>: a small collaborative web app for a group or event you care about. It must have:</p>
@@ -239,15 +239,14 @@
 <p>Turn our conversation into a one-page PRD for the smallest useful version of this app. Include the problem, target users, three to five user stories, the core journey, the main record and its fields, authentication and sharing rules, core features, acceptance criteria, and what is not in the first version. Do not add features we have not discussed. End by asking me what I would cut.</p>
 </blockquote>
 <p>Read it. Change anything that does not sound like your idea, and cut anything you cannot demonstrate. Then create a new Git project for the app, save the result as <code>PRD.md</code>, make the first commit, create a GitHub repository, and push it. Keep this project separate from the HADR starter repository.</p>
-<h2 id="build-in-small-passes" tabindex="-1"><a class="header-anchor" href="#build-in-small-passes">Build in small passes</a></h2>
-<p>Open the app folder in Claude Code. Do not paste one giant build prompt. Let the PRD hold the context, and give Claude one job at a time. For example:</p>
-<ol>
-<li><code>Read PRD.md. What is the smallest complete user journey we can build first? Do not code yet.</code></li>
-<li>Review its answer, then ask it to build and run that journey.</li>
-<li>Ask it to add the next CRUD operation.</li>
-<li>Ask it to test the app as both users and fix the most important failure.</li>
-<li>Ask it to compare the result with the PRD and tell you what is still missing.</li>
-</ol>
+<h2 id="give-claude-code-the-prd" tabindex="-1"><a class="header-anchor" href="#give-claude-code-the-prd">Give Claude Code the PRD</a></h2>
+<p>Open the app folder in Claude Code. Make sure that your reviewed <code>PRD.md</code> is in the project root.</p>
+<p>For this warm-up, give Claude one complete build request. Use this prompt:</p>
+<blockquote>
+<p>Read <code>PRD.md</code> and build the app. Choose a small stack that works on this computer. Implement only the requirements in the PRD. Use a persistent local database and create two test users. Run the app, test the acceptance criteria, and fix important failures. Write a short <code>README.md</code> with setup and demonstration steps. Ask me a question only if you cannot continue safely without the answer.</p>
+</blockquote>
+<p>Let Claude plan and implement the app. You do not need to divide the build into small feature prompts or branches. You will use that more controlled workflow in the final project.</p>
+<p>When Claude finishes, run the app yourself. Test it as both users. Compare the result with the PRD. Ask Claude to fix requirements that do not work.</p>
 <p>Use a stack you know, or let Claude suggest a small one. A local database is fine. Production-grade identity, infrastructure, and deployment are outside this exercise.</p>
 <h2 id="your-checklist" tabindex="-1"><a class="header-anchor" href="#your-checklist">Your checklist</a></h2>
 <p>Tick these off as you work. Your progress is saved in this browser.</p>
@@ -256,7 +255,7 @@
   <li><label><input type="checkbox" data-task="interview"> Claude interviewed me one question at a time before suggesting a solution.</label></li>
   <li><label><input type="checkbox" data-task="challenge"> I asked Claude to challenge one assumption or oversized idea.</label></li>
   <li><label><input type="checkbox" data-task="prd"> I reviewed a one-page PRD and saved it as <code>PRD.md</code>.</label></li>
-  <li><label><input type="checkbox" data-task="slice"> Claude and I agreed on the smallest complete user journey.</label></li>
+  <li><label><input type="checkbox" data-task="build"> I gave Claude Code the PRD and asked it to build the complete app.</label></li>
   <li><label><input type="checkbox" data-task="auth"> Two different test users can sign in.</label></li>
   <li><label><input type="checkbox" data-task="crud"> A user can create, view, edit, and delete the main record.</label></li>
   <li><label><input type="checkbox" data-task="sharing"> The sharing rule behaves as the PRD describes.</label></li>
