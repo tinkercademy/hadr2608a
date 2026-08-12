@@ -165,7 +165,7 @@
 <p>Ask the same model the same question twice and you can get two different answers, both plausible. <strong>So, how do you test a model?</strong></p>
 <p>We’ll explore that question with subagents here, by building <em>evals</em> for our intake model. Evals are a set of test cases engineered to evaluate the behaviour of an LLM. In this case, the evals consist of input and output pairs, where we can use an LLM to judge if the input and output are correctly paired.</p>
 <p>Our intake model is responsible for reading each incoming contact - a panicked call, an alarm, a responder update - and turning it into the structured report the rest of your dispatch system runs on. Get it wrong and everything downstream is wrong with it.</p>
-<p>Get the raw, unlabeled data with <code>uv run hadr-engine gen-datasets</code>: it writes <code>datasets/contacts_unlabeled.jsonl</code>. This will be our input set – the rest of this section is how we obtain the output set from this.</p>
+<p>Get the raw, unlabeled data with <code>uv run https://dl.hadr.ocelliq.com/hadr-engine.py gen-datasets</code>: it writes <code>datasets/contacts_unlabeled.jsonl</code>. This will be our input set – the rest of this section is how we obtain the output set from this.</p>
 <p>Look at that file before continuing.</p>
 <h2 id="goal%3A-extract-what-the-user-said" tabindex="-1"><a class="header-anchor" href="#goal%3A-extract-what-the-user-said">Goal: Extract what the user said</a></h2>
 <p>Your dispatch code is code, not an LLM. It needs structure in the data to work. That’s where the intake model comes in: what kind of incident, how bad, how many people, what evidence the caller actually gave. Its job is to extract what was <strong>said</strong>, not what is true.</p>
