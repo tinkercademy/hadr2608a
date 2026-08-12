@@ -162,171 +162,220 @@
       <main id="main" class="page-main">
         <article class="content">
           <h1 id="plan%2C-build%2C-review" tabindex="-1"><a class="header-anchor" href="#plan%2C-build%2C-review">Plan, build, review</a></h1>
-<p>The course delivery loop is plan mode, an isolated worktree, a focused change, automated checks, and review by someone else.</p>
-<h2 id="how-to-code-agentically" tabindex="-1"><a class="header-anchor" href="#how-to-code-agentically">How to Code Agentically</a></h2>
-<p>Coding used to be expensive, so we planned carefully to avoid wasting engineering time. With coding agents, code is cheap and fast but unreliable, so human review becomes the bottleneck. Most failed agent projects began with an unquestioned plan. (Source: Brendan Graetz, <a href="https://blog.bguiz.com/presentations/hard-parts-building-gen-ai/">“Hard Parts: Building with Gen AI”</a>.)</p>
-<p>The bottleneck shifts to problem scoping, planning, verification, and validation.</p>
+<p>Use the same workflow for each change in this course:</p>
+<ol>
+<li>Read the requirements.</li>
+<li>Ask Claude for a plan.</li>
+<li>Review the plan.</li>
+<li>Ask Claude to build the change.</li>
+<li>Run the tests.</li>
+<li>Ask a teammate to review the pull request.</li>
+<li>Merge the pull request.</li>
+</ol>
+<p>In this activity, you will use this workflow to build the report store and the incident store.</p>
+<h2 id="expected-result" tabindex="-1"><a class="header-anchor" href="#expected-result">Expected result</a></h2>
+<p>At the end of this activity, each participant must have:</p>
 <ul>
-<li><strong>Scoping:</strong> What should I build?</li>
-<li><strong>Planning:</strong> How should I build it?</li>
-<li><strong>Verification:</strong> Did I build it right?</li>
-<li><strong>Validation:</strong> Did I build the right thing?</li>
+<li>a working <code>ReportStore</code>;</li>
+<li>a working <code>IncidentStore</code>;</li>
+<li>all 11 supplied <code>@warmup</code> scenarios passing;</li>
+<li>all <code>pytest</code> tests passing; and</li>
+<li>two pull requests that a teammate approved before the merge.</li>
 </ul>
-<p>The developer’s leverage sits in choosing the problem, shaping the plan, constraining the work, and judging the evidence.</p>
-<h3 id="reliable-use-habits" tabindex="-1"><a class="header-anchor" href="#reliable-use-habits">Reliable-use habits</a></h3>
+<p>Do not build intake, report matching, dispatch, or replanning in this activity. You will build these parts later in the course.</p>
+<h2 id="use-claude-safely" tabindex="-1"><a class="header-anchor" href="#use-claude-safely">Use Claude safely</a></h2>
+<p>Claude can write code quickly. Claude can also write incorrect code. You must control the scope and check the result.</p>
 <ul>
-<li>Describe the outcome and constraints before asking for implementation.</li>
-<li>When requirements are fuzzy, have Claude interview you first: <code>Ask me questions, 3 at a time, until you are 90% sure about what to build.</code></li>
-<li>Ask the agent to plan the user behaviour before planning the code change.</li>
-<li>Ask the agent to inspect the repository and propose a plan before editing.</li>
-<li>Treat generated code as untrusted until tests, review, and direct inspection support it.</li>
-<li>Keep changes small enough to explain, verify, and reverse.</li>
-<li>Put repeatable rules in repository instructions or deterministic checks instead of repeating them in chat.</li>
-<li>Preserve human ownership of requirements, risk decisions, and acceptance.</li>
+<li>Give Claude a clear outcome and clear limits.</li>
+<li>Ask Claude to read the repository before it makes a plan.</li>
+<li>Do not let Claude edit code until you approve the plan.</li>
+<li>Keep each change small.</li>
+<li>Check the code and the test results.</li>
+<li>Put permanent repository rules in <a href="https://www.youtube.com/watch?v=i_OHQH4-M2Y"><code>CLAUDE.md</code></a>.</li>
+<li>Put repeatable checks in <a href="https://code.claude.com/docs/en/hooks">hooks</a>.</li>
+<li>Use <a href="https://code.claude.com/docs/en/checkpointing"><code>/rewind</code></a> if you must remove an incorrect change.</li>
+<li>Use <code>@claude</code> as a second reviewer. A teammate must still make the approval decision.</li>
 </ul>
-<h3 id="claude-code-features" tabindex="-1"><a class="header-anchor" href="#claude-code-features">Claude Code features</a></h3>
-<p>We introduce Claude Code features as we go. They release very quickly - ostensibly because Claude Code makes Claude Code - so keep an eye on the <a href="https://code.claude.com/docs/en/commands">commands</a>. If you think of a feature we missed, let us know - and when you use one, post it on the Padlet.</p>
-<p>Here are some features we will be using today:</p>
-<ul>
-<li>Use <a href="https://www.youtube.com/watch?v=etcVpATXpSc">plan mode</a> to inspect the repository and challenge an underspecified request.</li>
-<li>Put durable repository conventions in <a href="https://www.youtube.com/watch?v=i_OHQH4-M2Y"><code>CLAUDE.md</code></a>.</li>
-<li>Use a <a href="https://code.claude.com/docs/en/worktrees">worktree</a> so concurrent agent work does not share uncommitted files.</li>
-<li>Enforce repeatable rules with <a href="https://code.claude.com/docs/en/hooks">hooks</a>: deterministic checks that run after every edit.</li>
-<li>Trust the undo: <a href="https://code.claude.com/docs/en/checkpointing"><code>/rewind</code></a> steps back to any snapshot Claude Code took as it worked.</li>
-<li>Ask <code>@claude</code> for adversarial review, then decide which findings are supported by evidence.</li>
-<li>Publish a plan or report as an <a href="https://code.claude.com/docs/en/artifacts">artifact</a>: a live <a href="http://claude.ai">claude.ai</a> page that updates in place as you work and shares to the class.</li>
-</ul>
-<p><img src="/day-1/02-plan-build-review/git-worktree-comic.png" alt="Comic: git worktree lets you check out two branches at once, sharing one .git directory"></p>
-<p><em>Comic by <a href="https://jvns.ca">Julia Evans</a>, from <a href="https://wizardzines.com/comics/git-worktree/">wizardzines.com</a>.</em></p>
-<h2 id="blindspot-pass" tabindex="-1"><a class="header-anchor" href="#blindspot-pass">Blindspot pass</a></h2>
-<p>Your prompts are a map; the codebase is the territory, and projects fail in the gap between the two: your unknowns, especially the unknown unknowns. Before planning anything, give Claude this, modified freely:</p>
+<p>You can use <a href="https://www.youtube.com/watch?v=etcVpATXpSc">plan mode</a> for the planning step. You can also publish a plan or report as an <a href="https://code.claude.com/docs/en/artifacts">Artifact</a>.</p>
+<h2 id="write-the-product-brief" tabindex="-1"><a class="header-anchor" href="#write-the-product-brief">Write the product brief</a></h2>
+<p>Work with your team. Decide which operator problem the HADR agent must solve.</p>
+<p>Ask Claude:</p>
 <blockquote>
-<p>I am building a dispatch agent for the HADR game: a partially observable fire-dispatch simulator played through typed tools. I have never worked with this system. Do a blindspot pass: find my unknown unknowns about this problem, and explain them so I can prompt you better.</p>
+<p>Help our team decide which operator problem the HADR agent should solve first. Ask us one question at a time. Do not propose an architecture. Do not write code.</p>
 </blockquote>
-<p>Post your most surprising unknown to the Padlet. (Source: Thariq, <a href="https://x.com/i/status/2073100352921215386">“A Field Guide to Fable: Finding Your Unknowns”</a>, with <a href="https://thariqs.github.io/html-effectiveness/unknowns/">worked examples</a>)</p>
-<details>
-<summary>Spoiler: one unknown your blindspot pass should surface</summary>
-<p>The stores treat reports and incidents as separate things, yet nothing specifies how a report maps to an incident. That underspecification is deliberate: the location and time-window find functions hint at the shape of an answer, and you will design the actual matching rules on Day 2.</p>
-</details>
-<h2 id="product-thinking%3A-what-problem-should-the-agent-solve%3F" tabindex="-1"><a class="header-anchor" href="#product-thinking%3A-what-problem-should-the-agent-solve%3F">Product thinking: what problem should the agent solve?</a></h2>
-<p>You know the setting: uncertain reports and too few fire trucks. Now decide who you are helping and which decision you want to improve. Do this before you choose fields, prompts, or architecture.</p>
-<p>Open Claude on the web or use plan mode. Begin with:</p>
-<blockquote>
-<p>Help our team decide which operator problem this HADR agent should solve first. Interview us one question at a time. Do not propose an architecture or write code yet.</p>
-</blockquote>
-<p>Stay in the conversation for at least eight questions. Claude should help your team examine:</p>
+<p>Answer questions about these subjects:</p>
 <ul>
-<li>who uses or depends on the system;</li>
-<li>which decisions are difficult today;</li>
-<li>what information arrives late or cannot be trusted;</li>
-<li>the consequences of a false alarm, a missed incident, or a late dispatch;</li>
-<li>what the agent may decide by itself;</li>
-<li>what should remain visible to, or controlled by, a person;</li>
-<li>how the operator would know that the system helped; and</li>
-<li>what the first useful version should do.</li>
+<li>the primary user;</li>
+<li>the decision that the user must make;</li>
+<li>information that can be late or incorrect;</li>
+<li>the most serious failure;</li>
+<li>decisions that the agent can make;</li>
+<li>decisions that a person must make;</li>
+<li>measures of success; and</li>
+<li>work that is not part of the first version.</li>
 </ul>
-<p>Then ask Claude to turn the discussion into a one-page HADR product brief:</p>
+<p>Then ask Claude:</p>
 <blockquote>
-<p>Include the primary user, their problem, the decision the system supports, the most consequential failure, the human-agent boundary, success measures, the first useful slice, and explicit non-goals. Do not propose implementation details. End by asking us what we would cut.</p>
+<p>Write a one-page product brief. Include the primary user, the user problem, the supported decision, the most serious failure, the human control points, the measures of success, the first useful version, and the non-goals. Do not include implementation details.</p>
 </blockquote>
-<p>Review the brief as a team and cut anything you cannot defend. Save the agreed version as <code>product-brief.md</code> in your repository, then have Claude publish it as an Artifact. Keep implementation details out for now. Use the brief to record the problem and the product decisions your implementation must support.</p>
-<h2 id="activity" tabindex="-1"><a class="header-anchor" href="#activity">Activity</a></h2>
-<p>We’re going to begin by cloning the starter code and building the agent’s memory layer in pure code. Your agent needs to remember two different kinds of thing:</p>
-<ol>
-<li>Reports are contacts from the public. This is append-only evidence (add, get, find) your engine will receive.</li>
-<li>Incidents are your agents’ mutable beliefs (adds: update, link, close).</li>
-</ol>
-<p>A minimal starting schema ships in the starter: the <code>Report</code> and <code>Incident</code> dataclasses in <code>src/hadr_agent/stores/reports.py</code> and <code>stores/incidents.py</code>. It is the smallest thing that stores evidence and beliefs. Severity, headcount, contradiction flags, channel trust, and - above all - how a report maps to an incident are deliberately absent. Those you discover as scenarios force your hand.</p>
-<p>We’re going to build this following best practices for an agentic workflow. Pay attention to the mechanics of what we do.</p>
-<h3 id="cloning-and-initial-setup" tabindex="-1"><a class="header-anchor" href="#cloning-and-initial-setup">Cloning and initial setup</a></h3>
-<p><a href="/preflight/">Preflight</a> already had you clone the <a href="https://dl.hadr.ocelliq.com/starter.git">course starter</a> into your <strong>own</strong> private repository, install it with <code>uv sync</code>, and write your <code>.env</code>. If you skipped it, do it now - everything below happens in that repository.</p>
-<p><strong>You are each building a separate agent, but you review each other’s pull requests</strong>, so every teammate needs read and review access to everyone else’s repo. And everyone uses their own OpenCode Go key (<code>OPENAI_KEY=sk-...</code>) - runtime model calls bill it, no sharing.</p>
-<h2 id="requirements-and-implementation" tabindex="-1"><a class="header-anchor" href="#requirements-and-implementation">Requirements and Implementation</a></h2>
-<p>Because code is cheap and your time is expensive, we’ll do “spec driven development” here.</p>
-<ol>
-<li>We’ll turn the product brief into requirements for what the code needs to do.</li>
-<li>We’ll get Claude to propose a specification for how to achieve that in code.</li>
-<li>We’ll get Claude to implement that specification, and finally</li>
-<li>We’ll get Claude to review that specification.</li>
-</ol>
-<p>All this is designed to minimize your time working on the code and maximize Claude’s.</p>
-<h3 id="1.-requirements" tabindex="-1"><a class="header-anchor" href="#1.-requirements">1. Requirements</a></h3>
-<p>Do this as a team: crowd around one laptop and argue through the requirements. Each of you will ship your own agent, but you should settle disagreements before anyone writes code. Agree on the same scenarios, then commit them to each repository.</p>
-<p>Open <code>product-brief.md</code> before you write the scenarios. For each scenario, name the user decision, serious failure, or constraint it protects. If you cannot name one, leave that scenario out of the first version.</p>
-<table>
-<thead>
-<tr>
-<th>Product decision</th>
-<th>Possible scenario</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Avoid acting twice on the same report</td>
-<td>A duplicate contact does not open another incident</td>
-</tr>
-<tr>
-<td>Keep uncertainty visible</td>
-<td>Conflicting reports preserve the contradiction</td>
-</tr>
-<tr>
-<td>Protect life before property</td>
-<td>An incident with people trapped outranks an empty building</td>
-</tr>
-<tr>
-<td>Keep major reversals accountable</td>
-<td>A redirect records what the agent is giving up</td>
-</tr>
-</tbody>
-</table>
-<p>We’ll be using Gherkin for this. It’s a great way to express formal software requirements in a way that’s understandable for your product/project managers and is also directly testable. The starter ships initial scenarios in <code>starter/features/</code>. These are a starting point, not a finished spec: grow them as you discover new cases - add scenarios and edge cases as your understanding deepens.</p>
-<p>Once you’ve figured out the fixed requirements:</p>
-<ol>
-<li>Push the requirements in formal code up to your own repository.</li>
-<li>Have agent publish an artifact describing the design, including a <a href="/day-1/01-hadr/#design">mermaid diagram</a>, and have one of your teammates review this.</li>
-</ol>
-<pre><code class="language-bash">uv run behave                # check everything (this will fail)
-uv run behave --tags=@warmup # check just this stage
-</code></pre>
-<h3 id="2.-specification" tabindex="-1"><a class="header-anchor" href="#2.-specification">2. Specification</a></h3>
-<p>This task is too simple for a full specification, but watch out for the <a href="/day-1/06-agentic-loop/">agentic loop</a> and <a href="/day-2/03-reconciliation/">reconciliation</a> - you’ll need to vet the specification there.</p>
-<p>Ask Claude to write a spec for how to satisfy your requirements, it will just write you the exact code (for this exercise.)</p>
-<h3 id="3.-implementation" tabindex="-1"><a class="header-anchor" href="#3.-implementation">3. Implementation</a></h3>
-<h4 id="fan-out-and-fill-in-the-functions" tabindex="-1"><a class="header-anchor" href="#fan-out-and-fill-in-the-functions">Fan out and fill in the functions</a></h4>
-<p>Both <code>find</code> functions filter by location and time window. The starter repository supplies the dataclasses, the stubbed signatures, and the requirements: each function’s contract and the acceptance scenarios your PR must satisfy. Plan against those requirements rather than inventing scope; keep each store to a dict plus a JSON file.</p>
-<p>Start in plan mode: have Claude propose the implementation and publish the plan as an artifact. Review the page yourself - push back on anything underspecified - then approve the plan and let the build run.</p>
-<p>The work splits into four independent units: reports, open and close, get and find, and update and link. Build all four in your own repository, but build them <em>concurrently</em> - one worktree and one agent per unit, one pull request each, each reviewed by a teammate. Running four agents at once is the point of the exercise; you will be doing it all week. To work in an isolated worktree:</p>
-<pre><code class="language-bash">git worktree add ../hadr-reports -b reports   # new branch in a sibling folder
-cd ../hadr-reports &amp;&amp; claude                   # run the agent there
-# ...build, commit, push, open the PR...
-git worktree remove ../hadr-reports            # clean up after the merge
-</code></pre>
-<p>Each worktree shares the same git history but has its own working files, so concurrent agents never fight over uncommitted changes.</p>
-<p>Take the time to get this right, we’ll be using this for your agent’s memory in the <a href="/day-1/06-agentic-loop/">agentic loop</a>.</p>
-<h3 id="4.-merging-and-review" tabindex="-1"><a class="header-anchor" href="#4.-merging-and-review">4. Merging and Review</a></h3>
-<p>Basic principles are:</p>
+<p>Review the brief as a team. Remove each statement that the team cannot support. Keep the agreed text. Each participant will add it to the report-store branch as <code>product-brief.md</code>.</p>
+<p>The product brief gives product context. It is not the technical specification for this activity.</p>
+<h2 id="what-you-will-build" tabindex="-1"><a class="header-anchor" href="#what-you-will-build">What you will build</a></h2>
+<p>The report store holds evidence from public contacts. A stored report does not change. You will implement these methods:</p>
 <ul>
-<li>Nobody merges without a teammate’s approval, even in their own repository.</li>
-<li>PRs reference the scenario or requirement they satisfy.</li>
-<li>Generated code is held to the same tests and repository conventions as hand-written code.</li>
+<li><code>add</code>;</li>
+<li><code>get</code>;</li>
+<li><code>all</code>; and</li>
+<li><code>find_reports</code>.</li>
 </ul>
-<p>Push each unit as a branch, open a pull request against your <code>master</code>, and get a teammate to review it before you merge. Four small PRs reviewed by four different people beats one big PR nobody reads.</p>
-<p>In Claude Code, run <code>/install-github-app</code> to connect the repo, then mention <code>@claude</code> in a PR to request a review.</p>
-<h4 id="adversarial-pr-(optional)" tabindex="-1"><a class="header-anchor" href="#adversarial-pr-(optional)">Adversarial PR (Optional)</a></h4>
-<p>Once your good PRs are in, open a destructive one against a teammate’s repository that should not merge - fonts to Comic Sans, committed OpenCode key, deleted tests, etc. Run an agent review loop over the pull requests landing in your own repo and see whether it catches what your teammate planted. Claude can catch obvious bugs, but not always.</p>
-<p>Agents write code fast; your review process and extensive test suite is the guardrail. We’ll learn more about this in <a href="/day-1/07-checkpoint/#activity%3A-backpressure-engineering">backpressure engineering</a> at the end of the day.</p>
-<h3 id="when-you%E2%80%99re-done" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done">When you’re done</a></h3>
+<p>The incident store holds the agent’s current beliefs. An incident can change when the agent receives more evidence. You will implement these methods:</p>
+<ul>
+<li><code>open</code>;</li>
+<li><code>get</code>;</li>
+<li><code>all</code>;</li>
+<li><code>find</code>;</li>
+<li><code>update</code>;</li>
+<li><code>link</code>; and</li>
+<li><code>close</code>.</li>
+</ul>
+<p>The starter supplies the data classes and the method signatures. Keep each store as a dictionary with a JSON log.</p>
+<p>Do not decide how a report maps to an incident. This decision is part of the reconciliation activity on Day 2.</p>
+<h2 id="understand-the-supplied-specification" tabindex="-1"><a class="header-anchor" href="#understand-the-supplied-specification">Understand the supplied specification</a></h2>
+<p>The starter repository already contains the technical specification. Do not ask Claude to write a second specification.</p>
+<p>The specification has two parts:</p>
 <ol>
-<li>
-<p><strong>Get all four units merged</strong> and confirm the requirements are fulfilled from a fresh pull of your own <code>master</code>:</p>
-<pre><code class="language-sh">uv run behave --tags=@warmup # check just this stage
-uv run pytest                # plumbing + smoke
-</code></pre>
-</li>
-<li>
-<p><strong>Post what you planted to the Padlet</strong>: the destructive pull request you opened against a teammate, and whether <code>@claude</code> caught it. The ones that slip through are the useful data - that is the shape of the review your test suite has to cover instead.</p>
-</li>
+<li>The Gherkin files define the required behavior.</li>
+<li>The method docstrings define the detailed contracts and edge cases.</li>
 </ol>
+<p>Read these files before you write code:</p>
+<ul>
+<li><code>features/reports.feature</code></li>
+<li><code>features/incidents.feature</code></li>
+<li><code>features/steps/report_steps.py</code></li>
+<li><code>features/steps/incident_steps.py</code></li>
+<li><code>features/steps/common_steps.py</code></li>
+<li><code>src/hadr_agent/stores/reports.py</code></li>
+<li><code>src/hadr_agent/stores/incidents.py</code></li>
+</ul>
+<p>A Gherkin scenario gives one example of required behavior:</p>
+<ul>
+<li><code>Given</code> defines the initial state.</li>
+<li><code>When</code> defines the action.</li>
+<li><code>Then</code> defines the expected result.</li>
+</ul>
+<p>Behave runs each scenario as an acceptance test. Gherkin states what the code must do. It does not state how to implement the code.</p>
+<p>The supplied scenarios are the minimum requirements. Do not delete them or make them less strict.</p>
+<h2 id="check-the-starting-state" tabindex="-1"><a class="header-anchor" href="#check-the-starting-state">Check the starting state</a></h2>
+<p><a href="/preflight/">Preflight</a> instructed you to clone the <a href="https://dl.hadr.ocelliq.com/starter.git">course starter</a> into your own private repository. Run these commands in that repository:</p>
+<pre><code class="language-bash">uv sync
+uv run pytest
+uv run behave --tags=@warmup
+</code></pre>
+<p><code>pytest</code> must pass. The <code>@warmup</code> scenarios must fail because the store methods are not implemented.</p>
+<p>If Behave reports <code>No module named 'hadr_agent'</code>, run <code>uv sync</code> in the repository and try again.</p>
+<p>Do not run <code>uv run behave</code> as the completion check. That command also runs scenarios for later course activities.</p>
+<p>Each participant works in a separate repository. Give your teammates permission to review your pull requests. Never share your OpenCode key.</p>
+<h2 id="add-a-team-scenario" tabindex="-1"><a class="header-anchor" href="#add-a-team-scenario">Add a team scenario</a></h2>
+<p>As a team, compare the product brief with the supplied store scenarios. Look for one important store behavior that the supplied scenarios do not test.</p>
+<p>Add one scenario only if it meets these conditions:</p>
+<ul>
+<li>It supports a decision or constraint in the product brief.</li>
+<li>It applies only to the report store or the incident store.</li>
+<li>You can test it without intake, report matching, dispatch, or replanning.</li>
+<li>You can explain the failure that it prevents.</li>
+</ul>
+<p>Examples of correct scope include:</p>
+<ul>
+<li>a search includes a report that is exactly on the radius boundary;</li>
+<li>a search includes reports on the start and end ticks;</li>
+<li>closing an incident stores the reason and the update tick;</li>
+<li>an update with an unknown field causes an error; or</li>
+<li>an update does not remove linked report IDs.</li>
+</ul>
+<p>Do not add a scenario only to complete this step. Use the supplied scenarios if the product brief does not identify a missing store behavior.</p>
+<p>If the team adds a scenario, each participant must add the same scenario to the applicable feature file. Add or change a step definition only when the scenario needs it. Run the feature and make sure that Behave does not report an undefined step.</p>
+<h2 id="build-the-report-store" tabindex="-1"><a class="header-anchor" href="#build-the-report-store">Build the report store</a></h2>
+<p>Complete the report store first.</p>
+<h3 id="1.-create-a-branch" tabindex="-1"><a class="header-anchor" href="#1.-create-a-branch">1. Create a branch</a></h3>
+<pre><code class="language-bash">git switch master
+git pull
+git switch -c feat/report-store
+</code></pre>
+<p>Add the agreed product brief to this branch as <code>product-brief.md</code>.</p>
+<p>If the team added a report scenario, add it to this branch before Claude changes the store.</p>
+<h3 id="2.-ask-for-a-plan" tabindex="-1"><a class="header-anchor" href="#2.-ask-for-a-plan">2. Ask for a plan</a></h3>
+<p>Start Claude in the repository. Use this request:</p>
+<blockquote>
+<p>Read <code>features/reports.feature</code>, <code>features/steps/report_steps.py</code>, <code>features/steps/common_steps.py</code>, and <code>src/hadr_agent/stores/reports.py</code>. The Gherkin scenarios and method docstrings are the specification. Propose a small implementation plan for <code>ReportStore</code>. Do not edit files. Keep the dictionary store and the JSON log. Do not change later-stage code.</p>
+</blockquote>
+<p>Review the plan. Check these items:</p>
+<ul>
+<li>It covers <code>STORE-R1</code> through <code>STORE-R5</code>.</li>
+<li>It covers the team scenario, if the team added one.</li>
+<li>It follows each method docstring.</li>
+<li>It keeps reports immutable.</li>
+<li>It does not add unrelated behavior.</li>
+<li>It includes the correct test command.</li>
+</ul>
+<p>Reject or correct the plan if one of these items is missing. Approve the plan only when you can explain it.</p>
+<h3 id="3.-build-and-test" tabindex="-1"><a class="header-anchor" href="#3.-build-and-test">3. Build and test</a></h3>
+<p>Ask Claude to implement the approved plan. Then run:</p>
+<pre><code class="language-bash">uv run behave features/reports.feature
+uv run pytest
+git diff --check
+</code></pre>
+<p>Read the code changes. Do not change a supplied scenario only to make a test pass.</p>
+<p>If a test fails, ask Claude to explain the cause before it changes the code. Repeat the tests after each correction.</p>
+<h3 id="4.-review-and-merge" tabindex="-1"><a class="header-anchor" href="#4.-review-and-merge">4. Review and merge</a></h3>
+<p>Commit the change and push the branch. Open a pull request to your own <code>master</code> branch.</p>
+<p>List <code>STORE-R1</code> through <code>STORE-R5</code> in the pull request. Also list the team scenario if you added one. Include the test commands and their results.</p>
+<p>Ask <code>@claude</code> to review the pull request. Then ask a teammate to check:</p>
+<ul>
+<li>the behavior in the Gherkin scenarios;</li>
+<li>the edge cases in the method docstrings;</li>
+<li>changes outside the report store;</li>
+<li>changes to tests; and</li>
+<li>the test evidence.</li>
+</ul>
+<p>Correct each valid problem. Run the tests again. A teammate must approve the pull request before you merge it.</p>
+<h2 id="build-the-incident-store" tabindex="-1"><a class="header-anchor" href="#build-the-incident-store">Build the incident store</a></h2>
+<p>Merge the report-store pull request before you start this unit. Then create the next branch:</p>
+<pre><code class="language-bash">git switch master
+git pull
+git switch -c feat/incident-store
+</code></pre>
+<p>If the team added an incident scenario, add it to this branch before Claude changes the store.</p>
+<p>Use the same plan, build, test, and review process. Use this planning request:</p>
+<blockquote>
+<p>Read <code>features/incidents.feature</code>, <code>features/steps/incident_steps.py</code>, <code>features/steps/common_steps.py</code>, and <code>src/hadr_agent/stores/incidents.py</code>. The Gherkin scenarios and method docstrings are the specification. Propose a small implementation plan for <code>IncidentStore</code>. Do not edit files. Keep the dictionary store and the JSON log. Do not change later-stage code.</p>
+</blockquote>
+<p>The plan must cover <code>STORE-I1</code> through <code>STORE-I6</code> and the team scenario, if the team added one.</p>
+<p>Run these checks after Claude implements the approved plan:</p>
+<pre><code class="language-bash">uv run behave features/incidents.feature
+uv run pytest
+git diff --check
+</code></pre>
+<p>Open a second pull request. List <code>STORE-I1</code> through <code>STORE-I6</code> and the test results. Ask <code>@claude</code> and a teammate to review it. Correct valid problems and run the tests again. Merge only after a teammate approves it.</p>
+<h2 id="optional-review-test" tabindex="-1"><a class="header-anchor" href="#optional-review-test">Optional review test</a></h2>
+<p>Do this only after you complete the required work. Ask a teammate for permission before you create the pull request.</p>
+<p>Open a pull request that contains one deliberate error. For example, remove a test or add an incorrect return value. Do not use a real secret. The pull request must not merge.</p>
+<p>Ask <code>@claude</code> to review the pull request. Compare its findings with the teammate’s findings. Close the pull request. Post the error and the review result to the Padlet.</p>
+<h2 id="completion-check" tabindex="-1"><a class="header-anchor" href="#completion-check">Completion check</a></h2>
+<p>Pull a current copy of your own <code>master</code> branch. Then run:</p>
+<pre><code class="language-bash">git switch master
+git pull
+uv run behave --tags=@warmup
+uv run pytest
+</code></pre>
+<p>You are finished when:</p>
+<ul>
+<li><code>STORE-R1</code> through <code>STORE-R5</code> pass;</li>
+<li><code>STORE-I1</code> through <code>STORE-I6</code> pass;</li>
+<li>each added team scenario passes;</li>
+<li><code>pytest</code> passes;</li>
+<li>the report and incident pull requests have teammate approval; and</li>
+<li>no later-stage code changed.</li>
+</ul>
 
           
           
