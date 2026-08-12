@@ -168,7 +168,7 @@
       <main id="main" class="page-main">
         <article class="content">
           <h1 id="build-an-llm-based-app" tabindex="-1"><a class="header-anchor" href="#build-an-llm-based-app">Build an LLM-based app</a></h1>
-<p>Work in pairs. Build a small app that uses an LLM. Use at least three techniques from this course.</p>
+<p>Work as a team. Build one small app that uses an LLM. Use at least three techniques from this course.</p>
 <p><img src="/day-2/06-finale/idea-to-action-journey.png" alt="From idea to action"></p>
 <p>HADR was the worked example. Your app does not need to use the HADR theme. Your app also does not need an agent loop. Use the simplest design that solves the problem.</p>
 <h2 id="requirements" tabindex="-1"><a class="header-anchor" href="#requirements">Requirements</a></h2>
@@ -178,7 +178,7 @@
 <li>one complete input-to-output path;</li>
 <li>one useful task for the LLM;</li>
 <li>at least three course techniques;</li>
-<li>synthetic, public, or safely redacted data; and</li>
+<li>one shared repository; and</li>
 <li>tests or examples that show the result.</li>
 </ul>
 <p>Use the LLM for a task that simple parsing or a fixed template cannot do. Do not add an agent loop only to make the app look more advanced.</p>
@@ -193,12 +193,23 @@
 <li>prepare a short <code>README.md</code>.</li>
 </ol>
 <p>You approve the idea, scope, and three techniques before Claude writes code.</p>
+<h2 id="work-as-a-team" tabindex="-1"><a class="header-anchor" href="#work-as-a-team">Work as a team</a></h2>
+<p>Build the minimum input-to-output path first. Then divide the remaining work into independent features.</p>
+<p>For each feature, define:</p>
+<ul>
+<li>one owner;</li>
+<li>the files or interface that the feature can change;</li>
+<li>one acceptance check; and</li>
+<li>its dependencies on other features.</li>
+</ul>
+<p>Use a separate branch for each feature. Consider a separate <a href="https://code.claude.com/docs/en/worktrees">Claude Code worktree</a> for each branch. A worktree gives each feature its own working directory. This lets team members and Claude sessions work in parallel without changing the same checkout.</p>
+<p>Review each feature before you merge it. Merge features one at a time. Run the complete test set after each merge.</p>
 <h2 id="find-an-idea-with-claude" tabindex="-1"><a class="header-anchor" href="#find-an-idea-with-claude">Find an idea with Claude</a></h2>
 <p>Open a new Claude Code conversation. Paste this prompt:</p>
 <blockquote>
-<p>We are two software engineers who work in defence technology. Help us choose a small app that uses an LLM. We will use only synthetic, public, or safely redacted data. Do not ask for classified, operational, proprietary, security-sensitive, or personal data.</p>
+<p>We are ______. Help us choose a small app that uses an LLM.</p>
 <p>Ask one question at a time. Explore software development, testing, maintenance, systems engineering, requirements, assurance, technical reports, simulation, data analysis, and other areas that interest us.</p>
-<p>Do not assume that the app must be a chatbot, an agent, or a defence app.</p>
+<p>Do not assume that the app must be a chatbot or an agent.</p>
 <p>Give us at least three different ideas. For each idea, list:</p>
 <ul>
 <li>the user;</li>
@@ -211,6 +222,7 @@
 </ul>
 <p>Recommend one idea. Base the recommendation on usefulness, clear scope, and ease of demonstration.</p>
 <p>After we choose an idea, write a one-page <code>PRD.md</code>. Include the problem, the input-to-output path, one example input and output, acceptance criteria, three test examples, non-goals, and the three course techniques.</p>
+<p>Propose features that our team can build in parallel after the minimum path works. For each feature, list its owner, file or interface boundary, acceptance check, and dependencies. Warn us when two proposed features are likely to change the same files.</p>
 <p>Do not add features that we cannot demonstrate. At the end, ask us what to remove.</p>
 </blockquote>
 <p>Choose a small idea. Remove features until one complete path remains.</p>
@@ -253,25 +265,36 @@
 <li>code review.</li>
 </ul>
 <p>At least one technique must control how the app uses the LLM. At least one technique must test or constrain the model. The use of Claude to write code is not one of the three techniques.</p>
-<h2 id="prompt-claude-to-implement-the-app" tabindex="-1"><a class="header-anchor" href="#prompt-claude-to-implement-the-app">Prompt Claude to implement the app</a></h2>
+<h2 id="prompt-claude-to-plan-the-team-build" tabindex="-1"><a class="header-anchor" href="#prompt-claude-to-plan-the-team-build">Prompt Claude to plan the team build</a></h2>
 <p>Create the project. Start a new Claude Code conversation. Paste:</p>
 <blockquote>
 <p>Read <code>PRD.md</code> and inspect this repository. Do not write code yet.</p>
 <p>Show the smallest complete input-to-output path. Show where each of the three course techniques belongs. For each technique, state the evidence that will show that it is useful.</p>
-<p>Propose a short plan. Make one test example work from start to finish before you add other features. Keep prompts in separate files. Keep deterministic validation outside the model. Do not add an agent loop unless one result must control the next tool call or model call.</p>
+<p>Propose a short plan. Make one test example work from start to finish before you add other features. Then divide the remaining work into independent features for the team.</p>
+<p>For each feature, list the files or interfaces that it can change, one acceptance check, and its dependencies. Put this plan in <code>TEAM_PLAN.md</code>. Warn us about features that can cause merge conflicts.</p>
+<p>Keep prompts in separate files. Keep deterministic validation outside the model. Do not add an agent loop unless one result must control the next tool call or model call.</p>
 <p>Show me the plan and wait for approval.</p>
 <p>After approval, implement one small step at a time. Run the relevant check after each step. Run all three test examples. Show the first important failure before you fix it. Make one improvement that has before-and-after evidence.</p>
 <p>Do not add authentication, deployment, or external integrations unless the main path needs them.</p>
 <p>At the end, write a short <code>README.md</code>. Include setup, demonstration steps, the three techniques, the evidence for each technique, known limits, and the next safe improvement.</p>
 </blockquote>
 <p>Review Claude’s work. Inspect the raw model input and output. Ask Claude to explain code that you do not understand.</p>
+<h2 id="build-features-in-parallel" tabindex="-1"><a class="header-anchor" href="#build-features-in-parallel">Build features in parallel</a></h2>
+<p>After the minimum path works, create one branch and worktree for each approved feature. Start a separate Claude Code conversation in each worktree. Paste:</p>
+<blockquote>
+<p>Read <code>PRD.md</code> and <code>TEAM_PLAN.md</code>. Implement only this feature: ______.</p>
+<p>Follow the approved file and interface boundary. Do not change another feature’s files unless the interface cannot work. If you find such a problem, stop and explain it before you edit.</p>
+<p>Run this feature’s acceptance check. Summarize the files changed, the evidence, and any integration risk. Do not merge the branch.</p>
+</blockquote>
+<p>Review the feature branch. Then merge it through the team’s normal review process.</p>
 <h2 id="check-the-result" tabindex="-1"><a class="header-anchor" href="#check-the-result">Check the result</a></h2>
 <p>Your project is complete when:</p>
 <ul>
 <li>one input-to-output path works;</li>
 <li>all three test examples run;</li>
-<li>the repository contains <code>PRD.md</code> and <code>README.md</code>;</li>
+<li>the repository contains <code>PRD.md</code>, <code>TEAM_PLAN.md</code>, and <code>README.md</code>;</li>
 <li>the app uses three course techniques;</li>
+<li>the team has reviewed and integrated its feature branches;</li>
 <li>at least one improvement has before-and-after evidence; and</li>
 <li>you can explain what the model does and what code checks.</li>
 </ul>
