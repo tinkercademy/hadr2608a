@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Reference solution: phase 3</title>
+    <title>Claude Code on the web</title>
     <meta name="description" content="Course notes for the DSTA Agentic AI for HADR Workshop." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -73,13 +73,7 @@
               <a href="/day-1/05-evaluation/" class="sidebar-sublink">Subagents and Evals</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-1/06-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/07-checkpoint/" class="sidebar-sublink">Checkpoint</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/08-show-and-tell/" class="sidebar-sublink">Show and tell</a>
+              <a href="/day-1/06-claude-code-web/" class="sidebar-sublink" aria-current="page">Claude Code on the web</a>
             </li>
           </ul>
         </li>
@@ -89,6 +83,12 @@
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-2/00a-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/00b-quality-gates/" class="sidebar-sublink">Quality gates and integration</a>
+            </li>
             <li class="sidebar-subitem">
               <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
             </li>
@@ -154,43 +154,60 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Reference solution: phase 3</h1>
+          <h1 class="page-title">Claude Code on the web</h1>
           <p class="page-subtitle">Day 1</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="phase-3-reference-solution" tabindex="-1"><a class="header-anchor" href="#phase-3-reference-solution">Phase 3 reference solution</a></h1>
-<p>An example scenario for an edge LOOP-1…5 never exercises: malformed JSON in the model’s tool-call arguments, which the docstring contract says must fall back to an empty dict rather than crash. Append to <code>features/agent_loop.feature</code>:</p>
-<pre><code class="language-gherkin">  Scenario: LOOP-6 malformed tool arguments fall back to an empty dict
-    Given the scripted model calls tool &quot;travel_time&quot; with malformed arguments, then yields
-    When the agent loop runs
-    Then the loop ran 2 rounds
-    And tool &quot;travel_time&quot; got empty arguments
-</code></pre>
-<p>And the two new steps in <code>features/steps/agent_loop_steps.py</code> (the existing <code>_call</code> helper always emits valid JSON, so build the malformed call directly):</p>
-<pre><code class="language-python">@given('the scripted model calls tool &quot;{name}&quot; with malformed arguments, then yields')
-def step_call_malformed(context, name):
-    call = SimpleNamespace(
-        id=&quot;call-1&quot;,
-        type=&quot;function&quot;,
-        function=SimpleNamespace(name=name, arguments=&quot;{not json&quot;),
-    )
-    context.script = [
-        _turn(&quot;&lt;think&gt;bad args&lt;/think&gt;&quot;, [call]),
-        _turn(&quot;&lt;think&gt;done&lt;/think&gt;recovered&quot;),
-    ]
-
-
-@then('tool &quot;{name}&quot; got empty arguments')
-def step_empty_args(context, name):
-    assert (name, {}) in context.calls, context.calls
-</code></pre>
-<p>Verified: all 6 scenarios pass against the phase-2 reference loop.</p>
+          <h1 id="claude-code-on-the-web" tabindex="-1"><a class="header-anchor" href="#claude-code-on-the-web">Claude Code on the web</a></h1>
+<p>Use Claude Code on the web to research one question and create an artifact. Each team member must complete this activity.</p>
+<h2 id="connect-github" tabindex="-1"><a class="header-anchor" href="#connect-github">Connect GitHub</a></h2>
+<p>Claude Code on the web uses GitHub to access a repository and save its work. Complete these steps before you start:</p>
+<ol>
+<li>Sign in at <a href="https://claude.ai/">claude.ai</a>.</li>
+<li>Connect your GitHub account to Claude.</li>
+<li>Open <a href="https://claude.ai/code">Claude Code on the web</a>.</li>
+<li>Give Claude access to the repository where you want it to create the artifact.</li>
+</ol>
+<h2 id="activity" tabindex="-1"><a class="header-anchor" href="#activity">Activity</a></h2>
+<ol>
+<li>Select one research question from the list below. Each team member must select a different question.</li>
+<li>Paste the question into Claude Code on the web.</li>
+<li>Ask follow-up questions. Challenge unclear claims and verify the important parts of the answer.</li>
+<li>Ask Claude to create an artifact in the connected repository that explains your findings.</li>
+<li>Present the artifact to your group.</li>
+<li>Share the artifact on the course Padlet.</li>
+</ol>
+<h2 id="optional-extension%3A-create-slides" tabindex="-1"><a class="header-anchor" href="#optional-extension%3A-create-slides">Optional extension: Create slides</a></h2>
+<p>Turn the artifact into slides. Start with the <a href="https://github.com/new?template_name=marp-cli-example&amp;template_owner=yhatt">MARP template</a>. You can also use the <a href="https://github.com/softaworks/agent-toolkit/blob/main/skills/marp-slide/SKILL.md">marp-slides skill</a>.</p>
+<h2 id="the-questions" tabindex="-1"><a class="header-anchor" href="#the-questions">The questions</a></h2>
+<ol>
+<li>How do you wrap an API in an agent skill?</li>
+<li>How do you drive browser actions from Claude Code - the Chrome extension, a browser MCP, or a CLI tool? When is a browser the wrong tool for the job?</li>
+<li>How do you run an alternative model - Kimi K3, GLM 5.2, DeepSeek V4 Pro - inside Claude Code, and what degrades when you do?</li>
+<li>Pi ships a system prompt of about a thousand tokens and four tools; Claude Code ships far more of both. What do you gain and lose at each end of that spectrum?</li>
+<li>When should you use MCP vs agent skills vs CLI vs API?</li>
+<li>Explain the “smart zone” and “dumb zone” of the context window.</li>
+<li>Why would one use <code>CLAUDE.md</code> as a directory of links to other .md files instead of one large <code>CLAUDE.md</code>?</li>
+<li>What are the pros and cons of running coding agents (and models) on your own computer vs in the cloud?</li>
+<li>Find agent skills that review code quality, technical architecture, or security vulnerabilities. Compare and contrast them: what does each one actually look at, and where do they disagree?</li>
+<li>How should you format what you feed an agent - markdown, HTML, JSON, XML-style tags? Find a case where the format changed the answer.</li>
+<li>What is a sound decision-making process for choosing LLMs and inference providers?</li>
+<li>What happens when a tool result contains instructions aimed at the agent? Find a real prompt-injection case, and how harnesses defend against it.</li>
+<li>When does handing work to a subagent beat doing it in the main context - and when does it just cost more?</li>
+<li>What would you have to be sure of before letting an agent run unattended for an hour?</li>
+<li>How do you tell whether a prompt change helped, rather than just felt better?</li>
+</ol>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/day-1/05-evaluation/">Previous: Subagents and Evals</a> | <a href="/day-2/">Next: Day 2 overview</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">

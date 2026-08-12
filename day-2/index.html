@@ -73,13 +73,7 @@
               <a href="/day-1/05-evaluation/" class="sidebar-sublink">Subagents and Evals</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-1/06-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/07-checkpoint/" class="sidebar-sublink">Checkpoint</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/08-show-and-tell/" class="sidebar-sublink">Show and tell</a>
+              <a href="/day-1/06-claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
             </li>
           </ul>
         </li>
@@ -89,6 +83,12 @@
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-2/00a-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/00b-quality-gates/" class="sidebar-sublink">Quality gates and integration</a>
+            </li>
             <li class="sidebar-subitem">
               <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
             </li>
@@ -162,10 +162,12 @@
       <main id="main" class="page-main">
         <article class="content">
           <h1 id="day-2" tabindex="-1"><a class="header-anchor" href="#day-2">Day 2</a></h1>
-<p>On Day 2, you build the HADR pipeline in four stages. Then you compare models and run the challenge without human input.</p>
+<p>On Day 2, you build the common agent loop and add quality gates. You then build the HADR pipeline in four stages, compare models, and run the challenge without human input.</p>
 <h2 id="morning" tabindex="-1"><a class="header-anchor" href="#morning">Morning</a></h2>
-<p>In the morning, build each stage in a separate pull request. Review and merge the pull requests in the listed order.</p>
+<p>In the morning, build the agent loop and prepare a clean integration baseline. Then build each pipeline stage in a separate pull request. Review and merge the pull requests in the listed order.</p>
 <ol>
+<li><a href="/day-2/00a-agentic-loop/">Agentic loop</a>: build the common tool loop. Test it with example tools and a real model.</li>
+<li><a href="/day-2/00b-quality-gates/">Quality gates and integration</a>: add automated checks, merge open work, and record a baseline run.</li>
 <li><a href="/day-2/01-dispatcher/">Stage 1: dispatcher</a>: configure the agent loop as the dispatcher. Run it with the simulator.</li>
 <li><a href="/day-2/02-intake/">Stage 2: intake</a>: turn natural-language contacts into structured reports.</li>
 <li><a href="/day-2/03-reconciliation/">Stage 3: reconciliation</a>: use deterministic rules to match reports to incidents.</li>
@@ -178,7 +180,7 @@
 <li><a href="/day-2/06-finale/">Presentation and finale</a>: publish your solution page. Present the important changes and run the challenge map.</li>
 </ol>
 <h2 id="merge-train" tabindex="-1"><a class="header-anchor" href="#merge-train">Merge train</a></h2>
-<p>Make each stage a small pull request for one scenario. A different team member must review and merge each pull request.</p>
+<p>Build the agent loop in two reviewed pull requests. Then make each pipeline stage a small pull request for one scenario. A different team member must review and merge each pull request.</p>
 <p>Merge the pull requests in order. Later stages depend on the earlier stages.</p>
 <p>Stop feature changes before the final exercise. Use the remaining time to integrate and test the system.</p>
 
@@ -187,7 +189,7 @@
           
           <hr />
           <nav aria-label="Course sequence">
-            <p><a href="/day-1/08-show-and-tell/">Previous: Show and tell</a> | <a href="/day-2/01-dispatcher/">Next: Stage 1: dispatcher</a></p>
+            <p><a href="/day-1/06-claude-code-web/">Previous: Claude Code on the web</a> | <a href="/day-2/00a-agentic-loop/">Next: Agentic loop</a></p>
           </nav>
           
         </article>

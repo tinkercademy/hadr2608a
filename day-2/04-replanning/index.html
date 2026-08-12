@@ -73,13 +73,7 @@
               <a href="/day-1/05-evaluation/" class="sidebar-sublink">Subagents and Evals</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-1/06-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/07-checkpoint/" class="sidebar-sublink">Checkpoint</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/08-show-and-tell/" class="sidebar-sublink">Show and tell</a>
+              <a href="/day-1/06-claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
             </li>
           </ul>
         </li>
@@ -89,6 +83,12 @@
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-2/00a-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/00b-quality-gates/" class="sidebar-sublink">Quality gates and integration</a>
+            </li>
             <li class="sidebar-subitem">
               <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
             </li>
@@ -194,7 +194,7 @@ a. Require the agent to file a <code>rationale</code> on every <code>dispatch</c
 <details class="spoiler" data-gate="patapim" hidden><summary>Spoiler: stuck on Stage 4?</summary><p><a href="reference-solution/">Stage 4 reference solution</a></p></details>
 <ol>
 <li>
-<p><strong>Write the scenarios first</strong>, since nothing ships. Cover a corrected location, a changed severity, conflicting occupant claims, a false alarm arriving after you dispatched, and a surprise collapse. Tag them <code>@stage4</code> and widen your CI gate to match, as <a href="/day-1/07-checkpoint/#activity%3A-backpressure-engineering">backpressure engineering</a> set up.</p>
+<p><strong>Write the scenarios first</strong>, since nothing ships. Cover a corrected location, a changed severity, conflicting occupant claims, a false alarm arriving after you dispatched, and a surprise collapse. Tag them <code>@stage4</code> and widen your CI gate to match, as <a href="/day-2/00b-quality-gates/#activity%3A-quality-checks">quality gates and integration</a> set up.</p>
 </li>
 <li>
 <p><strong>Exercise update and close</strong> through the existing CRUD boundary rather than reaching around it. The store is the only record of what your agent believed and when.</p>

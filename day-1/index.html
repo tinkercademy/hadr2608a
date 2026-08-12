@@ -73,13 +73,7 @@
               <a href="/day-1/05-evaluation/" class="sidebar-sublink">Subagents and Evals</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-1/06-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/07-checkpoint/" class="sidebar-sublink">Checkpoint</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/08-show-and-tell/" class="sidebar-sublink">Show and tell</a>
+              <a href="/day-1/06-claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
             </li>
           </ul>
         </li>
@@ -89,6 +83,12 @@
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-2/00a-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/00b-quality-gates/" class="sidebar-sublink">Quality gates and integration</a>
+            </li>
             <li class="sidebar-subitem">
               <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
             </li>
@@ -162,15 +162,15 @@
       <main id="main" class="page-main">
         <article class="content">
           <h1 id="day-1" tabindex="-1"><a class="header-anchor" href="#day-1">Day 1</a></h1>
-<p>On Day 1, you learn to use Claude Code and build the core HADR components.</p>
+<p>On Day 1, you learn to use Claude Code and build the data stores for the HADR agent. You also use Claude Code on the web to research a technical question and create an artifact.</p>
 <p>By the end of the day, each participant must have:</p>
 <ul>
-<li>reviewed changes;</li>
-<li>passing store and loop tests;</li>
-<li>a successful <code>--no-llm</code> skeleton run; and</li>
-<li>a live loop that uses the example tools.</li>
+<li>reviewed store changes;</li>
+<li>passing store tests;</li>
+<li>labeled intake data from the evaluation activity; and</li>
+<li>a research artifact created with Claude Code on the web.</li>
 </ul>
-<p>On Day 2, you will configure this loop as the dispatcher.</p>
+<p>On Day 2, you will build the agent loop and configure it as the dispatcher.</p>
 <h2 id="morning" tabindex="-1"><a class="header-anchor" href="#morning">Morning</a></h2>
 <p>In the morning, you learn the main Claude Code workflow. After the warm-up, you use the HADR game for each exercise.</p>
 <ol>
@@ -181,14 +181,12 @@
 <li><a href="/day-1/02-plan-build-review/">Plan, build, review</a>: use a supplied specification to plan, build, test, and review the report and incident stores.</li>
 </ol>
 <h2 id="afternoon" tabindex="-1"><a class="header-anchor" href="#afternoon">Afternoon</a></h2>
-<p>In the afternoon, you connect tools to the game. Then you build and run the agent loop.</p>
+<p>In the afternoon, you connect tools to the game, examine model costs, and prepare evaluation data. You finish by trying Claude Code on the web.</p>
 <ol>
 <li><a href="/day-1/03-skills-tools-mcps/">Skills, tools, and MCPs</a>: connect Claude Code to the game. Play the game and save the procedure as a skill.</li>
 <li><a href="/day-1/04-tokens/">Tokens and costing</a>: inspect context growth, cost, and prompt caching.</li>
 <li><a href="/day-1/05-evaluation/">Evaluation</a>: select evidence for each check. Use Haiku subagents under <code>/goal</code> to produce labeled intake data.</li>
-<li><a href="/day-1/06-agentic-loop/">Agentic loop</a>: build the common tool loop. Test it with example tools and a real model.</li>
-<li><a href="/day-1/07-checkpoint/">Checkpoint</a>: merge, verify, and divide Day 2 work.</li>
-<li><a href="/day-1/08-show-and-tell/">Show and tell</a>: share what your team built and saw.</li>
+<li><a href="/day-1/06-claude-code-web/">Claude Code on the web</a>: connect GitHub to Claude, research one technical question, and create an artifact.</li>
 </ol>
 <h2 id="learning-outcomes" tabindex="-1"><a class="header-anchor" href="#learning-outcomes">Learning outcomes</a></h2>
 <p>You will learn how to:</p>
@@ -199,7 +197,7 @@
 <li>Connect an agent to an external system through skills, typed tools, and MCP.</li>
 <li>Read and manage context, token spend, and prompt caching.</li>
 <li>Match each check to its evidence: deterministic scenario tests, model evals, or full game runs.</li>
-<li>Build a complete agent loop from parts: standing orders, memory, tools, inner loop, and tick runner.</li>
+<li>Use Claude Code on the web with a connected GitHub repository.</li>
 </ul>
 
           

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Show and tell</title>
+    <title>Reference solution: phase 1</title>
     <meta name="description" content="Course notes for the DSTA Agentic AI for HADR Workshop." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -42,7 +42,7 @@
             <span class="sidebar-link-label">Preflight</span>
           </a>
         </li>
-        <li class="sidebar-item is-open">
+        <li class="sidebar-item">
           <a href="/day-1/" class="sidebar-link">
             <span class="sidebar-link-label">Day 1</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
@@ -73,22 +73,22 @@
               <a href="/day-1/05-evaluation/" class="sidebar-sublink">Subagents and Evals</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-1/06-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/07-checkpoint/" class="sidebar-sublink">Checkpoint</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/08-show-and-tell/" class="sidebar-sublink" aria-current="page">Show and tell</a>
+              <a href="/day-1/06-claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/day-2/" class="sidebar-link">
             <span class="sidebar-link-label">Day 2</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-2/00a-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/00b-quality-gates/" class="sidebar-sublink">Quality gates and integration</a>
+            </li>
             <li class="sidebar-subitem">
               <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
             </li>
@@ -154,46 +154,35 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Show and tell</h1>
-          <p class="page-subtitle">Day 1</p>
+          <h1 class="page-title">Reference solution: phase 1</h1>
+          <p class="page-subtitle">Day 2</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="show-and-tell%3A-one-research-question" tabindex="-1"><a class="header-anchor" href="#show-and-tell%3A-one-research-question">Show and tell: one research question</a></h1>
-<p>If time allows: each member takes one question below, pastes it verbatim into Claude Code, and interrogates the answer - push back, question further, verify.</p>
-<ol>
-<li>When you are happy with the answer, ask Claude to build an artifact that presents your finding.</li>
-<li>Present it within your group, then share your artifact on the course Padlet so everyone else can read it.</li>
-<li>If time permits, turn it into slides too: start from the <a href="https://github.com/new?template_name=marp-cli-example&amp;template_owner=yhatt">MARP template</a>, optionally with the <a href="https://github.com/softaworks/agent-toolkit/blob/main/skills/marp-slide/SKILL.md">marp-slides skill</a>.</li>
-</ol>
-<h2 id="the-questions" tabindex="-1"><a class="header-anchor" href="#the-questions">The questions</a></h2>
-<ol>
-<li>How do you wrap an API in an agent skill?</li>
-<li>How do you drive browser actions from Claude Code - the Chrome extension, a browser MCP, or a CLI tool? When is a browser the wrong tool for the job?</li>
-<li>How do you run an alternative model - Kimi K3, GLM 5.2, DeepSeek V4 Pro - inside Claude Code, and what degrades when you do?</li>
-<li>Pi ships a system prompt of about a thousand tokens and four tools; Claude Code ships far more of both. What do you gain and lose at each end of that spectrum?</li>
-<li>When should you use MCP vs agent skills vs CLI vs API?</li>
-<li>Explain the “smart zone” and “dumb zone” of the context window.</li>
-<li>Why would one use <code>CLAUDE.md</code> as a directory of links to other .md files instead of one large <code>CLAUDE.md</code>?</li>
-<li>What are the pros and cons of running coding agents (and models) on your own computer vs in the cloud?</li>
-<li>Find agent skills that review code quality, technical architecture, or security vulnerabilities. Compare and contrast them: what does each one actually look at, and where do they disagree?</li>
-<li>How should you format what you feed an agent - markdown, HTML, JSON, XML-style tags? Find a case where the format changed the answer.</li>
-<li>What is a sound decision-making process for choosing LLMs and inference providers?</li>
-<li>What happens when a tool result contains instructions aimed at the agent? Find a real prompt-injection case, and how harnesses defend against it.</li>
-<li>When does handing work to a subagent beat doing it in the main context - and when does it just cost more?</li>
-<li>What would you have to be sure of before letting an agent run unattended for an hour?</li>
-<li>How do you tell whether a prompt change helped, rather than just felt better?</li>
-</ol>
+          <h1 id="phase-1-reference-solution" tabindex="-1"><a class="header-anchor" href="#phase-1-reference-solution">Phase 1 reference solution</a></h1>
+<p>One call, no tools, no loop: send the system prompt and the task, return the raw content (think block and all) as the final message. This replaces the <code>raise NotImplementedError</code> body of <code>agent_loop</code>; no new imports needed.</p>
+<pre><code class="language-python">    result = LoopResult()
+    resp = client.chat.completions.create(
+        model=model,
+        max_tokens=max_tokens,
+        messages=[
+            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: system},
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user},
+        ],
+        tools=tool_defs,
+        temperature=0,
+    )
+    result.usage.add(resp.usage)
+    result.rounds += 1
+    result.final = resp.choices[0].message.content or &quot;&quot;
+    return result
+</code></pre>
+<p>Verified: <code>LOOP-1</code> passes, <code>ruff check</code> and <code>pyright</code> clean.</p>
 
           
           
-          
-          <hr />
-          <nav aria-label="Course sequence">
-            <p><a href="/day-1/07-checkpoint/">Previous: Checkpoint</a> | <a href="/day-2/">Next: Day 2 overview</a></p>
-          </nav>
           
         </article>
         <footer class="page-foot">

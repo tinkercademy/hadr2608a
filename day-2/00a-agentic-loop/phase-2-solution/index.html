@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Reference solution: phase 1</title>
+    <title>Reference solution: phase 2</title>
     <meta name="description" content="Course notes for the DSTA Agentic AI for HADR Workshop." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -42,7 +42,7 @@
             <span class="sidebar-link-label">Preflight</span>
           </a>
         </li>
-        <li class="sidebar-item is-open">
+        <li class="sidebar-item">
           <a href="/day-1/" class="sidebar-link">
             <span class="sidebar-link-label">Day 1</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
@@ -73,22 +73,22 @@
               <a href="/day-1/05-evaluation/" class="sidebar-sublink">Subagents and Evals</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-1/06-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/07-checkpoint/" class="sidebar-sublink">Checkpoint</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/08-show-and-tell/" class="sidebar-sublink">Show and tell</a>
+              <a href="/day-1/06-claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/day-2/" class="sidebar-link">
             <span class="sidebar-link-label">Day 2</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-2/00a-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/00b-quality-gates/" class="sidebar-sublink">Quality gates and integration</a>
+            </li>
             <li class="sidebar-subitem">
               <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
             </li>
@@ -154,32 +154,82 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Reference solution: phase 1</h1>
-          <p class="page-subtitle">Day 1</p>
+          <h1 class="page-title">Reference solution: phase 2</h1>
+          <p class="page-subtitle">Day 2</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="phase-1-reference-solution" tabindex="-1"><a class="header-anchor" href="#phase-1-reference-solution">Phase 1 reference solution</a></h1>
-<p>One call, no tools, no loop: send the system prompt and the task, return the raw content (think block and all) as the final message. This replaces the <code>raise NotImplementedError</code> body of <code>agent_loop</code>; no new imports needed.</p>
+          <h1 id="phase-2-reference-solution" tabindex="-1"><a class="header-anchor" href="#phase-2-reference-solution">Phase 2 reference solution</a></h1>
+<p>The full loop. Two import changes at the top of <code>agent.py</code>: add <code>import json</code>, and extend the SDK types import to <code>from openai.types.chat import ChatCompletionMessageParam, ChatCompletionToolUnionParam</code>. One module-level helper:</p>
+<pre><code class="language-python">def _replayable_args(raw: str | None) -&gt; str:
+    &quot;&quot;&quot;Tool-call arguments as the provider will accept them back.&quot;&quot;&quot;
+    try:
+        json.loads(raw or &quot;{}&quot;)
+    except json.JSONDecodeError:
+        return &quot;{}&quot;
+    return raw or &quot;{}&quot;
+</code></pre>
+<p>The body:</p>
 <pre><code class="language-python">    result = LoopResult()
-    resp = client.chat.completions.create(
-        model=model,
-        max_tokens=max_tokens,
-        messages=[
-            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: system},
-            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user},
-        ],
-        tools=tool_defs,
-        temperature=0,
-    )
-    result.usage.add(resp.usage)
-    result.rounds += 1
-    result.final = resp.choices[0].message.content or &quot;&quot;
+    messages: list[ChatCompletionMessageParam] = [
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: system},
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user},
+    ]
+    for _ in range(max_rounds):
+        resp = client.chat.completions.create(
+            model=model,
+            max_tokens=max_tokens,
+            messages=messages,
+            tools=tool_defs,
+            temperature=0,
+        )
+        result.usage.add(resp.usage)
+        result.rounds += 1
+        msg = resp.choices[0].message
+        calls = [tc for tc in (msg.tool_calls or []) if tc.type == &quot;function&quot;]
+
+        # Feed the assistant turn back verbatim (content incl. &lt;think&gt;); the
+        # exact bytes let the provider hit its implicit prompt cache.
+        assistant: ChatCompletionMessageParam = {&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: msg.content or &quot;&quot;}
+        if calls:
+            assistant[&quot;tool_calls&quot;] = [
+                {
+                    &quot;id&quot;: tc.id,
+                    &quot;type&quot;: &quot;function&quot;,
+                    &quot;function&quot;: {
+                        &quot;name&quot;: tc.function.name,
+                        # Verbatim, except when the model emitted arguments that are
+                        # not valid JSON: replaying those 400s the whole request, so
+                        # send &quot;{}&quot; and let the tool report the bad call instead.
+                        &quot;arguments&quot;: _replayable_args(tc.function.arguments),
+                    },
+                }
+                for tc in calls
+            ]
+        messages.append(assistant)
+
+        if not calls:
+            result.final = strip_think(msg.content or &quot;&quot;)
+            break
+
+        for tc in calls:
+            try:
+                args = json.loads(tc.function.arguments or &quot;{}&quot;)
+            except json.JSONDecodeError:
+                args = {}
+            out = await run_tool(tc.function.name, args)
+            messages.append({&quot;role&quot;: &quot;tool&quot;, &quot;tool_call_id&quot;: tc.id, &quot;content&quot;: json.dumps(out)})
     return result
 </code></pre>
-<p>Verified: <code>LOOP-1</code> passes, <code>ruff check</code> and <code>pyright</code> clean.</p>
+<p>Why the shape is what it is:</p>
+<ul>
+<li>The <code>tc.type == &quot;function&quot;</code> filter narrows the SDK’s union tool-call type - this is the pyright friction the page warns about, solved without a cast.</li>
+<li>The assistant turn is rebuilt as a plain dict and appended verbatim (content including <code>&lt;think&gt;</code>) so the scripted LOOP-3 cache invariant and the provider’s implicit prompt cache both hold.</li>
+<li>Malformed tool arguments fall back to <code>{}</code> per the docstring contract instead of crashing the loop - and <code>_replayable_args</code> is the same fallback applied to the <em>replay</em>, because “verbatim” stops being possible the moment the model emits arguments the provider will not accept back. Send <code>{}</code> and let the tool report the bad call; replaying the broken string 400s the entire request and kills the episode.</li>
+</ul>
+<p>Verified: all LOOP scenarios pass, <code>ruff check</code> and <code>pyright</code> clean.</p>
 
           
           

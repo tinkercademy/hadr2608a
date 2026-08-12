@@ -42,7 +42,7 @@
             <span class="sidebar-link-label">Preflight</span>
           </a>
         </li>
-        <li class="sidebar-item is-open">
+        <li class="sidebar-item">
           <a href="/day-1/" class="sidebar-link">
             <span class="sidebar-link-label">Day 1</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
@@ -73,22 +73,22 @@
               <a href="/day-1/05-evaluation/" class="sidebar-sublink">Subagents and Evals</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-1/06-agentic-loop/" class="sidebar-sublink" aria-current="page">Agentic loop</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/07-checkpoint/" class="sidebar-sublink">Checkpoint</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/08-show-and-tell/" class="sidebar-sublink">Show and tell</a>
+              <a href="/day-1/06-claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/day-2/" class="sidebar-link">
             <span class="sidebar-link-label">Day 2</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-2/00a-agentic-loop/" class="sidebar-sublink" aria-current="page">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/00b-quality-gates/" class="sidebar-sublink">Quality gates and integration</a>
+            </li>
             <li class="sidebar-subitem">
               <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
             </li>
@@ -155,7 +155,7 @@
       <header class="page-header">
         <div class="page-header-inner">
           <h1 class="page-title">Agentic loop</h1>
-          <p class="page-subtitle">Day 1</p>
+          <p class="page-subtitle">Day 2</p>
         </div>
       </header>
 
@@ -168,8 +168,8 @@
   <img src="ballerina-cappuccina-agentic-loop.png" alt="Ballerina Cappuccina shows the four steps of the agentic loop">
 </figure>
 <p>In this activity, you will build an agent in fewer than 100 lines of Python.</p>
-<p>The main function is <code>agent_loop</code> in <code>agent.py</code>. This function runs the tool loop and does not depend on a specific task. You will build it once and test it. Tomorrow, you will use it in the dispatcher.</p>
-<p>Do not use the other starter files in this activity. You will use them tomorrow.</p>
+<p>The main function is <code>agent_loop</code> in <code>agent.py</code>. This function runs the tool loop and does not depend on a specific task. You will build it once and test it. Later today, you will use it in the dispatcher.</p>
+<p>Do not use the other starter files in this activity. You will use them in later activities.</p>
 <pre class="mermaid">---
 config:
   layout: elk
@@ -285,7 +285,7 @@ uv run hadr-agent &quot;what's the secret message?&quot;
 uv run hadr-agent &quot;what files are in this project and what is it for?&quot;
 </code></pre>
 <p>The <code>rounds</code> value increases when a task needs a sequence of tools. The loop returns the final message when the model stops requesting tools.</p>
-<p>Tomorrow, the dispatcher will use this loop. Only the tools, prompt, and state message will change.</p>
+<p>The dispatcher activity will use this loop. Only the tools, prompt, and state message will change.</p>
 <h3 id="when-you-finish-1" tabindex="-1"><a class="header-anchor" href="#when-you-finish-1">When you finish</a></h3>
 <ol>
 <li>
@@ -359,7 +359,7 @@ uv run hadr-agent &quot;what files are in this project and what is it for?&quot;
 </tr>
 </tbody>
 </table>
-<p>Tomorrow, you will add these types of components to the dispatcher. You do not have to train a model. You can improve the dispatcher through standard software engineering.</p>
+<p>In later activities, you will add these types of components to the dispatcher. You do not have to train a model. You can improve the dispatcher through standard software engineering.</p>
 <p>For more information, read these resources:</p>
 <ul>
 <li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a>: Learn how to select information for the context window.</li>
@@ -374,7 +374,7 @@ uv run hadr-agent &quot;what files are in this project and what is it for?&quot;
           
           <hr />
           <nav aria-label="Course sequence">
-            <p><a href="/day-1/05-evaluation/">Previous: Subagents and Evals</a> | <a href="/day-1/07-checkpoint/">Next: Checkpoint</a></p>
+            <p><a href="/day-2/">Previous: Day 2 overview</a> | <a href="/day-2/00b-quality-gates/">Next: Quality gates and integration</a></p>
           </nav>
           
         </article>

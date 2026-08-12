@@ -73,13 +73,7 @@
               <a href="/day-1/05-evaluation/" class="sidebar-sublink">Subagents and Evals</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/day-1/06-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/07-checkpoint/" class="sidebar-sublink">Checkpoint</a>
-            </li>
-            <li class="sidebar-subitem">
-              <a href="/day-1/08-show-and-tell/" class="sidebar-sublink">Show and tell</a>
+              <a href="/day-1/06-claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
             </li>
           </ul>
         </li>
@@ -89,6 +83,12 @@
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/day-2/00a-agentic-loop/" class="sidebar-sublink">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-2/00b-quality-gates/" class="sidebar-sublink">Quality gates and integration</a>
+            </li>
             <li class="sidebar-subitem">
               <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
             </li>
@@ -163,7 +163,7 @@
         <article class="content">
           <h1 id="stage-1-reference-solution" tabindex="-1"><a class="header-anchor" href="#stage-1-reference-solution">Stage 1 reference solution</a></h1>
 <!-- markdownlint-disable MD033 -->
-<p>Four holes: a minimal <code>_finalize</code> (<code>_project_claim</code> ships working and routes through it), the runner’s stage-1 tick (<code>_process_tick</code>), the state message (<code>_state_message</code>), and the system prompt. The stores and the agent loop are Day 1 work and already pass.</p>
+<p>Four holes: a minimal <code>_finalize</code> (<code>_project_claim</code> ships working and routes through it), the runner’s stage-1 tick (<code>_process_tick</code>), the state message (<code>_state_message</code>), and the system prompt. The stores and the agent loop are complete and already pass.</p>
 <h2 id="intake%3A-project-a-structured-claim-(no-model-call)" tabindex="-1"><a class="header-anchor" href="#intake%3A-project-a-structured-claim-(no-model-call)">Intake: project a structured claim (no model call)</a></h2>
 <p><code>_project_claim</code> ships working; <code>_finalize</code> is what you write. It copies the envelope authority fields (<code>contact_id</code>, <code>reported_location</code>) from the contact - never from the payload - and enforces the report schema, so a <code>none</code> report carries no fire severity or headcount.</p>
 <pre><code class="language-python">def _finalize(fields: dict, contact: dict) -&gt; dict:
