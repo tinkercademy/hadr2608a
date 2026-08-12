@@ -208,7 +208,7 @@
 <p>Land everything still in flight on your own <code>master</code>: the phase-1 and phase-2 loop branches, and the pull request the eval driver opened against your repository. Remember the rule - every one of them needs a teammate’s adversarial review before you merge it, so trade reviews now rather than queuing them all on one person.</p>
 </li>
 <li>
-<p>From a clean clone or worktree, run the deterministic checks (<code>uv run behave --tags=@warmup</code> for the stores, <code>uv run behave features/agent_loop.feature</code> for the loop) and the <code>--no-llm</code> skeleton episode (<code>uv run hadr-runner stage1-basic@londone --no-llm</code> - needs an engine up: <code>cd ../engine &amp;&amp; uv run hadr-engine serve</code>). The skeleton saves nobody; that zero is your baseline.</p>
+<p>From a clean clone or worktree, run the deterministic checks (<code>uv run behave --tags=@warmup</code> for the stores, <code>uv run behave features/agent_loop.feature</code> for the loop) and the <code>--no-llm</code> skeleton episode (<code>uv run hadr-runner stage1-basic@londone --no-llm</code> - needs an engine up: <code>uv run https://dl.hadr.ocelliq.com/hadr-engine.py serve --port 8000</code>). The skeleton saves nobody; that zero is your baseline.</p>
 </li>
 <li>
 <p>Run the live loop on some examples (<code>uv run hadr-agent &quot;what's the secret message?&quot;</code>) and record the <code>rounds</code> and token total it prints.</p>

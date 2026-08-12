@@ -257,7 +257,7 @@ b. call <code>reconcile_vision</code>. (Add the import if necessary.)</li>
 </li>
 <li>
 <p><strong>Run it live</strong> and tune the thresholds against what you see:</p>
-<pre><code class="language-bash">cd ../engine &amp;&amp; uv run hadr-engine serve   # in its own terminal
+<pre><code class="language-bash">uv run https://dl.hadr.ocelliq.com/hadr-engine.py serve --port 8000   # in its own terminal
 uv run hadr-runner stage3-partial@londone
 </code></pre>
 <p>Both functions return their <code>Outcome</code> list and the runner throws it away, so bind it and print it while you tune. A run full of <code>OPEN</code> means your radius is too small; one incident swallowing the map means it is too large.</p>

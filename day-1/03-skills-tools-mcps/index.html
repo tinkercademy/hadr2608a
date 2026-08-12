@@ -194,7 +194,7 @@
 <p>We’ll learn this by connecting Claude to the HADR simulation over MCP, playing it by hand, and then packaging the winning procedure as a skill.</p>
 <h3 id="launch-the-engine" tabindex="-1"><a class="header-anchor" href="#launch-the-engine">Launch the engine</a></h3>
 <p>Launch the engine and open the display to see the map, trucks, and incoming reports for yourself:</p>
-<pre><code class="language-bash">cd engine &amp;&amp; uv run hadr-engine serve --port 8000
+<pre><code class="language-bash">uv run https://dl.hadr.ocelliq.com/hadr-engine.py serve --port 8000
 </code></pre>
 <p>Then open <code>http://127.0.0.1:8000/</code> in a browser. You should be greeted by a blank screen saying “connect to continue”. The <a href="/game/">game guide</a> covers the rules and the <a href="/game/api/">API guide</a> the control surface.</p>
 <p>Remember, the agent has no way to know the actual fires and damage directly, only through what is reported to it.</p>

@@ -207,7 +207,7 @@ a. Require the agent to file a <code>rationale</code> on every <code>dispatch</c
 </li>
 <li>
 <p><strong>Run it live:</strong></p>
-<pre><code class="language-bash">cd ../engine &amp;&amp; uv run hadr-engine serve   # in its own terminal
+<pre><code class="language-bash">uv run https://dl.hadr.ocelliq.com/hadr-engine.py serve --port 8000   # in its own terminal
 uv run hadr-runner stage4-replan@londone
 </code></pre>
 <p>Read the rationales afterwards. A run where every rationale is “dispatching to highest priority incident” is a run where nothing was actually reconsidered.</p>

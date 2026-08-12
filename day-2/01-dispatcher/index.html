@@ -245,7 +245,7 @@ b. order the incidents people-first, and</li>
 </li>
 <li>
 <p><strong>Run it live.</strong> Fill the two holes in <code>runner._process_tick</code>, bring an engine up, and run a full episode:</p>
-<pre><code class="language-bash">cd ../engine &amp;&amp; uv run hadr-engine serve   # in its own terminal
+<pre><code class="language-bash">uv run https://dl.hadr.ocelliq.com/hadr-engine.py serve --port 8000   # in its own terminal
 uv run hadr-runner stage1-basic@londone
 </code></pre>
 <p>Start with <code>minimax-m3</code> as <code>DISPATCH_MODEL</code> (the default).</p>
