@@ -58,6 +58,9 @@
               <a href="/day-1/01-hadr/" class="sidebar-sublink">The HADR game</a>
             </li>
             <li class="sidebar-subitem">
+              <a href="/day-1/01a-starter/" class="sidebar-sublink">Starter kit</a>
+            </li>
+            <li class="sidebar-subitem">
               <a href="/day-1/02-plan-build-review/" class="sidebar-sublink">Plan, build, review</a>
             </li>
             <li class="sidebar-subitem">
@@ -86,9 +89,6 @@
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
-            <li class="sidebar-subitem">
-              <a href="/day-2/00-starter/" class="sidebar-sublink">Starter: CLAUDE.md safari</a>
-            </li>
             <li class="sidebar-subitem">
               <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
             </li>
@@ -162,31 +162,32 @@
       <main id="main" class="page-main">
         <article class="content">
           <h1 id="day-2" tabindex="-1"><a class="header-anchor" href="#day-2">Day 2</a></h1>
-<p>Day 2 evolves the loop in stage order, measures model choices, and finishes with one unattended challenge episode.</p>
+<p>On Day 2, you build the HADR pipeline in four stages. Then you compare models and run the challenge without human input.</p>
 <h2 id="morning" tabindex="-1"><a class="header-anchor" href="#morning">Morning</a></h2>
-<p>The morning is the merge train: evolve the loop in stage order through reviewed PRs.</p>
+<p>In the morning, build each stage in a separate pull request. Review and merge the pull requests in the listed order.</p>
 <ol>
-<li><a href="/day-2/00-starter/">Starter: CLAUDE.md safari</a>: hunt for one convention worth adopting.</li>
-<li><a href="/day-2/01-dispatcher/">Stage 1: dispatcher</a>: configure yesterday’s agent loop into the dispatcher and run it live.</li>
+<li><a href="/day-2/01-dispatcher/">Stage 1: dispatcher</a>: configure the agent loop as the dispatcher. Run it with the simulator.</li>
 <li><a href="/day-2/02-intake/">Stage 2: intake</a>: turn natural-language contacts into structured reports.</li>
-<li><a href="/day-2/03-reconciliation/">Stage 3: reconciliation</a>: insert deterministic matching above incident CRUD.</li>
-<li><a href="/day-2/04-replanning/">Stage 4: replanning</a>: handle contradictions, corrections, redirects, and closure.</li>
+<li><a href="/day-2/03-reconciliation/">Stage 3: reconciliation</a>: use deterministic rules to match reports to incidents.</li>
+<li><a href="/day-2/04-replanning/">Stage 4: replanning</a>: respond to contradictions, corrections, redirects, and closed incidents.</li>
 </ol>
 <h2 id="afternoon" tabindex="-1"><a class="header-anchor" href="#afternoon">Afternoon</a></h2>
-<p>The afternoon proves the loop: compare models, bound the agent, and run the finale.</p>
+<p>In the afternoon, compare models, set agent limits, and run the final exercise.</p>
 <ol>
-<li><a href="/day-2/05-evaluation/">Model comparisons</a>: compare each role’s model with one alternative on frozen fixtures and repeated game runs.</li>
-<li><a href="/day-2/06-finale/">Presentation and finale</a>: publish your solution page, show what made the difference, and run the challenge map.</li>
+<li><a href="/day-2/05-evaluation/">Model comparisons</a>: compare each model with one alternative. Use fixed test data and repeated game runs.</li>
+<li><a href="/day-2/06-finale/">Presentation and finale</a>: publish your solution page. Present the important changes and run the challenge map.</li>
 </ol>
 <h2 id="merge-train" tabindex="-1"><a class="header-anchor" href="#merge-train">Merge train</a></h2>
-<p>Each stage is a reviewed scenario-sized PR, and nobody merges their own - a different member reviews and merges each. Merge in order because later mechanics depend on earlier contracts, then stop feature work for the integration buffer before the finale.</p>
+<p>Make each stage a small pull request for one scenario. A different team member must review and merge each pull request.</p>
+<p>Merge the pull requests in order. Later stages depend on the earlier stages.</p>
+<p>Stop feature changes before the final exercise. Use the remaining time to integrate and test the system.</p>
 
           
           
           
           <hr />
           <nav aria-label="Course sequence">
-            <p><a href="/day-1/08-show-and-tell/">Previous: Show and tell</a> | <a href="/day-2/00-starter/">Next: Starter: CLAUDE.md safari</a></p>
+            <p><a href="/day-1/08-show-and-tell/">Previous: Show and tell</a> | <a href="/day-2/01-dispatcher/">Next: Stage 1: dispatcher</a></p>
           </nav>
           
         </article>

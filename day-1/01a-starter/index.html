@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Starter + CLAUDE.md safari</title>
+    <title>Starter kit</title>
     <meta name="description" content="Course notes for the DSTA Agentic AI for HADR Workshop." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -42,7 +42,7 @@
             <span class="sidebar-link-label">Preflight</span>
           </a>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/day-1/" class="sidebar-link">
             <span class="sidebar-link-label">Day 1</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
@@ -56,6 +56,9 @@
             </li>
             <li class="sidebar-subitem">
               <a href="/day-1/01-hadr/" class="sidebar-sublink">The HADR game</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/day-1/01a-starter/" class="sidebar-sublink" aria-current="page">Starter kit</a>
             </li>
             <li class="sidebar-subitem">
               <a href="/day-1/02-plan-build-review/" class="sidebar-sublink">Plan, build, review</a>
@@ -80,15 +83,12 @@
             </li>
           </ul>
         </li>
-        <li class="sidebar-item is-open">
+        <li class="sidebar-item">
           <a href="/day-2/" class="sidebar-link">
             <span class="sidebar-link-label">Day 2</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
-            <li class="sidebar-subitem">
-              <a href="/day-2/00-starter/" class="sidebar-sublink" aria-current="page">Starter: CLAUDE.md safari</a>
-            </li>
             <li class="sidebar-subitem">
               <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
             </li>
@@ -154,21 +154,70 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Starter + CLAUDE.md safari</h1>
-          <p class="page-subtitle">Day 2</p>
+          <h1 class="page-title">Starter kit</h1>
+          <p class="page-subtitle">Day 1</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="starter%3A-claude.md-safari" tabindex="-1"><a class="header-anchor" href="#starter%3A-claude.md-safari">Starter: <a href="http://CLAUDE.md">CLAUDE.md</a> safari</a></h1>
-<p>Browse <code>CLAUDE.md</code> files online - good hunting grounds are <a href="https://github.com/search?q=path%3ACLAUDE.md&amp;type=code">GitHub code search</a> and <a href="https://github.com/hesreallyhim/awesome-claude-code">awesome-claude-code</a>. Better yet, spawn a few subagents to search the internet in parallel and report back the most interesting conventions they find - yesterday’s <a href="/day-1/05-evaluation/">evaluation session</a> showed the pattern. Share your find on the Padlet.</p>
-<p>Remember, Claude can change its own instructions. Try something like this:</p>
-<pre><code class="language-text">When a rule, policy, or decision surfaces during work (from the user, a hook, or discovery), record it proactively: repo-wide conventions go in CLAUDE.md, design decisions go in ASSUMPTIONS.md.
-</code></pre>
-<h2 id="in-the-starter-kit" tabindex="-1"><a class="header-anchor" href="#in-the-starter-kit">In the starter kit</a></h2>
-<p>The starter repository (<code>starter/</code>) is a <code>uv</code> project: <code>src/hadr_agent/</code> holds the runner shell, the MCP client, the two stores, and the intake/reconcile/dispatch modules. Plumbing ships working; the lessons ship as marked holes. Each store method’s docstring states its contract and edge cases, and <code>features/</code> carries the acceptance scenarios as executable Gherkin with stable IDs - <code>STORE-R*</code> and <code>STORE-I*</code> (Day-1 stores), <code>LOOP-*</code> (agent loop), <code>DISP-*</code> (dispatch, stage 1), <code>INT-*</code> (intake: the <code>_finalize</code> gate is stage 1, the prompt is stage 2), <code>REC-*</code> (reconciliation, stage 3). The holes are: the store methods (Day-1 warm-up), the runner inner loop, intake’s <code>_finalize</code> gate (minimally at stage 1, fully at stage 2) and the intake prompt (stage 2), the reconciliation logic and its match thresholds (stage 3), and the dispatch prompt plus the coverage/priority state-message builder (stages 1 and 4). <code>uv run pytest</code> (plumbing) is green out of the box; <code>uv run behave</code> runs the fill-the-hole scenarios, which fail until you build them. Your PRs cite the scenario IDs they satisfy. Copy <code>.env.example</code> to <code>.env</code> and fill in your OpenCode key (<code>OPENAI_KEY</code>); the endpoint and model settings also live in <code>.env</code> and default to values that work out of the box.</p>
-<p>Open and look around the starter kit in greater detail. In <code>src/hadr_agent/</code>:</p>
+          <h1 id="starter-kit" tabindex="-1"><a class="header-anchor" href="#starter-kit">Starter kit</a></h1>
+<p>You cloned the starter repository during <a href="/preflight/">Preflight</a>. It is a Python project that uses <code>uv</code>.</p>
+<p>Review the project before you change code. Find the files, tests, and incomplete exercises.</p>
+<h2 id="project-status" tabindex="-1"><a class="header-anchor" href="#project-status">Project status</a></h2>
+<p>The starter kit contains working support code and incomplete exercise code.</p>
+<ul>
+<li><code>uv run pytest</code> tests the support code. This command must pass before you start.</li>
+<li><code>uv run behave</code> runs the acceptance tests. Some tests fail until you complete the exercises.</li>
+<li>Each incomplete store method has a docstring. The docstring defines the required behavior and edge cases.</li>
+<li>The <code>features/</code> directory contains the acceptance tests in Gherkin format.</li>
+<li>Each acceptance test has a stable ID. Include the relevant IDs in each pull request.</li>
+</ul>
+<p>Your <code>.env</code> file contains the model endpoint, model names, and <code>OPENAI_KEY</code>. Do not commit this file.</p>
+<h2 id="work-by-lesson" tabindex="-1"><a class="header-anchor" href="#work-by-lesson">Work by lesson</a></h2>
+<table>
+<thead>
+<tr>
+<th>Lesson</th>
+<th>Work</th>
+<th>Test IDs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Day 1: stores</td>
+<td>Implement the report and incident store methods.</td>
+<td><code>STORE-R*</code>, <code>STORE-I*</code></td>
+</tr>
+<tr>
+<td>Day 1: agentic loop</td>
+<td>Implement the inner tool loop in <code>agent.py</code>.</td>
+<td><code>LOOP-*</code></td>
+</tr>
+<tr>
+<td>Day 2, Stage 1: dispatcher</td>
+<td>Build the state message and dispatch prompt. Implement the minimum intake gate. Connect intake and reconciliation in the runner.</td>
+<td><code>DISP-*</code>, <code>INT-*</code></td>
+</tr>
+<tr>
+<td>Day 2, Stage 2: intake</td>
+<td>Complete the intake gate and the intake prompt.</td>
+<td><code>INT-*</code></td>
+</tr>
+<tr>
+<td>Day 2, Stage 3: reconciliation</td>
+<td>Implement the matching logic and thresholds.</td>
+<td><code>REC-*</code></td>
+</tr>
+<tr>
+<td>Day 2, Stage 4: replanning</td>
+<td>Update the dispatch prompt and state message for new evidence.</td>
+<td>Team scenarios</td>
+</tr>
+</tbody>
+</table>
+<h2 id="files-you-will-use" tabindex="-1"><a class="header-anchor" href="#files-you-will-use">Files you will use</a></h2>
+<p>Most course code is in <code>src/hadr_agent/</code>.</p>
 <table>
 <thead>
 <tr>
@@ -179,31 +228,31 @@
 <tbody>
 <tr>
 <td><code>runner.py</code></td>
-<td>Outer shell: owns the MCP session, ticks the loop, calls <code>next_tick()</code> once per tick. Ships working; intake and reconcile are holes.</td>
+<td>Owns the MCP session and processes each tick. It calls <code>next_tick()</code> once per tick. Its intake and reconciliation steps are incomplete.</td>
 </tr>
 <tr>
 <td><code>agent.py</code></td>
-<td>The agentic tool loop, model- and task-agnostic. Every agent here is a configuration of it.</td>
+<td>Contains the task-neutral tool loop. The dispatcher uses this loop.</td>
 </tr>
 <tr>
 <td><code>intake.py</code></td>
-<td>One human contact in, one schema-conforming report out (cheap model). Deliberately <em>not</em> a loop.</td>
+<td>Converts one human contact into one valid report. It makes one model call and does not use the tool loop.</td>
 </tr>
 <tr>
 <td><code>reconcile.py</code></td>
-<td>Deterministic code, no LLM: match reports + truck vision to incidents.</td>
+<td>Matches reports and truck observations to incidents. This code does not use an LLM.</td>
 </tr>
 <tr>
 <td><code>dispatch.py</code></td>
-<td>Configures the loop for dispatch: state message, typed tools, the filed-incident check.</td>
+<td>Configures the tool loop for dispatch. It supplies the state message, typed tools, and incident check.</td>
 </tr>
 <tr>
 <td><code>stores/reports.py</code></td>
-<td>Append-only store of extracted evidence, one row per contact.</td>
+<td>Stores extracted evidence. Reports are append-only, with one report for each contact.</td>
 </tr>
 <tr>
 <td><code>stores/incidents.py</code></td>
-<td>Mutable store of the agent’s beliefs about suspected fires.</td>
+<td>Stores the agent’s current beliefs about suspected fires. Incidents can change.</td>
 </tr>
 <tr>
 <td><code>prompts/intake_system.md</code></td>
@@ -215,31 +264,73 @@
 </tr>
 </tbody>
 </table>
-<p>Two files ship working and should not be changed:</p>
+<p>Do not change these support files:</p>
 <ul>
-<li><code>engine_client.py</code>: Connects to the game MCP and provides it to your agent.</li>
-<li><code>util.py</code>: shared plumbing - token accounting, API client, prompt loading, tool schemas.</li>
+<li><code>engine_client.py</code> connects the agent to the game MCP.</li>
+<li><code>util.py</code> provides token counting, the API client, prompt loading, and tool schemas.</li>
 </ul>
-<h2 id="anatomy-of-an-agent" tabindex="-1"><a class="header-anchor" href="#anatomy-of-an-agent">Anatomy of an agent</a></h2>
-<p>The dispatch agent is a <em>claw</em>: a small, always-on agent that is mostly files and a loop. (The name comes from OpenClaw, which has this shape.) A claw has six parts:</p>
+<h2 id="parts-of-the-dispatch-agent" tabindex="-1"><a class="header-anchor" href="#parts-of-the-dispatch-agent">Parts of the dispatch agent</a></h2>
+<p>The dispatch agent runs continuously during an episode. It does not wait for a user prompt.</p>
+<p>This course calls this type of agent a <em>claw</em>, after OpenClaw. A claw is a small agent with six parts:</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Purpose</th>
+<th>Main file</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prompt</td>
+<td>Gives the dispatch rules to the model.</td>
+<td><code>prompts/dispatch_system.md</code></td>
+</tr>
+<tr>
+<td>Loop</td>
+<td>Sends context to the model and runs its tool calls.</td>
+<td><code>agent.py</code></td>
+</tr>
+<tr>
+<td>Tools</td>
+<td>Let the model read data and dispatch trucks.</td>
+<td><code>dispatch.py</code></td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>Keeps reports and incidents between ticks.</td>
+<td><code>stores/</code></td>
+</tr>
+<tr>
+<td>Heartbeat</td>
+<td>Starts the agent for each tick.</td>
+<td><code>runner.py</code></td>
+</tr>
+<tr>
+<td>Channel</td>
+<td>Exchanges data and commands with the simulator.</td>
+<td><code>engine_client.py</code></td>
+</tr>
+</tbody>
+</table>
+<p>The starter kit supplies the heartbeat and channel. You build or configure the other parts during the course.</p>
+<h2 id="control-flow" tabindex="-1"><a class="header-anchor" href="#control-flow">Control flow</a></h2>
+<p>For each tick, the system does these steps:</p>
 <ol>
-<li><strong>Prompt</strong>/Soul: the prompts in <code>intake_system.md</code> and <code>dispatch_system.md</code>.</li>
-<li><strong>Loop</strong>: the inner tool loop (<code>agent.py</code>) - feed the model context, run the tools it asks for, go round again until it yields for the tick.</li>
-<li><strong>Tools</strong>: actions the model can execute - read contacts, query the map, dispatch.</li>
-<li><strong>Memory</strong>: what survives between ticks, kept in the report and incident stores you built yesterday morning.</li>
-<li><strong>Heartbeat</strong>: what wakes it without a human - the outer runner that invokes the agent.</li>
-<li><strong>Channel</strong>: where output lands so someone can act on it - commands to the simulator.</li>
+<li>The runner gets new data through the channel.</li>
+<li>Intake and reconciliation update the memory.</li>
+<li>The loop reads the current state and applies the dispatch prompt.</li>
+<li>The model uses tools to dispatch trucks or get more data.</li>
+<li>The runner calls <code>next_tick()</code> once.</li>
 </ol>
-<p>In this exercise we provide the heartbeat (<code>runner.py</code>) and the channel (<code>engine_client.py</code>); the rest you configure on top of the <a href="/day-1/06-agentic-loop/">agentic loop</a> you built yesterday.</p>
-<p>In a nutshell: the <strong>heartbeat</strong> fires each tick, the <strong>channel</strong> provides input from the world, which is used to update the <strong>memory</strong>. The <strong>loop</strong> wakes, applies its <strong>prompt</strong> to pick the next action and uses <strong>tools</strong> to execute them. Nobody prompts it mid-episode.</p>
-<p><em>These are the same moving parts of every agentic system, with task- and job-specific modifications.</em></p>
+<p>You will build the <a href="/day-1/06-agentic-loop/">agentic loop</a> later today. You will configure it as a dispatcher on Day 2.</p>
 
           
           
           
           <hr />
           <nav aria-label="Course sequence">
-            <p><a href="/day-2/">Previous: Day 2 overview</a> | <a href="/day-2/01-dispatcher/">Next: Stage 1: dispatcher</a></p>
+            <p><a href="/day-1/01-hadr/">Previous: The HADR game</a> | <a href="/day-1/02-plan-build-review/">Next: Plan, build, review</a></p>
           </nav>
           
         </article>

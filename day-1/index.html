@@ -58,6 +58,9 @@
               <a href="/day-1/01-hadr/" class="sidebar-sublink">The HADR game</a>
             </li>
             <li class="sidebar-subitem">
+              <a href="/day-1/01a-starter/" class="sidebar-sublink">Starter kit</a>
+            </li>
+            <li class="sidebar-subitem">
               <a href="/day-1/02-plan-build-review/" class="sidebar-sublink">Plan, build, review</a>
             </li>
             <li class="sidebar-subitem">
@@ -86,9 +89,6 @@
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
-            <li class="sidebar-subitem">
-              <a href="/day-2/00-starter/" class="sidebar-sublink">Starter: CLAUDE.md safari</a>
-            </li>
             <li class="sidebar-subitem">
               <a href="/day-2/01-dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
             </li>
@@ -162,22 +162,31 @@
       <main id="main" class="page-main">
         <article class="content">
           <h1 id="day-1" tabindex="-1"><a class="header-anchor" href="#day-1">Day 1</a></h1>
-<p>Day 1 starts with a one-hour Claude Code warm-up. It then introduces the general agent loop and the report and incident stores. Each participant should finish with reviewed changes, passing loop and store scenarios, and a <code>--no-llm</code> skeleton run. The dispatcher is the first activity on Day 2.</p>
+<p>On Day 1, you learn to use Claude Code and build the core HADR components.</p>
+<p>By the end of the day, each participant must have:</p>
+<ul>
+<li>reviewed changes;</li>
+<li>passing store and loop tests;</li>
+<li>a successful <code>--no-llm</code> skeleton run; and</li>
+<li>a live loop that uses the example tools.</li>
+</ul>
+<p>On Day 2, you will configure this loop as the dispatcher.</p>
 <h2 id="morning" tabindex="-1"><a class="header-anchor" href="#morning">Morning</a></h2>
-<p>The morning checks that everyone can build with Claude Code, then develops the habits needed to plan, delegate, verify, and review agent-written code. The HADR game becomes the running problem after the warm-up.</p>
+<p>In the morning, you learn the main Claude Code workflow. After the warm-up, you use the HADR game for each exercise.</p>
 <ol>
-<li><a href="/day-1/00-background/">Background</a>: trace the milestones that made today’s coding agents possible.</li>
-<li><a href="/day-1/00a-crud-warmup/">Claude Code warm-up</a>: build a small, collaborative CRUD app in one hour, then explain and demonstrate it.</li>
-<li><a href="/day-1/01-hadr/">The HADR game</a>: meet the course project, its hidden state, and the dispatch agent your team will build.</li>
+<li><a href="/day-1/00-background/">Background</a>: review the events that made coding agents possible.</li>
+<li><a href="/day-1/00a-crud-warmup/">Claude Code warm-up</a>: build a small CRUD application with a team. Explain and demonstrate the result.</li>
+<li><a href="/day-1/01-hadr/">The HADR game</a>: learn the project, its hidden state, and the dispatch task.</li>
+<li><a href="/day-1/01a-starter/">Starter kit</a>: find the files, tests, and incomplete exercises.</li>
 <li><a href="/day-1/02-plan-build-review/">Plan, build, review</a>: use a supplied specification to plan, build, test, and review the report and incident stores.</li>
 </ol>
 <h2 id="afternoon" tabindex="-1"><a class="header-anchor" href="#afternoon">Afternoon</a></h2>
-<p>The afternoon connects the tools to the game and ends with the agent loop running live.</p>
+<p>In the afternoon, you connect tools to the game. Then you build and run the agent loop.</p>
 <ol>
-<li><a href="/day-1/03-skills-tools-mcps/">Skills, tools, and MCPs</a>: connect Claude Code to the game, solve it interactively, and package the procedure as a skill.</li>
+<li><a href="/day-1/03-skills-tools-mcps/">Skills, tools, and MCPs</a>: connect Claude Code to the game. Play the game and save the procedure as a skill.</li>
 <li><a href="/day-1/04-tokens/">Tokens and costing</a>: inspect context growth, cost, and prompt caching.</li>
-<li><a href="/day-1/05-evaluation/">Evaluation</a>: match each check to its evidence layer, and manufacture labeled intake data with Haiku subagents under <code>/goal</code>.</li>
-<li><a href="/day-1/06-agentic-loop/">Agentic loop</a>: build the agentic tool loop every agent in the kit runs on, prove it on toy tools, and run it live against a real model.</li>
+<li><a href="/day-1/05-evaluation/">Evaluation</a>: select evidence for each check. Use Haiku subagents under <code>/goal</code> to produce labeled intake data.</li>
+<li><a href="/day-1/06-agentic-loop/">Agentic loop</a>: build the common tool loop. Test it with example tools and a real model.</li>
 <li><a href="/day-1/07-checkpoint/">Checkpoint</a>: merge, verify, and divide Day 2 work.</li>
 <li><a href="/day-1/08-show-and-tell/">Show and tell</a>: share what your team built and saw.</li>
 </ol>
