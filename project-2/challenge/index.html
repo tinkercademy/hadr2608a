@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Maps</title>
+    <title>HADR challenge</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -65,7 +65,7 @@
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/project-2/introduction/" class="sidebar-link">
             <span class="sidebar-link-label">Project 2: HADR agent</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
@@ -117,7 +117,7 @@
               <a href="/project-2/model-comparisons/" class="sidebar-sublink">Model comparisons</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/project-2/challenge/" class="sidebar-sublink">HADR challenge</a>
+              <a href="/project-2/challenge/" class="sidebar-sublink" aria-current="page">HADR challenge</a>
             </li>
           </ul>
         </li>
@@ -149,7 +149,7 @@
             </li>
           </ul>
         </li>
-        <li class="sidebar-item is-open">
+        <li class="sidebar-item">
           <a href="/game/overview/" class="sidebar-link">
             <span class="sidebar-link-label">Game reference</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
@@ -159,7 +159,7 @@
               <a href="/game/api/" class="sidebar-sublink">API</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/game/maps/" class="sidebar-sublink" aria-current="page">Maps</a>
+              <a href="/game/maps/" class="sidebar-sublink">Maps</a>
             </li>
             <li class="sidebar-subitem">
               <a href="/game/overview/" class="sidebar-sublink">Overview</a>
@@ -189,24 +189,114 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Maps</h1>
-          <p class="page-subtitle">The three cities scenarios play on</p>
+          <h1 class="page-title">HADR challenge</h1>
+          <p class="page-subtitle">Project 2: HADR agent</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="maps" tabindex="-1"><a class="header-anchor" href="#maps">Maps</a></h1>
-<p>Three cities ship in the current build. Every scenario names its map (for example <code>stage4-replan@londone</code>), and the same difficulty stage plays differently on each street network.</p>
-<p><img src="/game/03-maps/map-londone.png" alt="Map of Londone: crooked lanes around a green, a river across the north-east, and a canal cutting through the middle"></p>
-<p><strong>Londone</strong> (70 blocks, 508 lots). A compact river town of crooked lanes, where the Old Harbour Market and the riverside school sit minutes from everything else. Small enough that any truck can reach any fire quickly - the challenge is choosing which fire, not getting there.</p>
-<p><img src="/game/03-maps/map-feeladelphia.png" alt="Map of Feeladelphia: a vast street grid stretching along a south-east waterfront, crossed by a canal"></p>
-<p><strong>Feeladelphia</strong> (1,527 blocks, 3,686 lots). A relentless waterfront grid running from the Schuylkill-side mills to the Delaware wharves - by far the largest map. Distance is the enemy here: a truck committed to the wrong end of town pays for it in ticks.</p>
-<p><img src="/game/03-maps/map-stockhome.png" alt="Map of Stockhome: a radial old-town core ringed by grid districts, wrapped around a bay with a canal to the east"></p>
-<p><strong>Stockhome</strong> (166 blocks, 893 lots). A harbour city wrapped around its bay: ring streets circle the old town, quays line the shore, and a canal splits the eastern districts. The coastal road funnels cross-town traffic, so simultaneous fires on opposite shores stretch a small fleet.</p>
+          <h1>HADR challenge</h1>
+
+<p>Run the same game as the room, then publish the terminal result. The board compares casualties first, buildings lost second, and provider-reported tokens third. There is no blended score.</p>
+
+<section class="challenge-brief" aria-labelledby="challenge-title">
+  <div>
+    <p class="challenge-kicker">Live dispatch order</p>
+    <h2 id="challenge-title">Loading challenge…</h2>
+  </div>
+  <dl class="challenge-coordinates">
+    <div><dt>Scenario</dt><dd id="challenge-scenario">—</dd></div>
+    <div><dt>Seed</dt><dd id="challenge-seed">—</dd></div>
+    <div><dt>Board</dt><dd id="challenge-state">Connecting</dd></div>
+  </dl>
+</section>
+
+<p id="challenge-error" class="form-message is-error" role="alert" hidden></p>
+
+<h2>Run the assessment</h2>
+
+<p>Start the engine in one terminal. Run the command shown below from your HADR repository in another. Do not change the announced scenario or seed.</p>
+
+<pre><code id="challenge-command">Loading command…</code></pre>
+
+<h2>Publish your result</h2>
+
+<p>Use a name you are comfortable displaying to the class. Only the result summary is stored; never upload <code>.env</code> or the engine JSONL log.</p>
+
+<form id="result-form" class="result-form">
+  <fieldset>
+    <legend>Operator</legend>
+    <div class="form-grid">
+      <label>Display name<input name="displayName" required minlength="2" maxlength="40" autocomplete="name" /></label>
+      <label>Team <span>(optional)</span><input name="team" maxlength="40" autocomplete="organization" /></label>
+      <label>Git commit<input name="gitCommit" required minlength="7" maxlength="40" pattern="[a-fA-F0-9]{7,40}" placeholder="abc1234" autocapitalize="off" /></label>
+      <label>Submission code<input name="submissionCode" type="password" required autocomplete="off" /></label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Terminal outcome</legend>
+    <div class="form-grid">
+      <label>Run ID<input name="runId" required pattern="run-[a-zA-Z0-9-]{3,100}" placeholder="run-8f2a" autocapitalize="off" /></label>
+      <label>Terminal reason<select name="terminalReason" required><option value="resolved">resolved</option><option value="tick_limit">tick_limit</option></select></label>
+      <label>Terminal tick<input name="tick" type="number" required min="0" max="1000" inputmode="numeric" /></label>
+      <label>Casualties<input name="casualties" type="number" required min="0" max="100000" inputmode="numeric" /></label>
+      <label>Buildings lost<input name="buildingsLost" type="number" required min="0" max="10000" inputmode="numeric" /></label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Runtime</legend>
+    <div class="form-grid">
+      <label>Intake tokens<input name="intakeTokens" type="number" required min="0" max="1000000000" inputmode="numeric" /></label>
+      <label>Dispatch tokens<input name="dispatchTokens" type="number" required min="0" max="1000000000" inputmode="numeric" /></label>
+      <label>Intake model<input name="intakeModel" required maxlength="100" autocapitalize="off" /></label>
+      <label>Dispatch model<input name="dispatchModel" required maxlength="100" autocapitalize="off" /></label>
+    </div>
+  </fieldset>
+
+  <button class="publish-result" type="submit" disabled>Publish result</button>
+  <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
+</form>
+
+<details class="agent-submit">
+  <summary>Let Claude submit it</summary>
+  <p>Set the submission code without placing it in your prompt or shell history:</p>
+  <pre><code>read -s HADR_SUBMISSION_CODE
+export HADR_SUBMISSION_CODE</code></pre>
+  <p>Then paste this into Claude Code in your HADR repository:</p>
+  <blockquote>
+    <p>Submit my HADR challenge result. Do not edit any files. Read the current challenge and its <code>submissionTemplate</code> from <code>https://hadr2608a.tk.sg/api/hadr/challenge</code>, run its exact scenario and seed with <code>uv run hadr-runner</code>, and capture the terminal summary. Read only the <code>INTAKE_MODEL</code> and <code>DISPATCH_MODEL</code> names from <code>.env</code>; never print or transmit keys, tokens, base URLs, or other environment values. Fill every field in <code>submissionTemplate</code>, including my current Git commit. Ask me for my public display name and optional team. Show me the complete JSON and wait for my approval. After approval, POST it to <code>https://hadr2608a.tk.sg/api/hadr/results</code> with <code>Content-Type: application/json</code> and the environment variable <code>HADR_SUBMISSION_CODE</code> in the <code>X-Submission-Code</code> header. Do not upload <code>.env</code> or any engine JSONL run log. Report the server response exactly.</p>
+  </blockquote>
+</details>
+
+<div class="results-heading">
+  <div>
+    <h2>Room results</h2>
+    <p>Each display name keeps only its latest run.</p>
+  </div>
+  <button id="refresh-results" class="refresh-results" type="button">Refresh</button>
+</div>
+
+<div class="results-table-wrap">
+  <table class="results-table">
+    <thead>
+      <tr><th scope="col">Order</th><th scope="col">Operator</th><th scope="col">Casualties</th><th scope="col">Buildings</th><th scope="col">Tokens</th><th scope="col">Models</th><th scope="col">Run</th></tr>
+    </thead>
+    <tbody id="results-body"><tr><td colspan="7">Loading results…</td></tr></tbody>
+  </table>
+</div>
+
+<script src="/assets/hadr-results.js" defer></script>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/project-2/model-comparisons/">Previous: Model comparisons</a> | <a href="/project-3/introduction/">Next: Specs</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">
