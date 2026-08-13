@@ -38,33 +38,42 @@
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="/setup/" class="sidebar-link">
+          <a href="/setup/course-setup/" class="sidebar-link">
             <span class="sidebar-link-label">Setup</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/setup/course-setup/" class="sidebar-sublink">Course setup</a>
+            </li>
             <li class="sidebar-subitem">
               <a href="/setup/background/" class="sidebar-sublink">Background</a>
             </li>
           </ul>
         </li>
         <li class="sidebar-item">
-          <a href="/project-1/" class="sidebar-link">
+          <a href="/project-1/introduction/" class="sidebar-link">
             <span class="sidebar-link-label">Project 1: CRUD app</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/project-1/introduction/" class="sidebar-sublink">Introduction</a>
+            </li>
             <li class="sidebar-subitem">
               <a href="/project-1/crud-app/" class="sidebar-sublink">Build the CRUD app</a>
             </li>
           </ul>
         </li>
         <li class="sidebar-item">
-          <a href="/project-2/" class="sidebar-link">
+          <a href="/project-2/introduction/" class="sidebar-link">
             <span class="sidebar-link-label">Project 2: HADR agent</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/project-2/introduction/" class="sidebar-sublink">Introduction</a>
+            </li>
             <li class="sidebar-subitem">
               <a href="/project-2/hadr-game/" class="sidebar-sublink">The HADR game</a>
             </li>
@@ -110,24 +119,27 @@
           </ul>
         </li>
         <li class="sidebar-item">
-          <a href="/project-3/" class="sidebar-link">
+          <a href="/project-3/introduction/" class="sidebar-link">
             <span class="sidebar-link-label">Project 3: AI app</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
             <li class="sidebar-subitem">
-              <a href="/project-3/claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
+              <a href="/project-3/introduction/" class="sidebar-sublink">Introduction</a>
             </li>
           </ul>
         </li>
         <li class="sidebar-item">
-          <a href="/conclusion/" class="sidebar-link">
+          <a href="/conclusion/claude-code-web/" class="sidebar-link">
             <span class="sidebar-link-label">Presentations and conclusion</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
             <li class="sidebar-subitem">
-              <a href="/conclusion/hadr-finale/" class="sidebar-sublink">HADR finale</a>
+              <a href="/conclusion/claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/conclusion/presentations/" class="sidebar-sublink">Presentations</a>
             </li>
             <li class="sidebar-subitem">
               <a href="/conclusion/future/" class="sidebar-sublink">The future</a>
@@ -135,7 +147,7 @@
           </ul>
         </li>
         <li class="sidebar-item">
-          <a href="/game/" class="sidebar-link">
+          <a href="/game/overview/" class="sidebar-link">
             <span class="sidebar-link-label">Game reference</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
@@ -145,6 +157,9 @@
             </li>
             <li class="sidebar-subitem">
               <a href="/game/maps/" class="sidebar-sublink">Maps</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/overview/" class="sidebar-sublink">Overview</a>
             </li>
           </ul>
         </li>
@@ -237,7 +252,7 @@ To gate new content, wrap it in any element with data-gate="<code>" hidden - the
 </thead>
 <tbody>
 <tr>
-<td><a href="/setup/">Setup</a></td>
+<td><a href="/setup/course-setup/">Course setup</a></td>
 <td>individual</td>
 <td>The <code>/install-github-app</code> setup PR; branch protection active</td>
 <td>-</td>
@@ -265,12 +280,6 @@ To gate new content, wrap it in any element with data-gate="<code>" hidden - the
 <td>group</td>
 <td><strong>Cross-repo:</strong> the driver opens one PR into every teammate’s repo carrying the prompt, synthesized skill, rubric, and accepted labels</td>
 <td><code>npx ccusage</code> screenshot (driver only)</td>
-</tr>
-<tr>
-<td><a href="/project-3/claude-code-web/">Claude Code on the web</a></td>
-<td>group</td>
-<td>The research artifact in a connected GitHub repository</td>
-<td>The artifact</td>
 </tr>
 <tr>
 <td><a href="/project-2/agentic-loop/">Agentic loop</a></td>
@@ -315,22 +324,22 @@ To gate new content, wrap it in any element with data-gate="<code>" hidden - the
 <td>Two artifact links: dispatch-model comparison, then intake-model comparison</td>
 </tr>
 <tr>
-<td><a href="/project-3/">Project 3: AI app</a></td>
+<td><a href="/project-3/introduction/">Project 3: AI app</a></td>
 <td>group</td>
 <td>A working app, <code>PRD.md</code>, <code>TEAM_PLAN.md</code>, reviewed feature branches, three fixtures, and a README naming the three techniques and their evidence</td>
 <td>-</td>
 </tr>
 <tr>
-<td><a href="/conclusion/">Presentations and conclusion</a></td>
+<td><a href="/conclusion/claude-code-web/">Claude Code on the web</a></td>
+<td>group</td>
+<td>The research artifact in a connected GitHub repository</td>
+<td>The artifact</td>
+</tr>
+<tr>
+<td><a href="/conclusion/presentations/">Presentations</a></td>
 <td>group</td>
 <td>A Claude Design slide deck; each team member passes the quiz gate</td>
 <td>The slide deck and working app presentation</td>
-</tr>
-<tr>
-<td><a href="/conclusion/hadr-finale/">HADR finale</a></td>
-<td>group</td>
-<td>-</td>
-<td>The HADR finale result</td>
 </tr>
 </tbody>
 </table>
@@ -346,7 +355,7 @@ To gate new content, wrap it in any element with data-gate="<code>" hidden - the
 </thead>
 <tbody>
 <tr>
-<td><a href="/game/">Gameplay Scores</a></td>
+<td><a href="/game/overview/">Gameplay Scores</a></td>
 <td><code>tungtung</code></td>
 <td>Reveals the expected-scores tables to students.</td>
 </tr>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Project 1: CRUD app</title>
+    <title>Claude Code on the web</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,33 +38,42 @@
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="/setup/" class="sidebar-link">
+          <a href="/setup/course-setup/" class="sidebar-link">
             <span class="sidebar-link-label">Setup</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
             <li class="sidebar-subitem">
+              <a href="/setup/course-setup/" class="sidebar-sublink">Course setup</a>
+            </li>
+            <li class="sidebar-subitem">
               <a href="/setup/background/" class="sidebar-sublink">Background</a>
             </li>
           </ul>
         </li>
-        <li class="sidebar-item is-active is-open">
-          <a href="/project-1/" class="sidebar-link">
+        <li class="sidebar-item">
+          <a href="/project-1/introduction/" class="sidebar-link">
             <span class="sidebar-link-label">Project 1: CRUD app</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/project-1/introduction/" class="sidebar-sublink">Introduction</a>
+            </li>
             <li class="sidebar-subitem">
               <a href="/project-1/crud-app/" class="sidebar-sublink">Build the CRUD app</a>
             </li>
           </ul>
         </li>
         <li class="sidebar-item">
-          <a href="/project-2/" class="sidebar-link">
+          <a href="/project-2/introduction/" class="sidebar-link">
             <span class="sidebar-link-label">Project 2: HADR agent</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/project-2/introduction/" class="sidebar-sublink">Introduction</a>
+            </li>
             <li class="sidebar-subitem">
               <a href="/project-2/hadr-game/" class="sidebar-sublink">The HADR game</a>
             </li>
@@ -110,24 +119,27 @@
           </ul>
         </li>
         <li class="sidebar-item">
-          <a href="/project-3/" class="sidebar-link">
+          <a href="/project-3/introduction/" class="sidebar-link">
             <span class="sidebar-link-label">Project 3: AI app</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
             <li class="sidebar-subitem">
-              <a href="/project-3/claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
+              <a href="/project-3/introduction/" class="sidebar-sublink">Introduction</a>
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
-          <a href="/conclusion/" class="sidebar-link">
+        <li class="sidebar-item is-open">
+          <a href="/conclusion/claude-code-web/" class="sidebar-link">
             <span class="sidebar-link-label">Presentations and conclusion</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
             <li class="sidebar-subitem">
-              <a href="/conclusion/hadr-finale/" class="sidebar-sublink">HADR finale</a>
+              <a href="/conclusion/claude-code-web/" class="sidebar-sublink" aria-current="page">Claude Code on the web</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/conclusion/presentations/" class="sidebar-sublink">Presentations</a>
             </li>
             <li class="sidebar-subitem">
               <a href="/conclusion/future/" class="sidebar-sublink">The future</a>
@@ -135,7 +147,7 @@
           </ul>
         </li>
         <li class="sidebar-item">
-          <a href="/game/" class="sidebar-link">
+          <a href="/game/overview/" class="sidebar-link">
             <span class="sidebar-link-label">Game reference</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
@@ -145,6 +157,9 @@
             </li>
             <li class="sidebar-subitem">
               <a href="/game/maps/" class="sidebar-sublink">Maps</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/overview/" class="sidebar-sublink">Overview</a>
             </li>
           </ul>
         </li>
@@ -171,37 +186,53 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Project 1: CRUD app</h1>
-          <p class="page-subtitle">Build a complete app from a product brief</p>
+          <h1 class="page-title">Claude Code on the web</h1>
+          <p class="page-subtitle">Presentations and conclusion</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="project-1%3A-crud-app" tabindex="-1"><a class="header-anchor" href="#project-1%3A-crud-app">Project 1: CRUD app</a></h1>
-<p>Build a small database-backed app from a product brief. This is the fast first pass: give Claude Code the complete brief, let it build, then check the result yourself.</p>
-<p>Keep this project separate from the HADR starter. It can be disposable and does not need production infrastructure.</p>
-<h2 id="build" tabindex="-1"><a class="header-anchor" href="#build">Build</a></h2>
+          <h1 id="claude-code-on-the-web" tabindex="-1"><a class="header-anchor" href="#claude-code-on-the-web">Claude Code on the web</a></h1>
+<p>Use Claude Code on the web to research one question and create an artifact. Each team member must complete this activity.</p>
+<h2 id="connect-github" tabindex="-1"><a class="header-anchor" href="#connect-github">Connect GitHub</a></h2>
+<p>Open <a href="https://claude.ai/code">Claude Code on the web</a>. If prompted, connect the GitHub account from Setup and give Claude access only to the repository where it will create the artifact.</p>
+<h2 id="activity" tabindex="-1"><a class="header-anchor" href="#activity">Activity</a></h2>
 <ol>
-<li><a href="/project-1/crud-app/">CRUD app warm-up</a>: choose a small problem, create a one-page PRD, and ask Claude Code to build the app.</li>
-<li>Check the app as two users. Compare the result with the PRD and fix important failures.</li>
-<li>Record a short walkthrough and share the result.</li>
+<li>Select one research question from the list below. Each team member must select a different question.</li>
+<li>Paste the question into Claude Code on the web.</li>
+<li>Ask follow-up questions. Challenge unclear claims and verify the important parts of the answer.</li>
+<li>Ask Claude to create an artifact in the connected repository that explains your findings.</li>
+<li>Present the artifact to your group.</li>
+<li>Share the artifact on the course Padlet.</li>
 </ol>
-<h2 id="complete-when" tabindex="-1"><a class="header-anchor" href="#complete-when">Complete when</a></h2>
-<ul>
-<li>The main create, read, update, and delete path works.</li>
-<li>Two test users demonstrate the access rule.</li>
-<li>Data remains after a restart.</li>
-<li>The repository contains the PRD and setup instructions.</li>
-<li>You can explain what works, what does not work, and what you learned.</li>
-</ul>
+<h2 id="optional-extension%3A-create-slides" tabindex="-1"><a class="header-anchor" href="#optional-extension%3A-create-slides">Optional extension: Create slides</a></h2>
+<p>Turn the artifact into slides. Start with the <a href="https://github.com/new?template_name=marp-cli-example&amp;template_owner=yhatt">MARP template</a>. You can also use the <a href="https://github.com/softaworks/agent-toolkit/blob/main/skills/marp-slide/SKILL.md">marp-slides skill</a>.</p>
+<h2 id="the-questions" tabindex="-1"><a class="header-anchor" href="#the-questions">The questions</a></h2>
+<ol>
+<li>How do you wrap an API in an agent skill?</li>
+<li>How do you drive browser actions from Claude Code - the Chrome extension, a browser MCP, or a CLI tool? When is a browser the wrong tool for the job?</li>
+<li>How do you run an alternative model - Kimi K3, GLM 5.2, DeepSeek V4 Pro - inside Claude Code, and what degrades when you do?</li>
+<li>Pi ships a system prompt of about a thousand tokens and four tools; Claude Code ships far more of both. What do you gain and lose at each end of that spectrum?</li>
+<li>When should you use MCP vs agent skills vs CLI vs API?</li>
+<li>Explain the “smart zone” and “dumb zone” of the context window.</li>
+<li>Why would one use <code>CLAUDE.md</code> as a directory of links to other .md files instead of one large <code>CLAUDE.md</code>?</li>
+<li>What are the pros and cons of running coding agents (and models) on your own computer vs in the cloud?</li>
+<li>Find agent skills that review code quality, technical architecture, or security vulnerabilities. Compare and contrast them: what does each one actually look at, and where do they disagree?</li>
+<li>How should you format what you feed an agent - markdown, HTML, JSON, XML-style tags? Find a case where the format changed the answer.</li>
+<li>What is a sound decision-making process for choosing LLMs and inference providers?</li>
+<li>What happens when a tool result contains instructions aimed at the agent? Find a real prompt-injection case, and how harnesses defend against it.</li>
+<li>When does handing work to a subagent beat doing it in the main context - and when does it just cost more?</li>
+<li>What would you have to be sure of before letting an agent run unattended for an hour?</li>
+<li>How do you tell whether a prompt change helped, rather than just felt better?</li>
+</ol>
 
           
           
           
           <hr />
           <nav aria-label="Course sequence">
-            <p><a href="/setup/background/">Previous: Background</a> | <a href="/project-1/crud-app/">Next: Build the CRUD app</a></p>
+            <p><a href="/project-3/introduction/">Previous: Introduction</a> | <a href="/conclusion/presentations/">Next: Presentations</a></p>
           </nav>
           
         </article>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Project 2: HADR agent</title>
+    <title>Project 1: CRUD app</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,33 +38,42 @@
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="/setup/" class="sidebar-link">
+          <a href="/setup/course-setup/" class="sidebar-link">
             <span class="sidebar-link-label">Setup</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
             <li class="sidebar-subitem">
+              <a href="/setup/course-setup/" class="sidebar-sublink">Course setup</a>
+            </li>
+            <li class="sidebar-subitem">
               <a href="/setup/background/" class="sidebar-sublink">Background</a>
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
-          <a href="/project-1/" class="sidebar-link">
+        <li class="sidebar-item is-open">
+          <a href="/project-1/introduction/" class="sidebar-link">
             <span class="sidebar-link-label">Project 1: CRUD app</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
             <li class="sidebar-subitem">
+              <a href="/project-1/introduction/" class="sidebar-sublink" aria-current="page">Introduction</a>
+            </li>
+            <li class="sidebar-subitem">
               <a href="/project-1/crud-app/" class="sidebar-sublink">Build the CRUD app</a>
             </li>
           </ul>
         </li>
-        <li class="sidebar-item is-active is-open">
-          <a href="/project-2/" class="sidebar-link">
+        <li class="sidebar-item">
+          <a href="/project-2/introduction/" class="sidebar-link">
             <span class="sidebar-link-label">Project 2: HADR agent</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/project-2/introduction/" class="sidebar-sublink">Introduction</a>
+            </li>
             <li class="sidebar-subitem">
               <a href="/project-2/hadr-game/" class="sidebar-sublink">The HADR game</a>
             </li>
@@ -110,24 +119,27 @@
           </ul>
         </li>
         <li class="sidebar-item">
-          <a href="/project-3/" class="sidebar-link">
+          <a href="/project-3/introduction/" class="sidebar-link">
             <span class="sidebar-link-label">Project 3: AI app</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
             <li class="sidebar-subitem">
-              <a href="/project-3/claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
+              <a href="/project-3/introduction/" class="sidebar-sublink">Introduction</a>
             </li>
           </ul>
         </li>
         <li class="sidebar-item">
-          <a href="/conclusion/" class="sidebar-link">
+          <a href="/conclusion/claude-code-web/" class="sidebar-link">
             <span class="sidebar-link-label">Presentations and conclusion</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
             <li class="sidebar-subitem">
-              <a href="/conclusion/hadr-finale/" class="sidebar-sublink">HADR finale</a>
+              <a href="/conclusion/claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/conclusion/presentations/" class="sidebar-sublink">Presentations</a>
             </li>
             <li class="sidebar-subitem">
               <a href="/conclusion/future/" class="sidebar-sublink">The future</a>
@@ -135,7 +147,7 @@
           </ul>
         </li>
         <li class="sidebar-item">
-          <a href="/game/" class="sidebar-link">
+          <a href="/game/overview/" class="sidebar-link">
             <span class="sidebar-link-label">Game reference</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
@@ -145,6 +157,9 @@
             </li>
             <li class="sidebar-subitem">
               <a href="/game/maps/" class="sidebar-sublink">Maps</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/overview/" class="sidebar-sublink">Overview</a>
             </li>
           </ul>
         </li>
@@ -171,47 +186,37 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Project 2: HADR agent</h1>
-          <p class="page-subtitle">Build and evaluate a fire-dispatch agent</p>
+          <h1 class="page-title">Project 1: CRUD app</h1>
+          <p class="page-subtitle">Build a complete app from a product brief</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="project-2%3A-hadr-agent" tabindex="-1"><a class="header-anchor" href="#project-2%3A-hadr-agent">Project 2: HADR agent</a></h1>
-<p>Build an agent that turns imperfect emergency reports into fire-truck dispatches. Start by playing the game through Claude so that the problem is concrete. Then build the agent one layer at a time.</p>
-<p>Each participant works in a separate HADR repository. Teammates review pull requests and share the evaluation work.</p>
-<h2 id="understand-the-task" tabindex="-1"><a class="header-anchor" href="#understand-the-task">Understand the task</a></h2>
+          <h1 id="project-1%3A-crud-app" tabindex="-1"><a class="header-anchor" href="#project-1%3A-crud-app">Project 1: CRUD app</a></h1>
+<p>Build a small database-backed app from a product brief. This is the fast first pass: give Claude Code the complete brief, let it build, then check the result yourself.</p>
+<p>Keep this project separate from the HADR starter. It can be disposable and does not need production infrastructure.</p>
+<h2 id="build" tabindex="-1"><a class="header-anchor" href="#build">Build</a></h2>
 <ol>
-<li><a href="/project-2/hadr-game/">The HADR game</a>: learn the mission, information boundaries, and system shape.</li>
-<li><a href="/project-2/mcp-play/">MCP Play</a>: direct Claude through two complete episodes before you inspect or automate the pipeline.</li>
-<li><a href="/project-2/starter-kit/">Starter kit</a>: locate the files, tests, and incomplete components.</li>
+<li><a href="/project-1/crud-app/">CRUD app warm-up</a>: choose a small problem, create a one-page PRD, and ask Claude Code to build the app.</li>
+<li>Check the app as two users. Compare the result with the PRD and fix important failures.</li>
+<li>Record a short walkthrough and share the result.</li>
 </ol>
-<h2 id="build-the-foundations" tabindex="-1"><a class="header-anchor" href="#build-the-foundations">Build the foundations</a></h2>
-<ol>
-<li><a href="/project-2/plan-build-review/">Plan, build, review</a>: implement the report and incident stores from the supplied specification.</li>
-<li><a href="/project-2/skills/">Turn play into a skill</a>: extract a reusable procedure from the episodes you already played.</li>
-<li><a href="/project-2/tokens/">Tokens and costing</a>: inspect context growth, token use, and prompt caching.</li>
-<li><a href="/project-2/evaluation-data/">Subagents and evals</a>: produce reviewed intake fixtures for later evaluation.</li>
-<li><a href="/project-2/agentic-loop/">Agentic loop</a>: build and test the task-neutral tool loop.</li>
-<li><a href="/project-2/quality-gates/">Quality gates and integration</a>: add automated checks, merge the work, and record a baseline.</li>
-</ol>
-<h2 id="complete-and-evaluate-the-pipeline" tabindex="-1"><a class="header-anchor" href="#complete-and-evaluate-the-pipeline">Complete and evaluate the pipeline</a></h2>
-<ol>
-<li><a href="/project-2/dispatcher/">Stage 1: dispatcher</a>: configure the loop with state, instructions, and typed tools.</li>
-<li><a href="/project-2/intake/">Stage 2: intake</a>: convert human text into structured reports and evaluate it.</li>
-<li><a href="/project-2/reconciliation/">Stage 3: reconciliation</a>: integrate deterministic matching for duplicate and conflicting reports.</li>
-<li><a href="/project-2/replanning/">Stage 4: replanning</a>: make one measured change for new evidence.</li>
-<li><a href="/project-2/model-comparisons/">Model comparisons</a>: compare models against the same evidence.</li>
-</ol>
-<p>The aim is not to add every possible HADR feature. The aim is to understand the complete system and improve it with evidence.</p>
+<h2 id="complete-when" tabindex="-1"><a class="header-anchor" href="#complete-when">Complete when</a></h2>
+<ul>
+<li>The main create, read, update, and delete path works.</li>
+<li>Two test users demonstrate the access rule.</li>
+<li>Data remains after a restart.</li>
+<li>The repository contains the PRD and setup instructions.</li>
+<li>You can explain what works, what does not work, and what you learned.</li>
+</ul>
 
           
           
           
           <hr />
           <nav aria-label="Course sequence">
-            <p><a href="/project-1/crud-app/">Previous: Build the CRUD app</a> | <a href="/project-2/hadr-game/">Next: The HADR game</a></p>
+            <p><a href="/setup/background/">Previous: Background</a> | <a href="/project-1/crud-app/">Next: Build the CRUD app</a></p>
           </nav>
           
         </article>
