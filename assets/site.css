@@ -598,6 +598,42 @@ button {
   color: var(--ink-soft);
 }
 
+.content details {
+  margin: 1.25rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.content details[open] {
+  background: var(--tint);
+}
+
+.content summary {
+  padding: 0.75rem 1rem;
+  background: var(--mist);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.content summary:hover {
+  background: #d8d8d8;
+}
+
+.content summary:focus-visible {
+  outline: 3px solid var(--coral);
+  outline-offset: -3px;
+}
+
+.content details[open] summary {
+  background: #ffe9e7;
+}
+
+.content details > :not(summary) {
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
 .content ul li::marker {
   color: var(--coral);
 }
