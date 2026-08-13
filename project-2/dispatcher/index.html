@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>Stage 1: dispatcher</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
@@ -59,7 +59,7 @@
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/project-2/" class="sidebar-link">
             <span class="sidebar-link-label">Project 2: HADR agent</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
@@ -93,7 +93,7 @@
               <a href="/project-2/quality-gates/" class="sidebar-sublink">Quality gates and integration</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/project-2/dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
+              <a href="/project-2/dispatcher/" class="sidebar-sublink" aria-current="page">Stage 1: dispatcher</a>
             </li>
             <li class="sidebar-subitem">
               <a href="/project-2/intake/" class="sidebar-sublink">Stage 2: intake</a>
@@ -171,68 +171,146 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
-          
+          <h1 class="page-title">Stage 1: dispatcher</h1>
+          <p class="page-subtitle">Project 2: HADR agent</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
+          <h1 id="stage-1%3A-dispatcher" tabindex="-1"><a class="header-anchor" href="#stage-1%3A-dispatcher">Stage 1: dispatcher</a></h1>
+<!-- markdownlint-disable MD033 -->
+<figure class="cheat-image" data-gate="tralalero" hidden>
+  <figcaption>Cheat Code Entered</figcaption>
+  <img src="/day-2/01-dispatcher/tralalero-tralala-dispatch.png" alt="Tralalero Tralala sprinting to the fire">
+</figure>
+<p>Stage 1 changes the general agent loop into a fire dispatcher. The loop stays the same. A system prompt, a state message, and typed tools give the loop its task.</p>
+<pre class="mermaid">flowchart LR
+    subgraph Intake[&quot;Intake (model extraction)&quot;]
+        i1[&quot;'smoke near the&lt;br/&gt;school on 5th'&quot;]
+        i2[&quot;'building fire on Elm St,&lt;br/&gt;people inside'&quot;]
+        i3[&quot;'fire is out at&lt;br/&gt;the school now'&quot;]
+    end
+
+    r{&quot;Reconciliation (Code)&lt;br/&gt;match to known incidents&quot;}
+
+    subgraph Incidents[&quot;Incidents (Memory)&quot;]
+        n1[&quot;1: School, 5th Ave&quot;]
+        n2[&quot;2: Elm St&quot;]
+    end
+
+    subgraph Dispatch[&quot;Dispatch loop (Agent)&quot;]
+        plan[&quot;plan&quot;] --&gt; act[&quot;act&quot;]
+        act --&gt; plan
+    end
+
+    subgraph Trucks[&quot;Fire trucks&quot;]
+        t1[&quot;truck A&quot;]
+        t2[&quot;truck B&quot;]
+    end
+
+    i1 --&gt; r
+    i2 --&gt; r
+    i3 --&gt; r
+    r -- &quot;update&quot; --&gt; n1
+    r -- &quot;new&quot; --&gt; n2
+    n1 --&gt; plan
+    n2 --&gt; plan
+    act &lt;--&gt; t1
+    act &lt;--&gt; t2
+</pre><p>All contacts in this stage are structured reports. Each report describes a separate incident. The dispatcher must assign the trucks to the incidents.</p>
+<h2 id="what-is-provided" tabindex="-1"><a class="header-anchor" href="#what-is-provided">What is provided</a></h2>
+<p>The starter provides:</p>
 <ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
+<li>the agent loop;</li>
+<li>the report and incident stores;</li>
+<li>the dispatch tools and tool runner;</li>
+<li>structured contact data; and</li>
+<li>the <code>DISP-*</code> and <code>INT-*</code> scenarios.</li>
 </ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
+<h2 id="what-claude-implements" tabindex="-1"><a class="header-anchor" href="#what-claude-implements">What Claude implements</a></h2>
+<p>Claude changes only these parts:</p>
+<ol>
+<li>Claude completes the minimum <code>_finalize</code> code in <code>intake.py</code>.</li>
+<li>Claude connects structured reports to incidents in <code>runner._process_tick</code>.</li>
+<li>Claude writes <code>_state_message</code> in <code>dispatch.py</code>.</li>
+<li>Claude completes <code>prompts/dispatch_system.md</code>.</li>
+<li>Claude runs the focused scenarios and fixes failures in this stage.</li>
+</ol>
+<p>The state message must:</p>
 <ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
+<li>rank open incidents by risk to people;</li>
+<li>mark each incident as <code>COVERED</code> or <code>UNCOVERED</code>;</li>
+<li>mark each truck as <code>FREE</code> or committed; and</li>
+<li>give one clear allocation instruction.</li>
 </ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
+<h2 id="what-you-decide-and-check" tabindex="-1"><a class="header-anchor" href="#what-you-decide-and-check">What you decide and check</a></h2>
+<p>You decide the dispatch policy. Review these choices before Claude edits the prompt:</p>
+<ul>
+<li>How does the system rank people, severity, and uncertainty?</li>
+<li>When does the system hold a free truck?</li>
+<li>How does the system prevent duplicate coverage?</li>
+<li>What information must a dispatch rationale contain?</li>
+</ul>
+<p>Check the final state message. Ask Claude to show why the first incident has the highest rank. Do not accept a policy that you cannot explain.</p>
+<h2 id="what-you-do-not-build" tabindex="-1"><a class="header-anchor" href="#what-you-do-not-build">What you do not build</a></h2>
+<p>Do not add:</p>
+<ul>
+<li>natural-language intake;</li>
+<li>duplicate reconciliation;</li>
+<li>replanning rules; or</li>
+<li>a new agent loop.</li>
+</ul>
+<p>Later stages add these functions.</p>
+<h2 id="prompt-claude" tabindex="-1"><a class="header-anchor" href="#prompt-claude">Prompt Claude</a></h2>
+<p>Open the HADR repository in Claude Code. Paste this prompt:</p>
+<blockquote>
+<p>Complete Stage 1 of the HADR dispatcher.</p>
+<p>First, read <code>CLAUDE.md</code>, <code>dispatch.py</code>, <code>runner.py</code>, <code>intake.py</code>, both stores, and the <code>DISP-*</code> and <code>INT-*</code> scenarios.</p>
+<p>Before you edit, show the path from one structured contact to one dispatch tool call. List the code holes on this path. Stop if a required part is outside Stage 1.</p>
+<p>Implement only these items:</p>
+<ul>
+<li>Complete the minimum <code>_finalize</code> path for structured reports.</li>
+<li>Connect each fire or unknown report to one incident in <code>runner._process_tick</code>.</li>
+<li>Write <code>_state_message</code> in <code>dispatch.py</code>.</li>
+<li>Complete <code>prompts/dispatch_system.md</code>.</li>
+</ul>
+<p>Keep the general agent loop unchanged. Copy <code>contact_id</code> and <code>reported_location</code> from the contact envelope. Make each dispatch refer to a filed incident.</p>
+<p>In <code>_state_message</code>, read truck coordinates from <code>position</code>. Permit a null <code>route</code>. Do not treat the old <code>incident_id</code> on an idle truck as a current commitment.</p>
+<p>Show me the dispatch policy before you put it in the system prompt. Use this initial rule unless I change it: assign one free truck to each highest-priority uncovered incident. Do not issue a command that changes nothing. Wait for my approval.</p>
+<p>Run <code>uv run behave features/dispatch.feature features/intake.feature</code>. Inspect the recorded request when a scenario fails. Do not change code before you understand the failure.</p>
+<p>At the end, show one complete state message. Explain what code decides and what the model decides.</p>
+</blockquote>
+<h2 id="check-the-result" tabindex="-1"><a class="header-anchor" href="#check-the-result">Check the result</a></h2>
+<p>Run:</p>
+<pre><code class="language-bash">uv run behave features/dispatch.feature features/intake.feature
+uv run hadr-runner stage1-basic@londone
+</code></pre>
+<p>Record:</p>
+<ul>
+<li>casualties;</li>
+<li>buildings lost;</li>
+<li>dispatch rounds; and</li>
+<li>dispatch tokens.</li>
+</ul>
+<p>Read one dispatch rationale. If both trucks go to the same fire, first check the state message and the system prompt. Do not change the model first.</p>
+<details class="spoiler" data-gate="tralalero" hidden><summary>Catch-up solution</summary><p>If the vertical slice is still blocked after one focused repair, use the <a href="reference-solution/">Stage 1 reference solution</a>.</p></details>
+<p>The <a href="helper-prompt/">skeleton progress checker</a> gives a more detailed review.</p>
+<h2 id="completion-criteria" tabindex="-1"><a class="header-anchor" href="#completion-criteria">Completion criteria</a></h2>
+<ul>
+<li>A structured contact can cause a valid dispatch.</li>
+<li>The state message prepares the facts before the model call.</li>
+<li>You can explain the dispatch policy.</li>
+<li>You have a live baseline for the next stages.</li>
 </ul>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/project-2/quality-gates/">Previous: Quality gates and integration</a> | <a href="/project-2/intake/">Next: Stage 2: intake</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">

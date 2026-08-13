@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>Background</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,19 +32,19 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/setup/" class="sidebar-link">
             <span class="sidebar-link-label">Setup</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
             <li class="sidebar-subitem">
-              <a href="/setup/background/" class="sidebar-sublink">Background</a>
+              <a href="/setup/background/" class="sidebar-sublink" aria-current="page">Background</a>
             </li>
           </ul>
         </li>
@@ -171,68 +171,86 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
-          
+          <h1 class="page-title">Background</h1>
+          <p class="page-subtitle">Setup</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
+          <!-- markdownlint-disable MD036 -->
+<h1 id="how-we-got-here" tabindex="-1"><a class="header-anchor" href="#how-we-got-here">How we got here</a></h1>
+<p>One version of the timeline:</p>
+<p><strong>30 Nov 2022: <a href="https://openai.com/index/chatgpt/">ChatGPT</a> made conversational coding widely accessible.</strong></p>
 <ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
+<li>It could explain and generate code through dialogue.</li>
+<li>Coding still meant copying snippets between a chat window and an editor.</li>
 </ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
+<p><strong>12 Sep 2024: OpenAI released <a href="https://openai.com/index/introducing-openai-o1-preview/"><code>o1-preview</code></a>.</strong></p>
 <ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
+<li>The model spent additional time reasoning before answering, improving results on complex coding, maths, and science tasks.</li>
 </ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
+<p><strong>20 Jan 2025: DeepSeek released <a href="https://api-docs.deepseek.com/news/news250120">R1</a>.</strong></p>
+<ul>
+<li>DeepSeek published an MIT-licensed reasoning model, its training report, and smaller distilled models.</li>
+<li>Strong reasoning is now accessible: developers could inspect, adapt, and self-host the weights.</li>
 </ul>
+<p><strong>02 Feb 2025: Karpathy named <a href="https://x.com/karpathy/status/1886192184808149383">“vibe coding”</a>.</strong></p>
+<ul>
+<li><em>“I ‘accept all’ always, I don’t read the diffs anymore.”</em></li>
+<li>The phrase captured a cultural shift toward describing an outcome and letting an AI produce the implementation.</li>
+<li>It did not remove the need for engineering judgment, evidence, or review.</li>
+</ul>
+<p><strong>24 Feb 2025: Anthropic released <a href="https://www.anthropic.com/news/claude-3-7-sonnet">Claude Code</a> as a research preview.</strong></p>
+<ul>
+<li>The model moved into the terminal, where it could search and read a repository, edit files, run tests, use command-line tools, and commit changes.</li>
+<li>Now you can delegate bounded engineering tasks to an agent operating inside the development environment.</li>
+</ul>
+<p><strong>24 Nov 2025: <a href="https://www.anthropic.com/news/claude-opus-4-5">Claude Opus 4.5</a> pushed coding agents further.</strong></p>
+<ul>
+<li>Anthropic reported stronger software-engineering, planning, tool-use, and long-horizon agent performance, with fewer tokens needed for comparable or better results.</li>
+<li>The practical shift was from agents that could attempt a change to agents that could plan, execute, and verify longer tasks with less intervention.</li>
+</ul>
+<p><strong>2026: Powerful local models became a practical choice.</strong></p>
+<ul>
+<li>Open-weight releases such as <a href="https://github.com/QwenLM/Qwen3.6">Qwen3.6</a>, <a href="https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemma-4-12b/">Gemma 4 12B</a>, and <a href="https://developer.nvidia.com/blog/inside-nvidia-nemotron-3-techniques-tools-and-data-that-make-it-efficient-and-accurate/">Nemotron 3 Nano</a> brought strong coding, reasoning, tool use, and multimodal capabilities to developer-owned hardware.</li>
+<li>Support for runtimes such as llama.cpp, MLX, Ollama, and LM Studio made local deployment increasingly routine. Hardware needs still varied from an ordinary laptop to a high-end workstation.</li>
+</ul>
+<p><strong>2026: Frontier-grade open models became a category.</strong></p>
+<ul>
+<li>Models from several labs, including <a href="https://z.ai/blog/glm-5.2">GLM-5.2</a>, <a href="https://www.moonshot.ai/">Kimi K3</a>, <a href="https://www.minimax.io/blog/minimax-m3">MiniMax M3</a>, and <a href="https://api-docs.deepseek.com/news/news260424/">DeepSeek V4</a>, competed near the proprietary frontier on reasoning, coding, tool use, multimodality, and long-horizon agent work.</li>
+<li>Efficiency-focused releases such as <a href="https://github.com/XiaomiMiMo/MiMo-V2-Flash">MiMo-V2-Flash</a> showed that the open ecosystem was broadening across both capability and deployment cost.</li>
+<li>These models could be inspected and self-hosted, but the largest required datacentre-scale hardware. Open and local had become separate dimensions.</li>
+</ul>
+<h2 id="beliefs-to-let-go" tabindex="-1"><a class="header-anchor" href="#beliefs-to-let-go"><a href="https://every.to/guides/compound-engineering">Beliefs to let go</a></a></h2>
+<p>Habits from before Nov 2025 to unlearn:</p>
+<ul>
+<li><em>“The code must be written by hand”.</em>
+<ul>
+<li>Who types doesn’t matter; maintainable code that solves the right problem does</li>
+</ul>
+</li>
+<li><em>“Every line must be manually reviewed”.</em>
+<ul>
+<li>If you don’t trust the results, devise a workflow to figure out what you should manually review.</li>
+</ul>
+</li>
+<li><em>“First attempts should be good”.</em> Expect a high garbage rate; iterate fast instead
+<ul>
+<li>Conversely, with good models, first attempts <em>can</em> be good, if you plan. <a href="https://x.com/MengTo/status/2073702261398892633?s=20">This was one-shotted</a>.</li>
+</ul>
+</li>
+<li><em>“<a href="https://x.com/pmarquees/status/2073538684318552267?s=46">More typing equals more learning</a>”.</em> Reviewing agent builds teaches more than hand-typing!</li>
+</ul>
+<p>Letting go isn’t ceding control. You’re encoding it: conventions, constraints, review, and that’s the thesis of this course.</p>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/setup/">Previous: Setup</a> | <a href="/project-1/">Next: Project 1 overview</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">

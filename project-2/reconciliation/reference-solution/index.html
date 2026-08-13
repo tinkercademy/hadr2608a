@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>Reference solution: Stage 3 reconciliation</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
@@ -171,65 +171,59 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
-          
+          <h1 class="page-title">Reference solution: Stage 3 reconciliation</h1>
+          <p class="page-subtitle">Project 2: HADR agent</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
-<ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
-</ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
-<ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
-</ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
-</ul>
+          <h1 id="stage-3-reference-solution" tabindex="-1"><a class="header-anchor" href="#stage-3-reference-solution">Stage 3 reference solution</a></h1>
+<!-- markdownlint-disable MD033 -->
+<p>Three parts: add a belief-strength field, implement deterministic reconciliation, and swap the runner’s naive one-incident-per-report loop for it.</p>
+<h2 id="belief-strength" tabindex="-1"><a class="header-anchor" href="#belief-strength">Belief strength</a></h2>
+<p>Add a <code>confidence</code> field (belief strength in [0, 1]) to the <code>Incident</code> dataclass - the starter ships none.</p>
+<pre><code class="language-python">    confidence: float = 0.5  # belief strength in [0, 1]
+</code></pre>
+<p>A fire opens at 0.6, an unknown at 0.4; corroboration adds 0.15, a nearby denial subtracts 0.25 (never below 0, never auto-closing), and truthful truck vision pins it to 1.0 or closes the incident.</p>
+<h2 id="thresholds" tabindex="-1"><a class="header-anchor" href="#thresholds">Thresholds</a></h2>
+<pre><code class="language-python">MATCH_RADIUS: float = 60.0
+TIME_WINDOW: int = 12
+OPEN_CONFIDENCE = {&quot;fire&quot;: 0.6, &quot;unknown&quot;: 0.4}
+CORROBORATE = 0.15
+FALSE_ALARM_PENALTY = 0.25
+</code></pre>
+<p>These are a tuning choice, not a given: any values that keep the deterministic fixtures separate work for the tests, but the live <code>stage3-partial@londone</code> map spaces buildings hundreds to thousands of world units apart, so pick a radius sane for the map and let the vision override catch a wrong merge rather than a radius that always does.</p>
+<h2 id="reconcile_reports" tabindex="-1"><a class="header-anchor" href="#reconcile_reports">reconcile_reports</a></h2>
+<p>Per the decision table in <code>reconcile.py</code>’s docstring. A denial never opens an incident; if one sits near an open belief it links as a possible false alarm and demotes confidence, never overwriting a live belief. A fire/unknown report opens a new incident or merges into the nearest compatible one (nearest-first, within radius and time window).</p>
+<pre><code class="language-python">def _reconcile_one(r, incidents, tick):
+    if r.coords is None:
+        return Outcome(IGNORED, None, r.contact_id, &quot;no resolvable location&quot;)
+    if r.incident_type == &quot;none&quot;:
+        match = _nearest_open(r.coords, incidents, tick)
+        if match is None:
+            return Outcome(IGNORED, None, r.contact_id, &quot;no fire, no incident&quot;)
+        incidents.link(match.incident_id, r.contact_id, tick)
+        incidents.update(match.incident_id, tick=tick,
+                         confidence=max(0.0, match.confidence - FALSE_ALARM_PENALTY))
+        return Outcome(FALSE_ALARM, match.incident_id, r.contact_id, &quot;denial near a suspected incident&quot;)
+    match = _best_match(r, incidents, tick)
+    if match is None:
+        inc = incidents.open(incident_type=r.incident_type, coords=r.coords, tick=tick,
+                             building_id=_building_id(r), severity=_sev_value(r),
+                             headcount=_head_value(r), headcount_qualifier=_head_qualifier(r),
+                             confidence=OPEN_CONFIDENCE.get(r.incident_type, 0.4))
+        incidents.link(inc.incident_id, r.contact_id, tick)
+        return Outcome(OPEN, inc.incident_id, r.contact_id)
+    incidents.link(match.incident_id, r.contact_id, tick)
+    return _merge(match, r, incidents, tick)
+</code></pre>
+<p><code>_merge</code> upgrades an <code>unknown</code> belief to <code>fire</code>, keeps the max severity band, and on an <code>all_out</code>-vs-<code>trapped</code> headcount clash flags a contradiction while retaining the MORE cautious belief (never silently overwriting). It also adopts a headcount claim when the incident holds none yet, and nudges confidence up by <code>CORROBORATE</code>.</p>
+<h2 id="reconcile_vision-(ground-truth)" tabindex="-1"><a class="header-anchor" href="#reconcile_vision-(ground-truth)">reconcile_vision (ground truth)</a></h2>
+<p>A building seen <code>normal</code> closes any co-located incident (<code>RESOLVED_VISION</code>); <code>burning</code> confirms or opens one at confidence 1.0 (<code>CONFIRMED_VISION</code>). <code>collapsed</code> is terminal - the building is lost, nothing left to serve - and the reference takes no reconcile action on it.</p>
+<h2 id="runner" tabindex="-1"><a class="header-anchor" href="#runner">Runner</a></h2>
+<p>Replace the naive stage-1 loop: <code>reconcile_mod.reconcile_reports(new_reports, ep.incidents, ep.reports, tick)</code>, then resolve each observation building to a point and call <code>reconcile_mod.reconcile_vision(...)</code> so reconciliation stays pure.</p>
+<p>Verified: <code>REC-1..8</code> green against the solution (<code>cd starter &amp;&amp; uv run --project ../solution behave features/reconcile.feature</code>); <code>ruff</code>/<code>pyright</code> clean; reconciliation is deterministic (identical inputs -&gt; identical links). A live <code>stage3-partial@londone</code> episode resolves at casualties 0 / buildings_lost 0, improving on the greedy baseline of 26 / 1.</p>
 
           
           

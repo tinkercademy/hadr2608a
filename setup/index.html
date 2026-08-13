@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>Setup</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,12 +32,12 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-active is-open">
           <a href="/setup/" class="sidebar-link">
             <span class="sidebar-link-label">Setup</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
@@ -171,68 +171,163 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
+          <h1 class="page-title">Setup</h1>
           
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
+          <h1 id="setup" tabindex="-1"><a class="header-anchor" href="#setup">Setup</a></h1>
+<p>Complete this setup in class before you start the projects. Form a balanced team and prepare the development tools on your own machine.</p>
+<h2 id="what-you-need-personally" tabindex="-1"><a class="header-anchor" href="#what-you-need-personally">What you need personally</a></h2>
+<p>Check that you have all these tools:</p>
 <ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
+<li>A seat on the course Claude Team plan for Claude Code.</li>
+<li>An OpenCode Go account for the default runtime models.</li>
+<li>A personal GitHub account.</li>
+<li>Software dependencies: Git, <code>uv</code> (for Python).</li>
+<li>Visual Studio Code.</li>
+<li>Internet access.</li>
+<li>Windows only: WSL2.</li>
 </ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
+<h2 id="build-a-balanced-team" tabindex="-1"><a class="header-anchor" href="#build-a-balanced-team">Build a balanced team</a></h2>
+<p>Aim for a team that has these skills:</p>
 <ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
+<li>At least one person is comfortable debugging Python and HTTP APIs.</li>
+<li>At least one person is comfortable running a GitHub pull-request workflow and resolving conflicts.</li>
+<li>At least one person enjoys tests, edge cases, data, or evaluation.</li>
+<li>At least one person is interested in prompts, models, and tool-calling behavior.</li>
 </ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
+<p>If your team has a gap, tell a facilitator early. We can rebalance teams, provide a starter pattern, or pair you with another group for that part.</p>
+<h2 id="set-up-development-prerequisites" tabindex="-1"><a class="header-anchor" href="#set-up-development-prerequisites">Set up development prerequisites</a></h2>
+<p>Windows users: install WSL2 and <a href="https://gitforwindows.org/">Git for Windows</a> first, then run <strong>every</strong> command on this page inside WSL2 - not PowerShell. The one PowerShell block below is an escape hatch for checking a model call, not an alternative path through the setup.</p>
+<ol>
+<li><a href="https://code.claude.com/docs/en/terminal-guide">Install Claude Code</a> and sign in using the course Team seat. The Claude desktop app is optional.</li>
+<li><a href="https://opencode.ai/docs">Install OpenCode</a>, sign in using the provided OpenCode Go API key, and verify the prescribed runtime models are available. OpenCode is a second harness with the same shape as Claude Code: same loop, same tools, different brain. Running both makes the harness/model split real, and its Go plan supplies the runtime models your dispatch agent will call.</li>
+<li>Install <a href="https://cli.github.com/">GitHub CLI</a>, Python, and <code>uv</code>; authenticate GitHub without placing credentials in the repository.</li>
+</ol>
+<p><img src="/preflight/team-collaboration-meeting.png" alt="A team collaborating around a shared workstation"></p>
+<h2 id="prepare-the-course-materials" tabindex="-1"><a class="header-anchor" href="#prepare-the-course-materials">Prepare the course materials</a></h2>
+<ol>
+<li>
+<p>Open <a href="https://hadr.ocelliq.com/">hadr.ocelliq.com</a> and sign in with the credentials your facilitator gave you.</p>
+</li>
+<li>
+<p>Each of you clones the <a href="https://dl.hadr.ocelliq.com/starter.git">course starter</a> and pushes it to your own new private GitHub repository. You each build your own agent; the team is your review circle, so add your teammates as collaborators.</p>
+<pre><code class="language-bash">git clone https://dl.hadr.ocelliq.com/starter.git hadr
+cd hadr
+git remote set-url origin &lt;your-own-repository&gt;
+git push -u origin master
+</code></pre>
+</li>
+<li>
+<p>Now point OpenCode at it: ask OpenCode to describe the repository, then check whether its description is accurate. Its <code>mcp-play/</code> folder holds the ready-made configs for the first HADR exercise.</p>
+</li>
+<li>
+<p>In your repository, install the starter and create your local configuration:</p>
+<pre><code class="language-bash">uv sync
+cp .env.example .env
+uv run hadr-runner --help
+</code></pre>
+</li>
+<li>
+<p>Open <code>.env</code>, replace the placeholder <code>OPENAI_KEY</code> with your own OpenCode Go key, and <strong>never commit that file</strong>.</p>
+</li>
+<li>
+<p>In a separate terminal, start the pinned course simulator and leave it running:</p>
+<pre><code class="language-bash">uv run https://dl.hadr.ocelliq.com/hadr-engine.py serve --port 8000
+</code></pre>
+</li>
+<li>
+<p>Open <a href="http://127.0.0.1:8000/">the simulator display</a>, then prove the starter can drive a complete episode without spending model tokens:</p>
+<pre><code class="language-bash">uv run hadr-runner stage1-basic@londone --no-llm --seed 777
+</code></pre>
+</li>
+<li>
+<p>Make one small runtime model call:</p>
+<pre><code class="language-bash">source .env
+curl --fail-with-body --silent --show-error \
+  &quot;$OPENAI_BASE_URL/chat/completions&quot; \
+  -H &quot;Authorization: Bearer $OPENAI_KEY&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d &quot;{\&quot;model\&quot;:\&quot;$DISPATCH_MODEL\&quot;,\&quot;messages\&quot;:[{\&quot;role\&quot;:\&quot;user\&quot;,\&quot;content\&quot;:\&quot;Write me a poem about frogs.\&quot;}],\&quot;max_tokens\&quot;:1024}&quot;
+</code></pre>
+</li>
+</ol>
+<details>
+<summary>Windows PowerShell equivalent</summary>
+<pre><code class="language-powershell">Get-Content .env | Where-Object { $_ -match &quot;^[^#][^=]*=&quot; } | ForEach-Object {
+  $name, $value = $_ -split &quot;=&quot;, 2
+  Set-Item -Path &quot;Env:$name&quot; -Value $value
+}
+$body = @{
+  model = $env:DISPATCH_MODEL
+  messages = @(@{ role = &quot;user&quot;; content = &quot;Write me a poem about frogs.&quot; })
+  max_tokens = 1024
+} | ConvertTo-Json -Compress
+curl.exe --fail-with-body --silent --show-error `
+  &quot;$($env:OPENAI_BASE_URL)/chat/completions&quot; `
+  -H &quot;Authorization: Bearer $($env:OPENAI_KEY)&quot; `
+  -H &quot;Content-Type: application/json&quot; `
+  --data $body
+</code></pre>
+</details>
+<p>Any non-error model response passes. If a step fails, resolve it before you start Project 1. Everyone should be able to repeat the same setup from their own clone.</p>
+<h2 id="set-up-claude-code" tabindex="-1"><a class="header-anchor" href="#set-up-claude-code">Set up Claude Code</a></h2>
+<p>Claude Code runs in any terminal, but the course assumes it is wired into your editor and your repository: it should see what you have selected, read your type errors rather than guess at them, and be able to review a teammate’s pull request.</p>
+<h3 id="in-the-editor" tabindex="-1"><a class="header-anchor" href="#in-the-editor">In the editor</a></h3>
+<ol>
+<li>Install the <a href="https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code">Claude Code extension</a>: search “Claude Code” in the Extensions view (<code>Ctrl+Shift+X</code>), or run <code>claude</code> once in VS Code’s integrated terminal and it installs itself. Windows users: open the project through the WSL extension, so the editor, the terminal, and <code>.venv</code> all sit on the same side of the boundary.</li>
+<li><strong>Check that Claude sees your editor.</strong> Open a file, select a few lines, and ask about “these lines”. The transcript shows <code>Selected N lines from &lt;file&gt;</code> above your message. If that line never appears, Claude is not connected to the editor: run <code>/ide</code> inside Claude Code (needed whenever you started it from a terminal outside VS Code).</li>
+<li><strong>Install the Pyright language server.</strong> Install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python extension</a>, which brings Pylance, a type checker live in the editor. Then run <strong>Python: Select Interpreter</strong> from the Command Palette (<code>Ctrl+Shift+P</code>) and choose <code>./.venv/bin/python</code> from your clone, or Pyright resolves none of the project’s imports.</li>
+<li><strong>Check that Pyright is running.</strong> A clean starter has zero errors, so prove the checker works by breaking something: add <code>x: int = &quot;not an int&quot;</code> to any file and confirm it appears in the Problems panel, then delete it. Those diagnostics are what Claude Code reads when it checks its own work.</li>
+</ol>
+<h3 id="in-the-repository" tabindex="-1"><a class="header-anchor" href="#in-the-repository">In the repository</a></h3>
+<p>Run <code>/install-github-app</code> in Claude Code. It opens a pull request that installs the GitHub integration used to invoke Claude from issues and pull requests.</p>
+<ul>
+<li>Review and merge the setup pull request before trying to use the integration.</li>
+<li>Mention <code>@claude</code> in a test pull request and confirm that it can read the conversation and leave a review.</li>
+<li>Use the app for review; you still decide what to change, and its review never stands in for a teammate’s approval.</li>
+<li>Install it in every repository you work in, including each teammate’s.</li>
 </ul>
+<p>Then protect <code>master</code> in your own repository: open <strong>Settings &gt; Rules &gt; Rulesets</strong> (or <strong>Settings &gt; Branches</strong> for classic protection), target <code>master</code>, and require a pull request with at least one approving review before merging. This is what stops “a teammate approves before you merge” from being an honour system.</p>
+<p><img src="/preflight/github-pr-checks-in-progress.jpg" alt="GitHub pull-request checks in progress"></p>
+<h3 id="model-and-effort" tabindex="-1"><a class="header-anchor" href="#model-and-effort">Model and effort</a></h3>
+<ul>
+<li><code>/model</code> selects the model. The available Claude family runs from Fable through Opus, Sonnet, and Haiku in descending capability and cost.
+<ul>
+<li>Leave the context-window option at <code>[1m]</code> when it is available.</li>
+<li><code>/model opusplan</code> uses Opus for planning and Sonnet for execution to reduce token use.</li>
+</ul>
+</li>
+<li><code>/effort</code> selects how much thinking the model does. A useful starting point is Fable at <code>high</code> or Opus at <code>xhigh</code>.</li>
+<li><code>/advisor</code> lets the working model consult an equal or more capable model. Available pairings depend on the current models and your plan. Use a pairing that the command accepts; do not assume that a lower-tier model can advise a higher-tier model.</li>
+</ul>
+<p><img src="/preflight/build-priority-planning.png" alt="Planning what to build first"></p>
+<h2 id="done-when" tabindex="-1"><a class="header-anchor" href="#done-when">Done when</a></h2>
+<ul>
+<li>Everyone can clone the repository and run the same smoke test.</li>
+<li>No secret or operational data appears in files, logs, shell history shared with the group, or screenshots.</li>
+<li>Branch protection and the <code>@claude</code> review integration are active.</li>
+</ul>
+<h2 id="how-to-work-during-the-course" tabindex="-1"><a class="header-anchor" href="#how-to-work-during-the-course">How to work during the course</a></h2>
+<p>You will each be building your <strong>own</strong> agent in your <strong>own</strong> repository.</p>
+<p>However, your team is crucial:</p>
+<ul>
+<li>Any pull requests to your repository should be reviewed and approved by another team member.</li>
+<li>Your team will help you with brainstorming and working through the more complex parts of this task.</li>
+<li>Some larger tasks (especially benchmarking) will be split amongst you.</li>
+</ul>
+<p>Use the team-balance list above to spread the work, not to create silos. Rotate who leads as the course moves from intake to reconciliation, dispatch, and evals.</p>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/setup/background/">Next: Background</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">

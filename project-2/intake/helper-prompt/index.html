@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>Helper prompt: intake</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
@@ -171,65 +171,31 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
-          
+          <h1 class="page-title">Helper prompt: intake</h1>
+          <p class="page-subtitle">Project 2: HADR agent</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
+          <h1 id="helper-prompt%3A-intake" tabindex="-1"><a class="header-anchor" href="#helper-prompt%3A-intake">Helper prompt: intake</a></h1>
+<p>Paste this into Claude Code when you want a check on your Stage 2 intake design and extraction call.</p>
+<blockquote>
+<p>You are reviewing my Stage 2 intake design for the HADR dispatch agent. Inspect only - do not edit anything unless I explicitly ask.</p>
+<p>Intake turns one human contact into one structured report. The only building operation the engine offers is <code>building_to_coords</code>: exact building ID in, coordinates out - no search, no enumeration, no reverse lookup. That leaves exactly one design decision, and I want you to make me state it rather than drift into it:</p>
 <ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
+<li>Does my intake model call <code>building_to_coords</code> itself and emit coordinates, so reports leave intake dispatch-ready at the cost of a tool round-trip per contact on a cheap model?</li>
+<li>Or does intake preserve the <code>l...</code> ID verbatim and leave one deterministic conversion to reconciliation, so intake stays pure text-to-JSON that is trivial to eval against fixtures?</li>
 </ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
+<p>Stage 2’s envelope-authority rule already picks the second branch for me: <code>reported_location</code> is copied verbatim from the contact and <code>report.schema.json</code> has nowhere to put an intake-resolved coordinate, so a coordinate the model emits is discarded. Make me state why that constraint forecloses the first branch and where I wrote it down - do not let me relitigate the choice. Do not suggest recovering a building list, searching by name, or mapping coordinates back to an ID - the API refuses all three by design.</p>
+<p>Then help me tune the extraction call:</p>
 <ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
+<li>thinking vs non-thinking mode for this model, and the trade-off;</li>
+<li>the <code>max_tokens</code> budget - in thinking mode it must cover the hidden reasoning AND the JSON, so too low silently truncates to empty output while too high is slow;</li>
+<li>generating the extraction prompt with AI, then generating a separate rubric and having a second AI run grade the prompt’s output against it, so I am not the only checker.</li>
 </ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
-</ul>
+<p>Report what is decided, what is still open, and the single next action.</p>
+</blockquote>
 
           
           

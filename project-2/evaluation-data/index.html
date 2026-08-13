@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>Subagents and Evals</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
@@ -59,7 +59,7 @@
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/project-2/" class="sidebar-link">
             <span class="sidebar-link-label">Project 2: HADR agent</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
@@ -84,7 +84,7 @@
               <a href="/project-2/tokens/" class="sidebar-sublink">Tokens and costing</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/project-2/evaluation-data/" class="sidebar-sublink">Subagents and Evals</a>
+              <a href="/project-2/evaluation-data/" class="sidebar-sublink" aria-current="page">Subagents and Evals</a>
             </li>
             <li class="sidebar-subitem">
               <a href="/project-2/agentic-loop/" class="sidebar-sublink">Agentic loop</a>
@@ -171,68 +171,194 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
-          
+          <h1 class="page-title">Subagents and Evals</h1>
+          <p class="page-subtitle">Project 2: HADR agent</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
+          <h1 id="subagents-and-evals" tabindex="-1"><a class="header-anchor" href="#subagents-and-evals">Subagents and evals</a></h1>
+<p>A model can give different answers when you ask the same question two times. Both answers can seem correct. <strong>How can you test the model?</strong></p>
+<p>In this section, you will use subagents to make <em>evals</em> for the intake model. An eval is a set of test cases for a large language model (LLM). Each test case contains:</p>
 <ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
+<li>An input.</li>
+<li>An expected output.</li>
 </ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
+<p>Another LLM checks whether the expected output correctly represents the input.</p>
+<p>The intake model reads each incoming contact. A contact can be:</p>
 <ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
+<li>A call.</li>
+<li>An alarm.</li>
+<li>A responder update.</li>
 </ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
+<p>The model converts each contact into a structured report. The dispatch system depends on this report. An intake error can cause errors in the rest of the system.</p>
+<p>Run <code>uv run https://dl.hadr.ocelliq.com/hadr-engine.py gen-datasets</code> to get the raw, unlabeled data. The command writes <code>datasets/contacts_unlabeled.jsonl</code>. This file is the input set. The activity in this section creates the expected output set.</p>
+<p>Open the file. Examine it before you continue.</p>
+<h2 id="goal%3A-extract-only-what-the-user-said" tabindex="-1"><a class="header-anchor" href="#goal%3A-extract-only-what-the-user-said">Goal: Extract only what the user said</a></h2>
+<p>The dispatch software requires structured data. The intake model supplies this data. It extracts:</p>
+<ul>
+<li>The incident type.</li>
+<li>The severity.</li>
+<li>The headcount.</li>
+<li>The reported evidence.</li>
 </ul>
+<p>The model must extract what the source <strong>said</strong>. It must not decide whether the statement is true.</p>
+<p>A caller can name the wrong building or exaggerate the incident. The simulation handles these errors, not the intake model. Each contact already contains these machine-readable values:</p>
+<ul>
+<li><code>reported_location</code></li>
+<li><code>occurred_at</code></li>
+</ul>
+<p>Copy these values. Do not derive them again from the contact text.</p>
+<p>Each row contains its contact in the <code>contact</code> key. Read <code>row[&quot;contact&quot;]</code>, not <code>row</code>. For example, a row can contain:</p>
+<pre><code class="language-json">{
+  &quot;contact&quot;: {
+    &quot;contact_id&quot;: &quot;unlabeled-con-1&quot;,
+    &quot;delivered_at&quot;: 6,
+    &quot;occurred_at&quot;: 5,
+    &quot;payload&quot;: {&quot;text&quot;: &quot;Listen, by the harbour market &lt;l139&gt;, 2 people definitely still in there and really bad, there's a fire. There's smoke.&quot;},
+    &quot;payload_type&quot;: &quot;human_text&quot;,
+    &quot;reported_location&quot;: {&quot;building_id&quot;: &quot;l139&quot;, &quot;kind&quot;: &quot;building_id&quot;},
+    &quot;source_type&quot;: &quot;public_call&quot;
+  }
+}
+</code></pre>
+<p>The expected output can be:</p>
+<pre><code class="language-json">{
+  &quot;incident_type&quot;: &quot;fire&quot;,
+  &quot;severity&quot;: &quot;high&quot;,
+  &quot;headcount&quot;: 2,
+  &quot;evidence&quot;: [&quot;smoke&quot;, &quot;flames reported&quot;]
+}
+</code></pre>
+<p>You must design the report schema. The schema must define:</p>
+<ul>
+<li>Its fields.</li>
+<li>The permitted values for each field.</li>
+<li>A value for information that the source did not provide.</li>
+</ul>
+<p>The activity tests your schema against 300 contacts.</p>
+<h2 id="subagents" tabindex="-1"><a class="header-anchor" href="#subagents">Subagents</a></h2>
+<p>A <a href="https://code.claude.com/docs/en/sub-agents"><strong>subagent</strong></a> is a separate Claude process. It has its own context window and tool limits. It performs a specified task and returns only the result to the main session.</p>
+<p>Subagents have four benefits:</p>
+<ol>
+<li>A new context does not contain irrelevant information from the main session.</li>
+<li>The main context receives the result, not the complete work process.</li>
+<li>You can use a lower-cost model for a simple task.</li>
+<li>You can run independent tasks at the same time.</li>
+</ol>
+<p>Always set a maximum number of subagents. Without this limit, Claude can start many subagents and quickly reach your plan limit.</p>
+<h2 id="activity%3A-find-the-data-structure" tabindex="-1"><a class="header-anchor" href="#activity%3A-find-the-data-structure">Activity: Find the data structure</a></h2>
+<p>The file contains 300 unlabeled contacts. You must:</p>
+<ul>
+<li>Find a common structure in the data.</li>
+<li>Use that structure to extract data.</li>
+<li>Check the quality of the extracted data.</li>
+</ul>
+<p>You will make three outputs:</p>
+<ul>
+<li>A common report schema.</li>
+<li>An extraction skill.</li>
+<li>A rubric for the extracted data.</li>
+</ul>
+<p>A <em>skill</em> is a documented procedure that an LLM can follow. A <em>rubric</em> is a skill that contains criteria for judging LLM output.</p>
+<p>This task requires repeated and careful work. The workflow that follows uses language models to complete the work quickly.</p>
+<h3 id="the-pattern%3A-subagents-%2B-adversarial-review" tabindex="-1"><a class="header-anchor" href="#the-pattern%3A-subagents-%2B-adversarial-review">The pattern: subagents + adversarial review</a></h3>
+<p>First, lower-cost annotators extract labels from the data. An <em>annotator</em> is a subagent that extracts these labels. Then, an independent critic checks all labels and skills. The critic does not make labels. This separation of work is an <em>adversarial review</em>.</p>
+<p>This pattern is similar to the independent review in <a href="/project-2/plan-build-review/">plan, build, review</a>. Use this pattern when:</p>
+<ul>
+<li>You cannot read all the data.</li>
+<li>You do not yet trust the extraction process.</li>
+</ul>
+<p><strong>Warning:</strong> This loop uses many tokens. Each cycle uses several annotators and one critic. Follow these group rules:</p>
+<ul>
+<li>Select one student as the driver.</li>
+<li>Only the driver runs the loop.</li>
+<li>The driver shares their screen.</li>
+<li>The other group members watch the loop.</li>
+<li>Examine these intermediate outputs as a group:
+<ul>
+<li>The schema discussion.</li>
+<li>The rubric.</li>
+<li>The rejected labels.</li>
+</ul>
+</li>
+<li>Do not start a second set of subagents.</li>
+</ul>
+<p>This is the only course activity that does not run separately in each repository.</p>
+<p><strong>Note:</strong> If you cannot continue, use the <a href="helper-prompt/">helper prompt</a> to improve your prompt.</p>
+<pre class="mermaid">flowchart LR
+    U[(&quot;contacts_unlabeled.jsonl&quot;)] --&gt; H1 &amp; H2 &amp; H3
+    H1[&quot;Haiku annotator 1&quot;]
+    H2[&quot;Haiku annotator 2&quot;]
+    H3[&quot;Haiku annotator n&quot;]
+    H1 &amp; H2 &amp; H3 -- &quot;labels + skills&quot; --&gt; C[&quot;Sonnet critic: does not annotate&quot;]
+    C -- &quot;rubric: accept/reject each label&quot; --&gt; G{&quot;95% accepted, or 3 cycles?&quot;}
+    G -- &quot;no: run again with the common skill&quot; --&gt; U
+    G -- &quot;yes&quot; --&gt; F[(&quot;accepted labels = intake fixtures&quot;)]
+    C -. &quot;proposed schema extensions&quot; .-&gt; S[&quot;your report schema&quot;]
+    H3 ~~~ S
+</pre><p>Use these steps:</p>
+<ol>
+<li>
+<p><strong>Start the annotators.</strong> Ask Claude to start several Haiku subagents. Give each subagent a different part of <code>contacts_unlabeled.jsonl</code>. Also give each subagent your report schema. Each annotator must:</p>
+<ul>
+<li>Independently extract all labels from its part of the data.</li>
+<li>Write a skill that describes the procedure it used. The skill can contain mistakes.</li>
+</ul>
+</li>
+<li>
+<p><strong>Run an independent review.</strong> Start one Sonnet critic that did not make labels. The critic reads every label and every skill. It returns:</p>
+<ul>
+<li>A <strong>rubric</strong> with explicit accept or reject criteria for each label.</li>
+<li>One <strong>common skill</strong> that combines the annotator skills. It keeps agreed procedures and resolves differences.</li>
+<li>Proposed <strong>schema extensions</strong> for useful information that the current schema cannot store.</li>
+</ul>
+</li>
+<li>
+<p><strong>Repeat the review cycle.</strong> Start new annotators that use the common skill. Then ask the critic to check the new labels.</p>
+</li>
+</ol>
+<p>The driver must tell an Opus agent to run this loop with <a href="https://code.claude.com/docs/en/goal"><code>/goal</code></a>. The goal must include:</p>
+<ul>
+<li>A success criterion of approximately 95% accepted labels.</li>
+<li>A maximum of 3 cycles.</li>
+<li>An instruction to write all intermediate results to disk.</li>
+</ul>
+<p>The maximum prevents the goal from running without a limit. The group can examine the saved results. The driver can also give the results to the group.</p>
+<p>This workflow has these important properties:</p>
+<ul>
+<li>The lower-cost model reads every contact and creates the labels.</li>
+<li>The higher-cost model reads the labels and skills. It uses its tokens for judgment instead of large-scale extraction.</li>
+<li>You can examine the skill and rubric more quickly than hundreds of individual labels.</li>
+<li>The independent review makes large-scale extraction more reliable.</li>
+</ul>
+<p>The main lesson is simple: use a structured workflow to make model output more reliable.</p>
+<h3 id="when-you-are-done" tabindex="-1"><a class="header-anchor" href="#when-you-are-done">When you are done</a></h3>
+<p>Only the driver ran the activity, but all group members need the outputs. You will use them in <a href="/project-2/intake/">Stage 2: intake</a>.</p>
+<p>The driver must:</p>
+<ol>
+<li>Run <code>npx ccusage</code>.</li>
+<li>Take a screenshot of the result.</li>
+<li>Post the screenshot on Padlet. The result shows the cost of the group loop. Compare it with the other groups.</li>
+<li>Open a pull request in <strong>each teammate’s repository</strong>. Each pull request must contain:
+<ul>
+<li>The prompt that controlled the loop.</li>
+<li>The common skill.</li>
+<li>The rubric.</li>
+<li>The accepted labels.</li>
+</ul>
+</li>
+</ol>
+<p>Each repository owner must review and merge their pull request. Do not approve it without reading it because you will use these outputs. If the critic proposed schema extensions, decide during the review whether to accept them.</p>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/project-2/tokens/">Previous: Tokens and costing</a> | <a href="/project-2/agentic-loop/">Next: Agentic loop</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">

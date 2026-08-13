@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>CRUD app warm-up</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
@@ -48,14 +48,14 @@
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/project-1/" class="sidebar-link">
             <span class="sidebar-link-label">Project 1: CRUD app</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
             <li class="sidebar-subitem">
-              <a href="/project-1/crud-app/" class="sidebar-sublink">Build the CRUD app</a>
+              <a href="/project-1/crud-app/" class="sidebar-sublink" aria-current="page">Build the CRUD app</a>
             </li>
           </ul>
         </li>
@@ -171,68 +171,174 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
-          
+          <h1 class="page-title">CRUD app warm-up</h1>
+          <p class="page-subtitle">Project 1: CRUD app</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
+          <h1 id="crud-app-warm-up" tabindex="-1"><a class="header-anchor" href="#crud-app-warm-up">CRUD app warm-up</a></h1>
+<p>Before we start the HADR project, use Claude Code to build a tiny CRUD app from a PRD. This is a one-hour warm-up. Use it to check that Claude Code and your development environment work.</p>
+<p>Keep this app separate from the HADR starter repository. It can be disposable. It only needs to run on your computer; putting it online is a stretch goal.</p>
+<h2 id="the-brief" tabindex="-1"><a class="header-anchor" href="#the-brief">The brief</a></h2>
+<p>Build a <a href="https://vaughntan.org/boringtinytools">“boring tiny tool”</a>: a small collaborative web app for a group or event you care about. It must have:</p>
 <ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
+<li>authentication, with at least two test users;</li>
+<li>a database that still has its records after the app restarts;</li>
+<li>create, read, update, and delete operations; and</li>
+<li>one clear rule about who can see or change each record.</li>
 </ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
+<p>Keep to one main kind of record and one shared action. For example:</p>
+<table>
+<thead>
+<tr>
+<th>App</th>
+<th>Main record</th>
+<th>Shared action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Family to-do list</td>
+<td>Task</td>
+<td>Assign or complete it</td>
+</tr>
+<tr>
+<td>Department outing board</td>
+<td>Suggestion</td>
+<td>Vote or RSVP</td>
+</tr>
+<tr>
+<td>Team lunch shortlist</td>
+<td>Place</td>
+<td>Vote for it</td>
+</tr>
+<tr>
+<td>Equipment list</td>
+<td>Item</td>
+<td>Borrow or return it</td>
+</tr>
+<tr>
+<td>Small collection</td>
+<td>Entry</td>
+<td>Add a note or favourite it</td>
+</tr>
+</tbody>
+</table>
+<p>Choose something useful to five people, not something meant for five million. Do not build a new Facebook or Instagram. An outing board for your own department is about the right size.</p>
+<h2 id="start-with-product-thinking" tabindex="-1"><a class="header-anchor" href="#start-with-product-thinking">Start with product thinking</a></h2>
+<p>Take about five minutes to choose a group, situation, or interest. Do not choose features yet. Start with something such as family chores, department outings, team lunches, equipment lending, or a collection you care about.</p>
+<p>Open Claude on the web. Use it as a product-thinking partner before you use Claude Code as a builder. Start a conversation with a small prompt:</p>
+<blockquote>
+<p>Help me explore a useful app for <strong>[this group, situation, or interest]</strong>. Interview me one question at a time so that we can find a small, real problem worth solving. Do not suggest features or write code until we understand who has the problem and what they do now.</p>
+</blockquote>
+<p>Stay in the conversation. Answer at least eight questions before asking Claude to write anything. Ask it to challenge a weak assumption or an idea that is too large. You should leave the interview knowing:</p>
 <ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
+<li>who the app is for;</li>
+<li>what they do now and what gets in their way;</li>
+<li>what a better outcome would look like;</li>
+<li>which one workflow matters most;</li>
+<li>what the app needs to remember;</li>
+<li>what different users may see or change; and</li>
+<li>what you will deliberately leave out.</li>
 </ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
+<p>If you already use agent skills, you can run an interview skill instead of writing your own prompt. Two examples are <a href="https://github.com/bguiz/build-agent-skills/tree/fb8c2eb7dfb32810e0c19ba964320c6ac0e54ab9/skills/build-1-plan-product">Brendan Graetz’s <code>build-1-plan-product</code></a> and <a href="https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md">Matt Pocock’s <code>grilling</code></a>. Both keep the work in conversation before implementation. A plain Claude chat is also enough.</p>
+<h2 id="turn-the-interview-into-a-prd" tabindex="-1"><a class="header-anchor" href="#turn-the-interview-into-a-prd">Turn the interview into a PRD</a></h2>
+<p>When the idea is clear, use a separate prompt:</p>
+<blockquote>
+<p>Turn our conversation into a one-page PRD for the smallest useful version of this app. Include the problem, target users, three to five user stories, the core journey, the main record and its fields, authentication and sharing rules, core features, acceptance criteria, and what is not in the first version. Do not add features we have not discussed. End by asking me what I would cut.</p>
+</blockquote>
+<p>Read it. Change anything that does not sound like your idea, and cut anything you cannot demonstrate. Then create a new Git project for the app, save the result as <code>PRD.md</code>, make the first commit, create a GitHub repository, and push it. Keep this project separate from the HADR starter repository.</p>
+<h2 id="give-claude-code-the-prd" tabindex="-1"><a class="header-anchor" href="#give-claude-code-the-prd">Give Claude Code the PRD</a></h2>
+<p>Open the app folder in Claude Code. Make sure that your reviewed <code>PRD.md</code> is in the project root.</p>
+<p>For this warm-up, give Claude one complete build request. Use this prompt:</p>
+<blockquote>
+<p>Read <code>PRD.md</code> and build the app. Choose a small stack that works on this computer. Implement only the requirements in the PRD. Use a persistent local database and create two test users. Run the app, test the acceptance criteria, and fix important failures. Write a short <code>README.md</code> with setup and demonstration steps. Ask me a question only if you cannot continue safely without the answer.</p>
+</blockquote>
+<p>Let Claude plan and implement the app. You do not need to divide the build into small feature prompts or branches. You will use that more controlled workflow in the final project.</p>
+<p>When Claude finishes, run the app yourself. Test it as both users. Compare the result with the PRD. Ask Claude to fix requirements that do not work.</p>
+<p>Use a stack you know, or let Claude suggest a small one. A local database is fine. Production-grade identity, infrastructure, and deployment are outside this exercise.</p>
+<h2 id="your-checklist" tabindex="-1"><a class="header-anchor" href="#your-checklist">Your checklist</a></h2>
+<p>Tick these off as you work. Your progress is saved in this browser.</p>
+<ul class="persisted-checklist" data-storage-key="hadr-crud-warmup-v1">
+  <li><label><input type="checkbox" data-task="topic"> I chose a group or situation, not a list of features.</label></li>
+  <li><label><input type="checkbox" data-task="interview"> Claude interviewed me one question at a time before suggesting a solution.</label></li>
+  <li><label><input type="checkbox" data-task="challenge"> I asked Claude to challenge one assumption or oversized idea.</label></li>
+  <li><label><input type="checkbox" data-task="prd"> I reviewed a one-page PRD and saved it as <code>PRD.md</code>.</label></li>
+  <li><label><input type="checkbox" data-task="build"> I gave Claude Code the PRD and asked it to build the complete app.</label></li>
+  <li><label><input type="checkbox" data-task="auth"> Two different test users can sign in.</label></li>
+  <li><label><input type="checkbox" data-task="crud"> A user can create, view, edit, and delete the main record.</label></li>
+  <li><label><input type="checkbox" data-task="sharing"> The sharing rule behaves as the PRD describes.</label></li>
+  <li><label><input type="checkbox" data-task="persistence"> Records remain after a refresh or restart.</label></li>
+  <li><label><input type="checkbox" data-task="readme"> A new developer can run the app from <code>README.md</code>.</label></li>
+  <li><label><input type="checkbox" data-task="artefact"> I published the Claude Artifact and made it public.</label></li>
+  <li><label><input type="checkbox" data-task="video"> I recorded and uploaded the walkthrough.</label></li>
+</ul>
+<p class="checklist-status" aria-live="polite"></p>
+<script>
+  (() => {
+    const checklist = document.querySelector(".persisted-checklist[data-storage-key]");
+    if (!checklist) return;
+
+    const status = checklist.nextElementSibling;
+    const boxes = Array.from(checklist.querySelectorAll("input[data-task]"));
+
+    try {
+      const saved = new Set(JSON.parse(localStorage.getItem(checklist.dataset.storageKey) || "[]"));
+      boxes.forEach((box) => { box.checked = saved.has(box.dataset.task); });
+
+      const update = () => {
+        const completed = boxes.filter((box) => box.checked).map((box) => box.dataset.task);
+        localStorage.setItem(checklist.dataset.storageKey, JSON.stringify(completed));
+        if (status) status.textContent = `${completed.length} of ${boxes.length} complete. Saved in this browser.`;
+      };
+
+      boxes.forEach((box) => box.addEventListener("change", update));
+      update();
+    } catch (error) {
+      if (status) status.textContent = "Checklist progress cannot be saved in this browser.";
+    }
+  })();
+</script>
+<p>If one part does not work, say so. A small, honest demo is more useful than a broad claim. If you fall behind, cut styling and features before cutting the core user journey.</p>
+<h2 id="make-a-claude-artifact" tabindex="-1"><a class="header-anchor" href="#make-a-claude-artifact">Make a Claude Artifact</a></h2>
+<p>Once the app works, ask Claude to create and publish a public Artifact that explains:</p>
+<ul>
+<li>who the app is for and what they do together;</li>
+<li>the main record and its important fields;</li>
+<li>how authentication and sharing work;</li>
+<li>what works, what you cut, and what remains broken;</li>
+<li>the prompt or decision that helped most; and</li>
+<li>one thing you learnt while building it.</li>
+</ul>
+<p>Include two or three screenshots if time allows. Keep it short enough to read in two minutes. Make the Artifact public, check its public link in a private window, and share that link with your video.</p>
+<h2 id="record-the-walkthrough" tabindex="-1"><a class="header-anchor" href="#record-the-walkthrough">Record the walkthrough</a></h2>
+<p>Keep the video to 60-90 seconds. Show the app rather than its source code:</p>
+<ol>
+<li>Sign in as the first user and create a record.</li>
+<li>Sign in as the second user and show the sharing rule in action.</li>
+<li>Edit or delete the record.</li>
+<li>Open the Claude Artifact and name one thing you learnt.</li>
+</ol>
+<p>Upload the video and Artifact link to the class submission board. Be ready to talk about one surprise, one useful prompt, and one thing you would change next.</p>
+<h2 id="stretch-goals" tabindex="-1"><a class="header-anchor" href="#stretch-goals">Stretch goals</a></h2>
+<p>Only start these after the core path and video are complete:</p>
+<ul>
+<li>deploy the app and share its URL;</li>
+<li>add one automated test for the main journey;</li>
+<li>use Claude Design to sketch one screen, then implement one small improvement from that design in Claude Code;</li>
+<li>improve keyboard use, labels, and error messages; or</li>
+<li>add one more collaborative action without adding another product.</li>
 </ul>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/project-1/">Previous: Project 1 overview</a> | <a href="/project-2/">Next: Project 2 overview</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">

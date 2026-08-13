@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reference solution: Stage 1 dispatcher</title>
+    <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=Rubik:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
+  </head>
+  <body class="theme-tt">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    
+<aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+  <div class="sidebar-brand">
+    <a href="/" class="sidebar-brand-link">
+      <img class="sidebar-brand-sticker" src="/assets/tkrobot-fingerguns.png" alt="" />
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-title">Agentic Engineering with Claude Code</span>
+        <span class="sidebar-brand-sub">HADR Edition</span>
+      </span>
+    </a>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="sidebar-list">
+        <li class="sidebar-item">
+          <a href="/" class="sidebar-link">
+            <span class="sidebar-link-label">Home</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/setup/" class="sidebar-link">
+            <span class="sidebar-link-label">Setup</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/setup/background/" class="sidebar-sublink">Background</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/project-1/" class="sidebar-link">
+            <span class="sidebar-link-label">Project 1: CRUD app</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/project-1/crud-app/" class="sidebar-sublink">Build the CRUD app</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/project-2/" class="sidebar-link">
+            <span class="sidebar-link-label">Project 2: HADR agent</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/project-2/hadr-game/" class="sidebar-sublink">The HADR game</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/mcp-play/" class="sidebar-sublink">MCP Play</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/starter-kit/" class="sidebar-sublink">Starter kit</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/plan-build-review/" class="sidebar-sublink">Plan, build, review</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/skills/" class="sidebar-sublink">Turn play into a skill</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/tokens/" class="sidebar-sublink">Tokens and costing</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/evaluation-data/" class="sidebar-sublink">Subagents and Evals</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/agentic-loop/" class="sidebar-sublink">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/quality-gates/" class="sidebar-sublink">Quality gates and integration</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/intake/" class="sidebar-sublink">Stage 2: intake</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/reconciliation/" class="sidebar-sublink">Stage 3: reconciliation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/replanning/" class="sidebar-sublink">Stage 4: replanning</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/model-comparisons/" class="sidebar-sublink">Model comparisons</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/project-3/" class="sidebar-link">
+            <span class="sidebar-link-label">Project 3: AI app</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/project-3/claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/conclusion/" class="sidebar-link">
+            <span class="sidebar-link-label">Presentations and conclusion</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/conclusion/hadr-finale/" class="sidebar-sublink">HADR finale</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/conclusion/future/" class="sidebar-sublink">The future</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/game/" class="sidebar-link">
+            <span class="sidebar-link-label">Game reference</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/game/api/" class="sidebar-sublink">API</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/maps/" class="sidebar-sublink">Maps</a>
+            </li>
+          </ul>
+        </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-foot">
+    <a class="tinkercademy-brand" href="https://tinkercademy.com" rel="noopener" target="_blank" aria-label="Visit Tinkercademy">
+      <img src="/assets/tinkercademy-logo-white.png" alt="Tinkercademy" />
+    </a>
+    <div class="license-lockup">
+      <span class="license-label">Licensed from</span>
+      <a class="ocelliq-brand" href="https://ocelliq.com" rel="noopener" target="_blank" aria-label="Visit OcelliQ">
+        <img class="ocelliq-brand-mark" src="/assets/ocelliq-mark.svg" alt="" />
+        <span>OcelliQ</span>
+      </a>
+    </div>
+  </div>
+</aside>
+
+<button class="sidebar-toggle-btn" type="button" aria-label="Toggle navigation" aria-controls="sidebar">&#9776;</button>
+
+
+    <div class="layout">
+      <header class="page-header">
+        <div class="page-header-inner">
+          <h1 class="page-title">Reference solution: Stage 1 dispatcher</h1>
+          <p class="page-subtitle">Project 2: HADR agent</p>
+        </div>
+      </header>
+
+      <main id="main" class="page-main">
+        <article class="content">
+          <h1 id="stage-1-reference-solution" tabindex="-1"><a class="header-anchor" href="#stage-1-reference-solution">Stage 1 reference solution</a></h1>
+<!-- markdownlint-disable MD033 -->
+<p>Four holes: a minimal <code>_finalize</code> (<code>_project_claim</code> ships working and routes through it), the runner’s stage-1 tick (<code>_process_tick</code>), the state message (<code>_state_message</code>), and the system prompt. The stores and the agent loop are complete and already pass.</p>
+<h2 id="intake%3A-project-a-structured-claim-(no-model-call)" tabindex="-1"><a class="header-anchor" href="#intake%3A-project-a-structured-claim-(no-model-call)">Intake: project a structured claim (no model call)</a></h2>
+<p><code>_project_claim</code> ships working; <code>_finalize</code> is what you write. It copies the envelope authority fields (<code>contact_id</code>, <code>reported_location</code>) from the contact - never from the payload - and enforces the report schema, so a <code>none</code> report carries no fire severity or headcount.</p>
+<pre><code class="language-python">def _finalize(fields: dict, contact: dict) -&gt; dict:
+    it = fields.get(&quot;incident_type&quot;)
+    if it not in (&quot;fire&quot;, &quot;none&quot;, &quot;unknown&quot;):
+        it = &quot;unknown&quot;
+    report = {
+        &quot;contact_id&quot;: contact[&quot;contact_id&quot;],
+        &quot;reported_location&quot;: contact[&quot;reported_location&quot;],
+        &quot;incident_type&quot;: it,
+        &quot;severity&quot;: fields.get(&quot;severity&quot;),
+        &quot;headcount&quot;: fields.get(&quot;headcount&quot;),
+        &quot;event_time&quot;: fields.get(&quot;event_time&quot;),
+        &quot;notes&quot;: fields.get(&quot;notes&quot;) or &quot;&quot;,
+    }
+    if it == &quot;none&quot;:
+        report[&quot;severity&quot;] = None
+        report[&quot;headcount&quot;] = None
+    return report
+
+
+def _project_claim(contact: dict) -&gt; dict:
+    claim = contact[&quot;payload&quot;][&quot;claim&quot;]
+    fields = {
+        &quot;incident_type&quot;: claim.get(&quot;incident_type&quot;),
+        &quot;severity&quot;: claim.get(&quot;severity&quot;),
+        &quot;headcount&quot;: claim.get(&quot;headcount&quot;),
+        &quot;event_time&quot;: claim.get(&quot;event_time&quot;),
+    }
+    return _finalize(fields, contact)
+</code></pre>
+<p><code>_finalize</code> carries most of its weight at Stage 2, against a model that invents fields. The version above is the minimum INT-2/INT-3 need; Stage 2 extends it rather than replacing it.</p>
+<h2 id="runner%3A-one-incident-per-report" tabindex="-1"><a class="header-anchor" href="#runner%3A-one-incident-per-report">Runner: one incident per report</a></h2>
+<p>Stage 1 has no reconciliation. Each fire/unknown report with a resolvable location opens its own incident and links the contact; denials and unlocated reports open nothing. Truck-vision observations are collected but not yet consumed (Stage 3).</p>
+<pre><code class="language-python">    new_reports: list[Report] = []
+    for c in new_human:
+        fields, usage = intake_mod.extract_report(c, client=ep.intake_llm)
+        ep.intake_tokens.add(usage)
+        coords = await ep.location_coords(fields.get(&quot;reported_location&quot;))
+        new_reports.append(Report(
+            contact_id=fields[&quot;contact_id&quot;],
+            reported_location=fields[&quot;reported_location&quot;],
+            incident_type=fields[&quot;incident_type&quot;],
+            severity=fields.get(&quot;severity&quot;), headcount=fields.get(&quot;headcount&quot;),
+            event_time=fields.get(&quot;event_time&quot;), source_type=c.get(&quot;source_type&quot;),
+            coords=coords, tick=tick, notes=fields.get(&quot;notes&quot;, &quot;&quot;),
+        ))
+
+    for r in new_reports:
+        ep.reports.add(r)
+        if r.incident_type not in (&quot;fire&quot;, &quot;unknown&quot;) or r.coords is None:
+            continue
+        loc = r.reported_location
+        bid = loc[&quot;building_id&quot;] if loc.get(&quot;kind&quot;) == &quot;building_id&quot; else None
+        inc = ep.incidents.open(
+            r.incident_type, r.coords, tick=tick, building_id=bid,
+            severity=(r.severity or {}).get(&quot;value&quot;),
+            headcount=(r.headcount or {}).get(&quot;value&quot;),
+            headcount_qualifier=(r.headcount or {}).get(&quot;qualifier&quot;),
+        )
+        ep.incidents.link(inc.incident_id, r.contact_id, tick=tick)
+</code></pre>
+<h2 id="state-message%3A-pre-reconcile-for-the-weak-model" tabindex="-1"><a class="header-anchor" href="#state-message%3A-pre-reconcile-for-the-weak-model">State message: pre-reconcile for the weak model</a></h2>
+<p>The trap here is the truck dict shape. Live engine vehicle observations nest coordinates under <code>position</code>, carry a <code>route</code> that is <code>None</code> while the truck is parked, and keep an <code>incident_id</code> the engine never clears. The <code>DISP-*</code> fixture is built to match, so <code>t[&quot;x&quot;]</code> raises there. Read <code>t.get(&quot;position&quot;, {})</code> and <code>t.get(&quot;incident_id&quot;)</code>, and gate coverage on <code>status</code> as well.</p>
+<p>Rank open fire/unknown incidents people-first (<code>occupants * severity_weight</code>), mark each COVERED/UNCOVERED by whether a committed truck already serves it, mark trucks FREE/committed, and end with a one-line allocation rule.</p>
+<pre><code class="language-python">    open_inc = [i for i in incidents.find(status=&quot;open&quot;)
+                if i.incident_type in (&quot;fire&quot;, &quot;unknown&quot;)]
+    covered = {t[&quot;incident_id&quot;] for t in trucks
+               if t.get(&quot;incident_id&quot;) and t[&quot;status&quot;] in (&quot;moving&quot;, &quot;firefighting&quot;)}
+
+    sev_w = {&quot;high&quot;: 3.0, &quot;medium&quot;: 2.0, &quot;low&quot;: 1.0}
+    def occupants(i):
+        return 0 if i.headcount_qualifier == &quot;all_out&quot; else (i.headcount or 1)
+    def priority(i):
+        return occupants(i) * sev_w.get(i.severity, 1.5)
+
+    lines = [f&quot;tick={tick}&quot;, &quot;&quot;, &quot;OPEN INCIDENTS (highest priority first):&quot;]
+    for i in sorted(open_inc, key=priority, reverse=True):
+        cover = &quot;COVERED&quot; if i.incident_id in covered else &quot;UNCOVERED&quot;
+        lines.append(f&quot;  {i.incident_id} [{cover}] type={i.incident_type} &quot;
+                     f&quot;at x={i.coords[0]:.1f} y={i.coords[1]:.1f} &quot;
+                     f&quot;priority={priority(i):.1f} severity={i.severity}&quot;)
+    lines += [&quot;&quot;, &quot;TRUCKS:&quot;]
+    for t in trucks:
+        pos = t.get(&quot;position&quot;, {})
+        # The same status gate as `covered`: an idle truck still carrying the
+        # incident_id of a fire it put out is FREE, not committed.
+        state = &quot;committed&quot; if t.get(&quot;incident_id&quot;) in covered else &quot;FREE&quot;
+        lines.append(f&quot;  {t['vehicle_id']} [{state}] status={t['status']} &quot;
+                     f&quot;at x={pos.get('x', 0):.0f} y={pos.get('y', 0):.0f}&quot;)
+    lines += [&quot;&quot;, &quot;Assign each FREE truck to the highest-priority UNCOVERED &quot;
+              &quot;incident it can reach, ONE truck per incident. Do nothing for a &quot;
+              &quot;truck if every incident is already covered.&quot;]
+    return &quot;\n&quot;.join(lines)
+</code></pre>
+<p>Stage 3 folds a <code>confidence</code> (belief-strength) factor into <code>priority</code>; at Stage 1 the field does not exist yet, so priority is <code>occupants * severity</code> only. Stage 4 splits <code>committed</code> into two labels - see <a href="/project-2/replanning/reference-solution/">its reference solution</a>.</p>
+<h2 id="system-prompt" tabindex="-1"><a class="header-anchor" href="#system-prompt">System prompt</a></h2>
+<p>Fill the five <code>dispatch_system.md</code> TODO sections. The one that changes outcomes is the allocation rule: one free truck to the highest-priority uncovered incident, one truck per incident, do not stack. State truck mechanics (idle/moving/firefighting, retarget on dispatch, coordinates only), the uncertainty framing (incidents are beliefs, truck vision is truthful), and the requirement that every dispatch carries a real <code>incident_id</code> and a one-sentence rationale.</p>
+<p>The completed prompt (the <code>confidence</code> factor in Priorities only becomes meaningful once Stage 3 adds the field; before that the model simply never sees one):</p>
+<pre><code class="language-markdown">You are the dispatch controller for a fire-only emergency simulation. Each tick you receive the current incident beliefs and truck states, and you allocate a small fleet of trucks to save occupants and buildings. You act ONLY through the provided tools. You never call next_tick; the outer runner owns the clock.
+
+## What you control
+
+There are 2 trucks. A truck is `idle`, `moving`, or `firefighting`. Firefighting is positional: a stationary truck automatically fights the nearest burning building within the suppression radius. Suppression is slow, so a truck that reaches a real fire is committed to it for a long time. Dispatching a moving or firefighting truck RETARGETS it. Trucks have no home base; &quot;standing down&quot; is just a dispatch to a point.
+
+Destinations are world coordinates only. Convert a building ID to a point with `building_to_coords` before dispatching. Use `travel_time` to compare how far each truck is from a target.
+
+## The world is uncertain
+
+Incidents are BELIEFS built from noisy human reports, not ground truth. An incident may be a false alarm, a duplicate, or wrong about location or headcount. Truck vision is truthful: once a truck can see a building, its status is certain. Prefer committing trucks to high-confidence, high-stakes incidents; be willing to spend a truck's travel time to verify an uncertain-but-dangerous report only when you can spare it.
+
+## Priorities
+
+Rank open fire/unknown incidents by expected harm:
+
+    priority ~= occupants_at_risk * severity * time_urgency * confidence
+
+- occupants_at_risk: headcount, weighting confirmed_trapped &gt; possibly_trapped &gt; unknown &gt; all_out(0). People come first.
+- severity and time_urgency: high severity and fast-growing fires collapse sooner; a fire close to collapse with people inside is the top priority.
+- confidence: discount low-confidence or contradicted incidents, but never ignore a high-stakes one outright.
+- Do NOT dispatch to `none` incidents or to incidents vision has resolved as normal.
+
+## Committing vs. holding
+
+- Assign each free truck to the highest-priority uncovered incident it can reach.
+- Do not pull a truck off a fire it is actively suppressing UNLESS a clearly higher-priority incident (more lives, near collapse) is uncovered and this truck is the best one to take it - then retarget and say why.
+- A truck marked REDIRECTABLE is serving an incident that has dropped below the top of the list; it is not a commitment worth protecting. Retarget it to any uncovered incident that outranks the one it serves, even if it is still on the road. Chasing an unconfirmed report to the end while a bigger fire waits is the most expensive mistake available to you.
+- If every truck is committed and a new fire appears, decide explicitly: accept the delay, or redirect the least-valuable committed truck. State the tradeoff in the rationale.
+- When two trucks could take one fire, send the nearer; keep the other for coverage.
+- If there is nothing worth doing, stop without dispatching.
+
+## Rules
+
+- EVERY dispatch MUST carry the `incident_id` it serves and a one-sentence `rationale` naming the incident, the tradeoff, and why this truck. A dispatch without a real filed incident_id is a bug.
+- Keep reasoning short. You have a bounded number of tool rounds per tick; spend them on the queries you need, then dispatch and stop.
+- Re-dispatching a truck to where it is already heading is wasteful - only issue a command that changes something.
+</code></pre>
+<p>Verified: <code>DISP-1</code>, <code>DISP-2</code>, <code>INT-2</code>, <code>INT-3</code> pass against the solution (<code>cd starter &amp;&amp; uv run --project ../solution behave features/dispatch.feature features/intake.feature</code>); <code>ruff</code> and <code>pyright</code> clean; a live <code>stage1-basic@londone</code> episode (seed 777) resolves at casualties 5 / buildings_lost 1 (intake 0 tokens - structured claims skip the model), improving on the greedy baseline of 40 / 1.</p>
+
+          
+          
+          
+        </article>
+        <footer class="page-foot">
+          <p>Agentic Engineering with Claude Code - HADR Edition | Notes rendered with <a href="https://www.11ty.dev/">Eleventy</a>.</p>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        document.querySelectorAll(".sidebar-item").forEach(function (li) {
+          var link = li.querySelector(".sidebar-link");
+          var toggle = li.querySelector(".sidebar-toggle");
+          if (!link || !toggle) return;
+          toggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            li.classList.toggle("is-open");
+          });
+        });
+
+        var btn = document.querySelector(".sidebar-toggle-btn");
+        var body = document.body;
+        if (btn) {
+          btn.addEventListener("click", function () {
+            body.classList.toggle("sidebar-open");
+          });
+        }
+        document.addEventListener("click", function (e) {
+          if (
+            body.classList.contains("sidebar-open") &&
+            !e.target.closest(".sidebar") &&
+            !e.target.closest(".sidebar-toggle-btn")
+          ) {
+            body.classList.remove("sidebar-open");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Cheatcode gate: visiting any page with #somecode (or ?code=somecode) unlocks
+      // every element carrying data-gate="somecode", tab-session-wide. Content authors
+      // add a gate by wrapping content in any element with a data-gate attribute
+      // (plus `hidden`, so it stays invisible even before site.css loads).
+      // Codes are listed on the unlisted instructor notes page.
+      (() => {
+        const code = location.hash.slice(1) || new URLSearchParams(location.search).get("code");
+        if (code) sessionStorage.setItem("unlock-" + code, "1");
+        document.querySelectorAll("[data-gate]").forEach((el) => {
+          if (sessionStorage.getItem("unlock-" + el.dataset.gate)) {
+            el.removeAttribute("data-gate");
+            el.removeAttribute("hidden");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Copy button on every multiline fenced code block.
+      (() => {
+        const icon = (paths) =>
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+          'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + "</svg>";
+        const copyIcon = icon(
+          '<rect x="9" y="9" width="11" height="11" rx="2"/>' +
+            '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>'
+        );
+        const doneIcon = icon('<path d="M20 6 9 17l-5-5"/>');
+
+        document.querySelectorAll("pre:not(.mermaid)").forEach((pre) => {
+          const code = pre.querySelector("code");
+          if (!code || !code.textContent.trim().includes("\n")) return;
+
+          const wrap = document.createElement("div");
+          wrap.className = "code-wrap";
+          pre.replaceWith(wrap);
+          wrap.appendChild(pre);
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "copy-btn";
+          btn.innerHTML = copyIcon + "<span>Copy</span>";
+          wrap.appendChild(btn);
+
+          let timer;
+          btn.addEventListener("click", () => {
+            navigator.clipboard.writeText(code.textContent).then(
+              () => {
+                btn.innerHTML = doneIcon + "<span>Copied!</span>";
+                btn.classList.add("is-done");
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                  btn.innerHTML = copyIcon + "<span>Copy</span>";
+                  btn.classList.remove("is-done");
+                }, 2000);
+              },
+              () => {
+                btn.innerHTML = copyIcon + "<span>Press Ctrl+C</span>";
+                getSelection().selectAllChildren(code);
+              }
+            );
+          });
+        });
+      })();
+    </script>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2/dist/mermaid-layout-elk.esm.min.mjs";
+      mermaid.registerLayoutLoaders(elkLayouts);
+      mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+    </script>
+  </body>
+</html>

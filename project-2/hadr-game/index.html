@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>The HADR game</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
@@ -59,14 +59,14 @@
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/project-2/" class="sidebar-link">
             <span class="sidebar-link-label">Project 2: HADR agent</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
             <li class="sidebar-subitem">
-              <a href="/project-2/hadr-game/" class="sidebar-sublink">The HADR game</a>
+              <a href="/project-2/hadr-game/" class="sidebar-sublink" aria-current="page">The HADR game</a>
             </li>
             <li class="sidebar-subitem">
               <a href="/project-2/mcp-play/" class="sidebar-sublink">MCP Play</a>
@@ -171,68 +171,107 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
-          
+          <h1 class="page-title">The HADR game</h1>
+          <p class="page-subtitle">Project 2: HADR agent</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
+          <h1 id="the-hadr-game" tabindex="-1"><a class="header-anchor" href="#the-hadr-game">The HADR game</a></h1>
+<p>HADR means <strong>Humanitarian Assistance and Disaster Response</strong>. In this workshop, you will build an agent that dispatches limited fire trucks through a (simulated!) disaster. If HADR usually means High Availability and Disaster Recovery in your work, this is the other HADR.</p>
+<p>First learn the problem as an operator. On the <a href="/project-2/mcp-play/">next page</a>, you will connect Claude to the simulator and play two episodes before you inspect or automate the agent code.</p>
+<h2 id="your-mission" tabindex="-1"><a class="header-anchor" href="#your-mission">Your mission</a></h2>
+<p>You are building an agent that dispatches fire trucks in a disaster scenario. It receives human reports that can be late, incomplete, duplicated, inaccurate, or false. It must form a persistent picture of suspected incidents, decide what to trust, and dispatch trucks before buildings collapse and people are hurt.</p>
+<p><img src="/day-1/01-hadr/game-display-truck-enroute.png" alt="The HADR field display mid-episode: a fire truck en route to a burning building while human calls stream into the reports feed"></p>
+<h2 id="think-like-the-operator" tabindex="-1"><a class="header-anchor" href="#think-like-the-operator">Think like the operator</a></h2>
+<p>Before you look at the code, ask:</p>
 <ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
+<li>What information is public?</li>
+<li>What does the agent only believe?</li>
+<li>What remains hidden?</li>
+<li>Which dispatch mistake causes the most harm?</li>
+<li>What evidence would make you change a decision?</li>
 </ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
-<ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
-</ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
-</ul>
+<p>Keep these questions open while you play. Do not design from the diagram alone.</p>
+<h2 id="system-shape" tabindex="-1"><a class="header-anchor" href="#system-shape">System shape</a></h2>
+<p>You will build this pipeline:</p>
+<pre class="mermaid">flowchart LR
+    subgraph Intake[&quot;Intake (model extraction)&quot;]
+        i1[&quot;'smoke near the&lt;br/&gt;school on 5th'&quot;]
+        i2[&quot;'building fire on Elm St,&lt;br/&gt;people inside'&quot;]
+        i3[&quot;'fire is out at&lt;br/&gt;the school now'&quot;]
+    end
+
+    r{&quot;Reconciliation (Code)&lt;br/&gt;match to known incidents&quot;}
+
+    subgraph Incidents[&quot;Incidents (Memory)&quot;]
+        n1[&quot;1: School, 5th Ave&quot;]
+        n2[&quot;2: Elm St&quot;]
+    end
+
+    subgraph Dispatch[&quot;Dispatch loop (Agent)&quot;]
+        plan[&quot;plan&quot;] --&gt; act[&quot;act&quot;]
+        act --&gt; plan
+    end
+
+    subgraph Trucks[&quot;Fire trucks&quot;]
+        t1[&quot;truck A&quot;]
+        t2[&quot;truck B&quot;]
+    end
+
+    i1 --&gt; r
+    i2 --&gt; r
+    i3 --&gt; r
+    r -- &quot;update&quot; --&gt; n1
+    r -- &quot;new&quot; --&gt; n2
+    n1 --&gt; plan
+    n2 --&gt; plan
+    act &lt;--&gt; t1
+    act &lt;--&gt; t2
+</pre><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>What it does</th>
+<th>Kind</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intake</td>
+<td>Normalize each contact into a typed report</td>
+<td>Model call</td>
+</tr>
+<tr>
+<td>Reconciliation</td>
+<td>Decide whether a report opens a new incident or updates an existing one</td>
+<td>Code</td>
+</tr>
+<tr>
+<td>Incidents</td>
+<td>Hold the persistent picture of suspected incidents</td>
+<td>Memory</td>
+</tr>
+<tr>
+<td>Dispatch</td>
+<td>Plan against the incidents and act on the trucks</td>
+<td>Agent</td>
+</tr>
+</tbody>
+</table>
+<h2 id="measures" tabindex="-1"><a class="header-anchor" href="#measures">Measures</a></h2>
+<p>The game reports casualties, buildings lost, and runtime tokens separately. There is no single composite score: a cheap agent that misses people is not good, and an accurate agent that spends without bound is not finished.</p>
+<p>This is a difficult simulation. It is not always possible to solve every map without losses.</p>
+<p>Use the <a href="/game/">game guide</a> for the full rules and the <a href="/game/api/">API guide</a> for the typed control surface. You do not need to read either guide end to end before you start.</p>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/project-2/">Previous: Project 2 overview</a> | <a href="/project-2/mcp-play/">Next: MCP Play</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">

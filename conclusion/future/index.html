@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>The future</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
@@ -120,7 +120,7 @@
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/conclusion/" class="sidebar-link">
             <span class="sidebar-link-label">Presentations and conclusion</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
@@ -130,7 +130,7 @@
               <a href="/conclusion/hadr-finale/" class="sidebar-sublink">HADR finale</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/conclusion/future/" class="sidebar-sublink">The future</a>
+              <a href="/conclusion/future/" class="sidebar-sublink" aria-current="page">The future</a>
             </li>
           </ul>
         </li>
@@ -171,68 +171,77 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
-          
+          <h1 class="page-title">The future</h1>
+          <p class="page-subtitle">Presentations and conclusion</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
+          <h1 id="the-future" tabindex="-1"><a class="header-anchor" href="#the-future">The future</a></h1>
+<h2 id="the-four-d%E2%80%99s" tabindex="-1"><a class="header-anchor" href="#the-four-d%E2%80%99s">The four D’s</a></h2>
+<p>One framework to take home, from Anthropic’s <a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations">AI Fluency</a> course: <strong>Delegation, Description, Discernment, Diligence</strong>. You used all four during the workshop:</p>
 <ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
+<li><strong>Delegation</strong>: deciding what the dispatch agent does, and what stays human.</li>
+<li><strong>Description</strong>: <code>CLAUDE.md</code>, standing orders, behavior scenarios.</li>
+<li><strong>Discernment</strong>: PR reviews, evals, reading what the loop actually did.</li>
+<li><strong>Diligence</strong>: typed tools, deterministic checks, tick and spend caps.</li>
 </ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
+<h2 id="where-to-go-next" tabindex="-1"><a class="header-anchor" href="#where-to-go-next">Where to go next</a></h2>
+<p><strong>Keep building.</strong> For the theory behind what you built, <a href="https://anthropic.skilljar.com/">Anthropic Academy</a>’s free courses come with certificates: <a href="https://anthropic.skilljar.com/claude-code-in-action">Claude Code in Action</a>, <a href="https://anthropic.skilljar.com/introduction-to-agent-skills">Introduction to agent skills</a>, and the MCP courses. Directions to explore, roughly in order of how close they sit to this course:</p>
 <ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
+<li>Build an MCP server for a tool you already use. The connective tissue every agent after this one will need.</li>
+<li>Other harnesses: OpenCode, Codex, Cursor, Amp. Same loop, different trade-offs.</li>
+<li>Alternative models inside the harness, and local models, for work that cannot leave the building.</li>
+<li>Token use optimisation. You saw <code>/context</code>, <code>/compact</code>, and prompt caching; there is a whole discipline in there.</li>
+<li>Agentic workflow automation and multi-agent systems, for when one loop stops being enough.</li>
 </ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
+<p><strong>Teach someone else.</strong> Run an internal hackathon; the demo-and-issue-filing format works at any scale. <a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations">AI Fluency</a> is the course for the colleagues you will show this to.</p>
+<h2 id="other-things-to-explore" tabindex="-1"><a class="header-anchor" href="#other-things-to-explore">Other things to explore</a></h2>
+<p>Claude Code features the course never needed, worth a try on your own time:</p>
+<ul>
+<li><code>/voice</code> dictates your prompts: talking through a task is often faster than typing it, and rambling out loud surfaces requirements you would never bother to write down. There is audio output too - try <code>/radio</code> for Claude FM. (<a href="https://www.youtube.com/watch?v=tRsQsTMvPNg">Voice in Claude Code</a>)</li>
+<li><code>/advisor</code> pairs your working model with a smarter one, consulted only at key moments - for a plan or a course correction. Judgement where it counts, cheap tokens everywhere else. (<a href="https://www.youtube.com/watch?v=9wn6UK55uYU">Claude Code Advisor Command Explained in 3 Minutes</a>)</li>
+<li>Claude Code with other models: GLM, DeepSeek, and Kimi serve Anthropic-compatible endpoints, so pointing Claude Code’s environment variables at their base URL and key swaps the brain inside the same loop and tools - the most direct demonstration of the harness/model split. (<a href="https://docs.z.ai/devpack/quick-start">Z.ai GLM setup</a>; <a href="https://api-docs.deepseek.com/guides/agent_integrations/claude_code">DeepSeek’s equivalent</a>)</li>
+<li>Headless mode runs the whole agent as one command that prints a result and exits: <code>claude -p</code> and <code>opencode run</code>. This is the shape a scheduler invokes for true unattended operation. (<a href="https://code.claude.com/docs/en/headless">Headless docs</a>)</li>
 </ul>
+<h2 id="claude-code-on-the-web" tabindex="-1"><a class="header-anchor" href="#claude-code-on-the-web">Claude Code on the web</a></h2>
+<p>Claude Code running in a managed VM at <a href="https://claude.ai/code">claude.ai/code</a>: it clones your repo and keeps working after you disconnect, so a closed laptop lid no longer ends the session. (<a href="https://code.claude.com/docs/en/claude-code-on-the-web">Docs</a>)</p>
+<h3 id="launch-a-background-run" tabindex="-1"><a class="header-anchor" href="#launch-a-background-run">Launch a background run</a></h3>
+<p>One long-running task, handed to the web while you keep working locally:</p>
+<ul>
+<li>Connect your GitHub repo at <a href="http://claude.ai/code">claude.ai/code</a> and start a session; the managed VM keeps working after you close the tab.</li>
+<li>Hand it one bounded goal with <code>/goal</code>, so the checker keeps it honest between turns. A refactoring pass - tests, structure, dead code, docstrings - is a good first candidate: useful, and hard to break anything.</li>
+<li>Keep it off your branch: it works on its own branch and comes home as a PR you review.</li>
+<li>The goal rules apply even to a two-hour run: a target it cannot game, constraints with checking instruments, and caps. Here the caps are <code>/goal</code>’s checker plus your account’s usage limits - know both before you start.</li>
+<li>Get it running, then forget about it. That is the point.</li>
+</ul>
+<h2 id="further-reading" tabindex="-1"><a class="header-anchor" href="#further-reading">Further reading</a></h2>
+<ul>
+<li>Addy Osmani, <a href="https://addyosmani.com/blog/loop-engineering/">“Loop Engineering”</a> - designing the system that prompts the agent, so you no longer prompt it yourself.</li>
+<li>Elvis Sun’s <a href="https://github.com/elvisun/loss-function-development">loss-function-development repo and cheat museum</a> and the <a href="https://x.com/i/status/2068008743153832264">DAIR loop engineering piece</a> - how agents game the metrics they are given.</li>
+<li>Mario Zechner, <a href="https://www.youtube.com/watch?v=DPgJjRdQWrg">“Pi Building Pi”</a> - harnesses from first principles.</li>
+<li>Claude Code <a href="https://code.claude.com/docs/en/sandboxing">sandboxing docs</a> and the <a href="https://opencode.ai/docs">OpenCode docs</a> - for running agents with nobody watching.</li>
+</ul>
+<h2 id="who-to-follow" tabindex="-1"><a class="header-anchor" href="#who-to-follow">Who to follow</a></h2>
+<ul>
+<li><a href="https://addyosmani.com/">Addy Osmani</a> - loop engineering</li>
+<li><a href="https://simonwillison.net/">Simon Willison</a> - the field’s most reliable lab notebook</li>
+<li><a href="https://x.com/trq212">Thariq</a> - unknowns, and the unreasonable effectiveness of HTML</li>
+<li><a href="https://steipete.me/">Peter Steinberger</a> - agents running agents, at volume</li>
+<li><a href="https://mariozechner.at/">Mario Zechner</a> - harnesses from first principles</li>
+<li><a href="https://every.to/">Every</a> - compound engineering, weekly</li>
+<li><a href="https://www.anthropic.com/engineering">Anthropic’s engineering blog</a> - the features you used in the workshop, explained by the people who built them</li>
+</ul>
+<p>You built an agent that reads contacts and acts on them. These are feeds. Build the loop. Stay the engineer.</p>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/conclusion/hadr-finale/">Previous: HADR finale</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">

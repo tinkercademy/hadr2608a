@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>Quality gates and integration</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
@@ -59,7 +59,7 @@
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/project-2/" class="sidebar-link">
             <span class="sidebar-link-label">Project 2: HADR agent</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
@@ -90,7 +90,7 @@
               <a href="/project-2/agentic-loop/" class="sidebar-sublink">Agentic loop</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/project-2/quality-gates/" class="sidebar-sublink">Quality gates and integration</a>
+              <a href="/project-2/quality-gates/" class="sidebar-sublink" aria-current="page">Quality gates and integration</a>
             </li>
             <li class="sidebar-subitem">
               <a href="/project-2/dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
@@ -171,68 +171,91 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
-          
+          <h1 class="page-title">Quality gates and integration</h1>
+          <p class="page-subtitle">Project 2: HADR agent</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
+          <h1 id="quality-gates-and-integration" tabindex="-1"><a class="header-anchor" href="#quality-gates-and-integration">Quality gates and integration</a></h1>
+<!-- markdownlint-disable MD033 -->
+<p>Prepare your repository for the remaining HADR activities. You built the report and incident stores, then built the agent loop. Now add automated quality checks, merge open changes, and record a baseline run.</p>
+<p>Do all work on this page in your own repository. Agree on the quality tools with your team. Ask teammates to review the changes that you merge.</p>
+<h2 id="activity%3A-quality-checks" tabindex="-1"><a class="header-anchor" href="#activity%3A-quality-checks">Activity: Quality checks</a></h2>
+<p>Add code quality checks that run after repeated AI edits. Run them from a pre-commit hook. These checks prevent a gradual reduction in code quality.</p>
+<p>Use these standard Python tools:</p>
+<ol>
+<li><code>ruff</code> finds unused, inconsistent, or incorrect code.</li>
+<li><code>pyright</code> or <code>mypy</code> finds type errors.</li>
+<li><code>pytest</code> runs tests.</li>
+</ol>
+<p>Add these three (and <code>behave</code>) to your repo and configure them as a <code>pre-commit</code> hook.</p>
+<p>Discuss other useful checks with your team. Agree on a shared set of checks. Each team member must add these checks to their own repository.</p>
+<details class="spoiler"><summary>Some industry standards</summary>
 <ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
+<li>Test coverage thresholds (<code>pytest --cov --cov-fail-under</code>)</li>
+<li>Cyclomatic complexity limits (<code>ruff</code> rule <code>C901</code>)</li>
+<li>Dead-code detection (<code>vulture</code>)</li>
+<li>Dependency vulnerability audits (<code>pip-audit</code>)</li>
+<li>Enforced formatting (<code>ruff format --check</code>)</li>
 </ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
+</details>
+<h3 id="the-behave-gate" tabindex="-1"><a class="header-anchor" href="#the-behave-gate">The <code>behave</code> gate</a></h3>
+<p>The scenarios in <code>starter/features/</code> were written before the code. Some scenarios will fail until you implement their features.</p>
+<ol>
+<li>
+<p>Add <code>uv run behave</code> as a pre-commit hook and run it. Each failed scenario identifies work that is not complete. You can bypass a local hook with <code>git commit --no-verify</code>, so the hook is not a quality gate.</p>
+</li>
+<li>
+<p>Use GitHub CI as the quality gate. Run it for each pull request into <code>master</code>. Initially, run only the scenarios for completed features:</p>
+<pre><code class="language-yaml">- run: uv run behave --tags=&quot;@warmup&quot;   # gate the store warm-up only
+</code></pre>
+</li>
+<li>
+<p>Add tags to the gate when you complete each stage. After Stage 1 passes, use <code>--tags=&quot;@warmup or @stage1&quot;</code>. Add <code>@stage2</code> after you write the intake scenarios. Add <code>@stage3</code> after you complete reconciliation. Keep completed stages in the gate to prevent later changes from breaking them.</p>
+</li>
+<li>
+<p>Add a rule to <code>CLAUDE.md</code>: check the CI tag expression when a feature file changes or a stage is completed.</p>
+</li>
+</ol>
+<h3 id="when-you%E2%80%99re-done" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done">When you’re done</a></h3>
+<p>Post your list of pre-commit hooks to the Padlet. Review the lists from other teams and add useful checks to your list.</p>
+<h2 id="activity%3A-merging" tabindex="-1"><a class="header-anchor" href="#activity%3A-merging">Activity: Merging</a></h2>
+<ol>
+<li>
+<p>Merge all open changes into your own <code>master</code>. This includes the phase 1 and phase 2 loop branches and the pull request from the evaluation driver. A teammate must review each pull request before you merge it. Share the reviews across your team.</p>
+</li>
+<li>
+<p>Use a clean clone or worktree. Run <code>uv run behave --tags=@warmup</code> for the stores. Run <code>uv run behave features/agent_loop.feature</code> for the loop. Then run the skeleton episode with <code>uv run hadr-runner stage1-basic@londone --no-llm</code>. Start the engine first with <code>uv run https://dl.hadr.ocelliq.com/hadr-engine.py serve --port 8000</code>. The skeleton saves nobody. Record this result as the baseline.</p>
+</li>
+<li>
+<p>Run the live loop on some examples (<code>uv run hadr-agent &quot;what's the secret message?&quot;</code>) and record the <code>rounds</code> and token total it prints.</p>
+</li>
+<li>
+<p>Check the prompt cache on the live run. <code>agent_loop</code> sends each assistant turn back without changes. Thus, the system prompt, tool definitions, and prior turns stay the same across rounds. The kit adds the provider’s <code>prompt_tokens_details.cached_tokens</code> value to <code>result.usage.cache_read</code>. Add <code>cache_read</code> to the final output in <code>main()</code>. Confirm that it is not zero for a run with multiple rounds.</p>
+</li>
+</ol>
+<h3 id="when-you%E2%80%99re-done-1" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done-1">When you’re done</a></h3>
+<ol>
+<li><strong>Post your run on the Padlet.</strong> Include the <code>rounds</code>, total tokens, and <code>cache_read</code> from step 3. A <code>cache_read</code> of zero can mean that code changes the assistant turn. Compare your code with code from a teammate who has a nonzero value.</li>
+<li><strong>Complete the integration.</strong> Merge all required pull requests. Confirm that CI passes on <code>master</code>. Install the pre-commit hook in the clone that you will use for the remaining activities.</li>
+</ol>
+<h2 id="leave-with" tabindex="-1"><a class="header-anchor" href="#leave-with">Leave with</a></h2>
 <ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
-</ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
+<li>A reproducible setup command and test command.</li>
+<li>Automated checks that maintain code quality.</li>
+<li>A merged agent loop on your own <code>master</code>: green <code>LOOP-*</code> and store scenarios, plus a live <code>hadr-agent</code> run.</li>
+<li>The group intake fixtures merged into your repository, ready for <a href="/project-2/intake/">Stage 2: intake</a>.</li>
 </ul>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/project-2/agentic-loop/">Previous: Agentic loop</a> | <a href="/project-2/dispatcher/">Next: Stage 1: dispatcher</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">

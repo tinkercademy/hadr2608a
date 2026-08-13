@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>Reference solution: Stage 2 intake</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
@@ -171,65 +171,102 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
-          
+          <h1 class="page-title">Reference solution: Stage 2 intake</h1>
+          <p class="page-subtitle">Project 2: HADR agent</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
+          <h1 id="stage-2-reference-solution" tabindex="-1"><a class="header-anchor" href="#stage-2-reference-solution">Stage 2 reference solution</a></h1>
+<!-- markdownlint-disable MD033 -->
+<p>Two code holes (<code>_finalize</code> and enabling the human-text path) plus the intake prompt and your own eval. <code>_project_claim</code> and the runner already work, and Stage 1 left you a minimal <code>_finalize</code> to extend.</p>
+<h2 id="_finalize%3A-envelope-authority-%2B-schema" tabindex="-1"><a class="header-anchor" href="#_finalize%3A-envelope-authority-%2B-schema"><code>_finalize</code>: envelope authority + schema</a></h2>
+<p>The model reads the free text; the envelope owns identity and location. Copy <code>contact_id</code> and <code>reported_location</code> from the contact, never from the model. Coerce <code>incident_type</code> to the three legal values, default <code>notes</code>, and null out fire fields on a <code>none</code> report.</p>
+<pre><code class="language-python">def _finalize(fields: dict, contact: dict) -&gt; dict:
+    it = fields.get(&quot;incident_type&quot;)
+    if it not in (&quot;fire&quot;, &quot;none&quot;, &quot;unknown&quot;):
+        it = &quot;unknown&quot;
+    report = {
+        &quot;contact_id&quot;: contact[&quot;contact_id&quot;],
+        &quot;reported_location&quot;: contact[&quot;reported_location&quot;],
+        &quot;incident_type&quot;: it,
+        &quot;severity&quot;: fields.get(&quot;severity&quot;),
+        &quot;headcount&quot;: fields.get(&quot;headcount&quot;),
+        &quot;event_time&quot;: fields.get(&quot;event_time&quot;),
+        &quot;notes&quot;: fields.get(&quot;notes&quot;) or &quot;&quot;,
+    }
+    if it == &quot;none&quot;:
+        report[&quot;severity&quot;] = None
+        report[&quot;headcount&quot;] = None
+    return report
+</code></pre>
+<p>Because <code>reported_location</code> is copied verbatim and the report schema has no coordinate field, a <code>building_to_coords</code> call inside intake would have nowhere to put its result: the location conversion belongs to deterministic reconciliation (Stage 3), and intake stays pure text-to-JSON.</p>
+<h2 id="enable-the-human-text-path" tabindex="-1"><a class="header-anchor" href="#enable-the-human-text-path">Enable the human-text path</a></h2>
+<p>In <code>extract_report</code>, the raw model output is returned unvalidated until you finalize it. Replace the <code># TODO (stage 2)</code> return with:</p>
+<pre><code class="language-python">    return _finalize(fields, contact), usage
+</code></pre>
+<h2 id="the-prompt" tabindex="-1"><a class="header-anchor" href="#the-prompt">The prompt</a></h2>
+<p><code>mimo-v2.5</code> is a small model in JSON mode. A single crisp decision ladder outperforms few-shots (few-shots measurably hurt it). The load-bearing section is <code>incident_type</code>, decided by the words present:</p>
 <ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
+<li>fire/flame words (“on fire”, “flames”, “well alight”, “it’s burning”) -&gt; <code>fire</code>; panic or vagueness does not downgrade a stated fire.</li>
+<li>an explicit denial or a clearly non-fire matter (BBQ, steam, cat, dispute) -&gt; <code>none</code>.</li>
+<li>smoke alone, a burning smell alone, a bare alarm, “might be nothing” -&gt; <code>unknown</code>.</li>
 </ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
-<ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
-</ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
-</ul>
+<p>Absence of the word “fire” is not a denial. Severity drops one notch for panicked callers; headcount carries a qualifier (<code>confirmed_trapped</code> / <code>possibly_trapped</code> / <code>all_out</code> / <code>unknown</code>); firm first-hand claims get higher confidence than hedged or second-hand ones.</p>
+<p><code>event_time</code> is the field that most rewards an explicit rule. Left to its own judgement the model reads any present-tense report of an ongoing fire as a past event and sets a tick on all of them; naming the convention per source_type moved that field from 57% to 100%.</p>
+<p>The completed prompt:</p>
+<pre><code class="language-markdown">You classify ONE emergency contact (a transcribed call or an automatic alarm) into a structured report. Output ONLY a JSON object, no prose, no code fence.
+
+Keys:
+- `incident_type`: &quot;fire&quot; | &quot;unknown&quot; | &quot;none&quot;
+- `severity`: null, or {&quot;value&quot;: &quot;low&quot;|&quot;medium&quot;|&quot;high&quot;, &quot;confidence&quot;: 0-1}
+- `headcount`: null, or {&quot;value&quot;: int&gt;=0, &quot;qualifier&quot;: &quot;possibly_trapped&quot;|&quot;confirmed_trapped&quot;|&quot;all_out&quot;|&quot;unknown&quot;, &quot;confidence&quot;: 0-1}
+- `event_time`: null, or {&quot;tick&quot;: int&gt;=0, &quot;confidence&quot;: 0-1}
+- `notes`: short string (&quot;&quot; if none)
+
+Do NOT output contact_id or reported_location; those come from the envelope.
+
+## incident_type (most important - decide by the words present)
+
+- `fire`: the text states a fire, flames, or a building burning/ablaze - &quot;there's a fire&quot;, &quot;on fire&quot;, &quot;flames&quot;, &quot;open flames&quot;, &quot;flames out the window&quot;, &quot;it's burning&quot;, &quot;well alight&quot;, an explosion with flames. Panic, vagueness, or few details do NOT downgrade a stated fire; a panicked caller who mentions flames is still reporting `fire`.
+- `none`: the caller DENIES a fire - &quot;no fire&quot;, &quot;not a fire&quot;, &quot;nothing on fire&quot;, &quot;nothing serious&quot; - or reports a non-fire matter: BBQ/steam/toast/vent smoke, a party, noise, a leak, a stuck cat, a lockout, a dispute.
+- `unknown`: a possible fire NOT confirmed by any fire/flame word - smoke alone, a burning SMELL alone, an alarm sounding with no flames, &quot;might be nothing&quot;, &quot;hard to say&quot;, &quot;can't tell&quot;.
+
+Rule of thumb: flame/fire words -&gt; fire; an explicit denial or clearly non-fire request -&gt; none; otherwise smoke/smell/alarm/ambiguity -&gt; unknown. Absence of the word &quot;fire&quot; is not a denial.
+
+## severity (fire/unknown only; null for none and for bare alarms)
+
+- high: &quot;serious&quot;, &quot;spreading fast&quot;, &quot;getting worse quickly&quot;, &quot;really bad&quot;, &quot;it looks bad&quot;, huge, explosion, or people trapped.
+- medium: a real but limited-sounding fire, mixed cues.
+- low: &quot;small&quot;, &quot;minor&quot;, &quot;just a bit&quot;.
+Panicked callers exaggerate: drop their severity one notch and lower confidence.
+
+## headcount (null unless people are mentioned)
+
+Set value (0 for &quot;empty&quot;/&quot;everyone out&quot;) and qualifier: confirmed_trapped (definitely inside), possibly_trapped (maybe inside/unaccounted), all_out (everyone evacuated, value 0), unknown (a count given but status unclear). Vague counts -&gt; best integer estimate, low confidence.
+
+## event_time
+
+When you set it, tick is ALWAYS the occurred_at you were given, copied verbatim. Never do arithmetic: &quot;started 6 ticks back&quot; at occurred_at 14 is still tick 14, not 8.
+
+Decide by source_type:
+
+- `automatic_alarm`: always set it. An alarm has been sounding since before it reached you.
+- `responder_update`: always null. A responder is talking to you live from the scene.
+- `public_call`: set it only if the text carries a time reference - &quot;earlier&quot;, &quot;a while ago&quot;, &quot;a moment ago&quot;, &quot;not long ago&quot;, &quot;just now&quot;, &quot;as I speak&quot;, &quot;started N ticks back&quot;. Otherwise null.
+
+Describing a fire in the present tense (&quot;it's burning&quot;, &quot;there's a fire&quot;, &quot;spreading fast&quot;, &quot;smoke's coming out&quot;) is NOT a time reference. Vaguer wording lowers confidence, it does not change whether you set the field.
+
+## confidence
+
+Firm first-hand claims high (0.7-0.9); hedged, panicked, or second-hand claims lower (0.3-0.5).
+
+Output valid JSON only.
+</code></pre>
+<h2 id="eval" tabindex="-1"><a class="header-anchor" href="#eval">Eval</a></h2>
+<p>No harness ships in starter - build a small grader over the accepted-label fixture from the evaluation activity (manufactured from <code>contacts_unlabeled.jsonl</code>); the instructor <code>contacts_labeled.jsonl</code> stays sealed until <a href="/project-2/model-comparisons/">model comparisons</a>. Grade the field values with a tolerance band (severity ±1 band, headcount ±2, event_time tick ±2); the per-field <code>confidence</code> is advisory and carries fixture jitter, so do not match it exactly. Target incident_type &gt;=85%.</p>
+<p>Verified: <code>INT-2</code>/<code>INT-3</code> green against the solution (<code>cd starter &amp;&amp; uv run --project ../solution behave features/intake.feature</code>); the reference eval (<code>solution/evals/extraction.py --n 42</code>) scores incident_type 100%, reported_location 100%, severity(±1) 95.2%, headcount(±2) 100%, event_time 100%; live <code>stage2-language@londone</code> episodes resolve at casualties 5 / buildings_lost 1 (intake ~5 K tokens) on all four runs, improving on the greedy baseline of 40 / 1.</p>
 
           
           

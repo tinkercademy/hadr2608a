@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>Claude Code on the web</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
@@ -109,14 +109,14 @@
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/project-3/" class="sidebar-link">
             <span class="sidebar-link-label">Project 3: AI app</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
           </a>
           <ul class="sidebar-sublist">
             <li class="sidebar-subitem">
-              <a href="/project-3/claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
+              <a href="/project-3/claude-code-web/" class="sidebar-sublink" aria-current="page">Claude Code on the web</a>
             </li>
           </ul>
         </li>
@@ -171,68 +171,54 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
-          
+          <h1 class="page-title">Claude Code on the web</h1>
+          <p class="page-subtitle">Project 3: AI app</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
-<ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
-</ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
-<ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
-</ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
-</ul>
+          <h1 id="claude-code-on-the-web" tabindex="-1"><a class="header-anchor" href="#claude-code-on-the-web">Claude Code on the web</a></h1>
+<p>Use Claude Code on the web to research one question and create an artifact. Each team member must complete this activity.</p>
+<h2 id="connect-github" tabindex="-1"><a class="header-anchor" href="#connect-github">Connect GitHub</a></h2>
+<p>Open <a href="https://claude.ai/code">Claude Code on the web</a>. If prompted, connect the GitHub account from Setup and give Claude access only to the repository where it will create the artifact.</p>
+<h2 id="activity" tabindex="-1"><a class="header-anchor" href="#activity">Activity</a></h2>
+<ol>
+<li>Select one research question from the list below. Each team member must select a different question.</li>
+<li>Paste the question into Claude Code on the web.</li>
+<li>Ask follow-up questions. Challenge unclear claims and verify the important parts of the answer.</li>
+<li>Ask Claude to create an artifact in the connected repository that explains your findings.</li>
+<li>Present the artifact to your group.</li>
+<li>Share the artifact on the course Padlet.</li>
+</ol>
+<h2 id="optional-extension%3A-create-slides" tabindex="-1"><a class="header-anchor" href="#optional-extension%3A-create-slides">Optional extension: Create slides</a></h2>
+<p>Turn the artifact into slides. Start with the <a href="https://github.com/new?template_name=marp-cli-example&amp;template_owner=yhatt">MARP template</a>. You can also use the <a href="https://github.com/softaworks/agent-toolkit/blob/main/skills/marp-slide/SKILL.md">marp-slides skill</a>.</p>
+<h2 id="the-questions" tabindex="-1"><a class="header-anchor" href="#the-questions">The questions</a></h2>
+<ol>
+<li>How do you wrap an API in an agent skill?</li>
+<li>How do you drive browser actions from Claude Code - the Chrome extension, a browser MCP, or a CLI tool? When is a browser the wrong tool for the job?</li>
+<li>How do you run an alternative model - Kimi K3, GLM 5.2, DeepSeek V4 Pro - inside Claude Code, and what degrades when you do?</li>
+<li>Pi ships a system prompt of about a thousand tokens and four tools; Claude Code ships far more of both. What do you gain and lose at each end of that spectrum?</li>
+<li>When should you use MCP vs agent skills vs CLI vs API?</li>
+<li>Explain the “smart zone” and “dumb zone” of the context window.</li>
+<li>Why would one use <code>CLAUDE.md</code> as a directory of links to other .md files instead of one large <code>CLAUDE.md</code>?</li>
+<li>What are the pros and cons of running coding agents (and models) on your own computer vs in the cloud?</li>
+<li>Find agent skills that review code quality, technical architecture, or security vulnerabilities. Compare and contrast them: what does each one actually look at, and where do they disagree?</li>
+<li>How should you format what you feed an agent - markdown, HTML, JSON, XML-style tags? Find a case where the format changed the answer.</li>
+<li>What is a sound decision-making process for choosing LLMs and inference providers?</li>
+<li>What happens when a tool result contains instructions aimed at the agent? Find a real prompt-injection case, and how harnesses defend against it.</li>
+<li>When does handing work to a subagent beat doing it in the main context - and when does it just cost more?</li>
+<li>What would you have to be sure of before letting an agent run unattended for an hour?</li>
+<li>How do you tell whether a prompt change helped, rather than just felt better?</li>
+</ol>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/project-2/model-comparisons/">Previous: Model comparisons</a> | <a href="/project-3/">Next: Project 3: AI app</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">

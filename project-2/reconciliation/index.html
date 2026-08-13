@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>Stage 3: reconciliation</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
@@ -59,7 +59,7 @@
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/project-2/" class="sidebar-link">
             <span class="sidebar-link-label">Project 2: HADR agent</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
@@ -99,7 +99,7 @@
               <a href="/project-2/intake/" class="sidebar-sublink">Stage 2: intake</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/project-2/reconciliation/" class="sidebar-sublink">Stage 3: reconciliation</a>
+              <a href="/project-2/reconciliation/" class="sidebar-sublink" aria-current="page">Stage 3: reconciliation</a>
             </li>
             <li class="sidebar-subitem">
               <a href="/project-2/replanning/" class="sidebar-sublink">Stage 4: replanning</a>
@@ -171,68 +171,157 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
-          
+          <h1 class="page-title">Stage 3: reconciliation</h1>
+          <p class="page-subtitle">Project 2: HADR agent</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
+          <h1 id="stage-3%3A-reconciliation" tabindex="-1"><a class="header-anchor" href="#stage-3%3A-reconciliation">Stage 3: reconciliation</a></h1>
+<!-- markdownlint-disable MD033 -->
+<figure class="cheat-image" data-gate="lirili" hidden>
+  <figcaption>Cheat Code Entered</figcaption>
+  <img src="/day-2/03-reconciliation/lirili-larila-reconcile.png" alt="Lirili Larila deciding whether two smoke clouds are one fire">
+</figure>
+<p>Stage 3 adds duplicate reports, delays, denials, contradictions, and incorrect locations. Reconciliation converts reports into the current set of incident beliefs.</p>
+<p><img src="/day-2/03-reconciliation/matching-reports-to-incidents.png" alt="Reports matched to incidents by distance and time, with truck vision correcting a wrong match"></p>
+<h2 id="the-design" tabindex="-1"><a class="header-anchor" href="#the-design">The design</a></h2>
+<p>Reconciliation is deterministic code. It is not a model call.</p>
+<pre class="mermaid">flowchart LR
+    T[&quot;human text&quot;] --&gt; I[&quot;LLM intake&quot;] --&gt; R[&quot;reports: evidence&quot;] --&gt; C[&quot;code reconciliation&quot;] --&gt; B[&quot;incidents: beliefs&quot;]
+</pre><p>The intake model records what a caller said. Reconciliation uses fixed spatial, time, and incident-type rules. The same input and state must always give the same result.</p>
+<p>The supplied policy uses these main cases:</p>
+<table>
+<thead>
+<tr>
+<th>Report</th>
+<th>Nearby open incident</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>denial or non-fire</td>
+<td>no</td>
+<td>ignore the report</td>
+</tr>
+<tr>
+<td>denial or non-fire</td>
+<td>yes</td>
+<td>link the report; keep the incident open</td>
+</tr>
+<tr>
+<td>fire or unknown</td>
+<td>no</td>
+<td>open an incident</td>
+</tr>
+<tr>
+<td>fire or unknown</td>
+<td>yes</td>
+<td>link and merge the report</td>
+</tr>
+</tbody>
+</table>
+<p>Truck vision is more reliable than a human report:</p>
 <ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
+<li>A normal building closes the matching incident.</li>
+<li>A burning building confirms or opens an incident.</li>
 </ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
+<h2 id="what-is-provided" tabindex="-1"><a class="header-anchor" href="#what-is-provided">What is provided</a></h2>
+<p>The instructor provides the complete reconciliation policy and implementation. Use the <a href="reference-solution/">Stage 3 reference solution</a> or the files supplied in class.</p>
+<p>The solution includes:</p>
 <ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
+<li>report matching by distance and time;</li>
+<li>incident confidence and contradiction fields;</li>
+<li>merge rules;</li>
+<li>truck-vision rules; and</li>
+<li>the <code>REC-*</code> scenarios.</li>
 </ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
+<h2 id="what-claude-implements" tabindex="-1"><a class="header-anchor" href="#what-claude-implements">What Claude implements</a></h2>
+<p>Claude does not design a new solution. Claude integrates the supplied solution into your repository.</p>
+<p>Claude changes only these parts:</p>
+<ol>
+<li>Claude applies the supplied changes to <code>reconcile.py</code>.</li>
+<li>Claude adds the supplied incident fields.</li>
+<li>Claude connects reconciliation in <code>runner._process_tick</code>.</li>
+<li>Claude resolves merge conflicts with your Stage 1 and Stage 2 code.</li>
+<li>Claude runs all <code>REC-*</code> scenarios.</li>
+</ol>
+<h2 id="what-you-decide-and-check" tabindex="-1"><a class="header-anchor" href="#what-you-decide-and-check">What you decide and check</a></h2>
+<p>You do not choose a new reconciliation policy in this stage. You must understand the supplied policy.</p>
+<p>Ask Claude to trace:</p>
+<ul>
+<li>two reports that refer to the same fire;</li>
+<li>a denial near an open incident; and</li>
+<li>truck vision that contradicts a report.</li>
+</ul>
+<p>For each case, identify:</p>
+<ul>
+<li>the matching rule;</li>
+<li>the outcome;</li>
+<li>the store method that records the change; and</li>
+<li>the evidence that remains in the report store.</li>
+</ul>
+<h2 id="what-you-do-not-build" tabindex="-1"><a class="header-anchor" href="#what-you-do-not-build">What you do not build</a></h2>
+<p>Do not add:</p>
+<ul>
+<li>an LLM call for matching;</li>
+<li>embeddings or a vector database;</li>
+<li>a new store;</li>
+<li>new matching rules; or</li>
+<li>Stage 4 dispatch changes.</li>
+</ul>
+<h2 id="prompt-claude" tabindex="-1"><a class="header-anchor" href="#prompt-claude">Prompt Claude</a></h2>
+<p>Paste this prompt into Claude Code. Give Claude access to the supplied solution files.</p>
+<blockquote>
+<p>Integrate the supplied Stage 3 reconciliation solution.</p>
+<p>Read <code>reconcile.py</code>, both stores, <code>runner._process_tick</code>, <code>features/reconcile.feature</code>, and the supplied solution. Do not design a different reconciliation system.</p>
+<p>Before you edit, trace these cases through the supplied design:</p>
+<ul>
+<li>Two reports refer to the same fire.</li>
+<li>A denial is near an open incident.</li>
+<li>Truck vision contradicts a report.</li>
+</ul>
+<p>For each case, name the matching rule, outcome, and store mutation.</p>
+<p>Then integrate only the supplied changes:</p>
+<ul>
+<li>Apply report-to-incident matching in <code>reconcile.py</code>.</li>
+<li>Add the supplied confidence and contradiction fields.</li>
+<li>Apply the supplied truck-vision rules.</li>
+<li>Connect reconciliation in <code>runner._process_tick</code>.</li>
+<li>Resolve conflicts with my Stage 1 and Stage 2 code without changing their behaviour.</li>
+</ul>
+<p>Keep reports as append-only evidence. Keep incidents as mutable beliefs. Do not add a model call, embeddings, a vector store, or another persistence layer.</p>
+<p>Run <code>uv run behave features/reconcile.feature</code>. For one scenario, show the sequence of outcomes and store mutations.</p>
+<p>At the end, explain which intake errors reconciliation can correct and which errors it cannot correct.</p>
+</blockquote>
+<h2 id="check-the-result" tabindex="-1"><a class="header-anchor" href="#check-the-result">Check the result</a></h2>
+<p>Run:</p>
+<pre><code class="language-bash">uv run behave features/reconcile.feature
+uv run hadr-runner stage3-partial@londone
+</code></pre>
+<p>Inspect the outcomes from one episode.</p>
+<ul>
+<li>Many <code>OPEN</code> outcomes can mean that matching failed.</li>
+<li>One incident with many unrelated reports can mean that matching is too broad.</li>
+</ul>
+<p>Use the <a href="helper-prompt/">reconciliation review prompt</a> to check for hidden model calls or policy in the wrong layer.</p>
+<h2 id="completion-criteria" tabindex="-1"><a class="header-anchor" href="#completion-criteria">Completion criteria</a></h2>
+<ul>
+<li>The supplied solution is integrated.</li>
+<li>All <code>REC-*</code> scenarios pass.</li>
+<li>Reports remain separate from incident beliefs.</li>
+<li>You can explain why reconciliation is deterministic code.</li>
 </ul>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/project-2/intake/">Previous: Stage 2: intake</a> | <a href="/project-2/replanning/">Next: Stage 4: replanning</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">

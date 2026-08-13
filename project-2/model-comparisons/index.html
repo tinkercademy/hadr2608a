@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>Model comparisons</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
@@ -59,7 +59,7 @@
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/project-2/" class="sidebar-link">
             <span class="sidebar-link-label">Project 2: HADR agent</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
@@ -105,7 +105,7 @@
               <a href="/project-2/replanning/" class="sidebar-sublink">Stage 4: replanning</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/project-2/model-comparisons/" class="sidebar-sublink">Model comparisons</a>
+              <a href="/project-2/model-comparisons/" class="sidebar-sublink" aria-current="page">Model comparisons</a>
             </li>
           </ul>
         </li>
@@ -171,68 +171,177 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
-          
+          <h1 class="page-title">Model comparisons</h1>
+          <p class="page-subtitle">Project 2: HADR agent</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
-<ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
-</ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
-<ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
-</ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
-</ul>
+          <h1 id="model-comparisons" tabindex="-1"><a class="header-anchor" href="#model-comparisons">Model comparisons</a></h1>
+<p>There is no best model for every task. Compare models with the same evidence and record the trade-offs in quality, latency, and cost.</p>
+<h2 id="activity%3A-a-different-dispatch-model" tabindex="-1"><a class="header-anchor" href="#activity%3A-a-different-dispatch-model">Activity: A Different Dispatch Model</a></h2>
+<p>Dispatch currently runs on <code>minimax-m3</code>. Point <code>DISPATCH_MODEL</code> in your <code>.env</code> at one alternative and see how it fares. Replay the same scenarios on the original and alternative models enough times that you can tell a persistent difference from one lucky run. Record the model IDs, the total runtime tokens, and the evidence behind whichever you keep: a model that saves two casualties and triples the token bill is a trade you have to argue for, not a win.</p>
+<p>Coordinate with your team to pick different models to evaluate.</p>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>Model</th>
+<th>Release date</th>
+<th>OpenRouter link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MiniMax</td>
+<td><code>minimax-m3</code></td>
+<td>2026-05-31</td>
+<td><a href="https://openrouter.ai/minimax/minimax-m3">minimax/minimax-m3</a></td>
+</tr>
+<tr>
+<td>DeepSeek</td>
+<td><code>deepseek-v4-pro</code></td>
+<td>2026-04-24</td>
+<td><a href="https://openrouter.ai/deepseek/deepseek-v4-pro">deepseek/deepseek-v4-pro</a></td>
+</tr>
+<tr>
+<td>Tencent</td>
+<td><code>hy3</code></td>
+<td>2026-07-06</td>
+<td><a href="https://openrouter.ai/tencent/hy3">tencent/hy3</a></td>
+</tr>
+<tr>
+<td>OpenAI</td>
+<td><code>gpt-5.6-luna</code></td>
+<td>2026-07-09</td>
+<td><a href="https://openrouter.ai/openai/gpt-5.6-luna">openai/gpt-5.6-luna</a></td>
+</tr>
+</tbody>
+</table>
+<p>What you will soon discover is that models, especially small ones, are acutely sensitive to the exact wording you give them: a line that steers <code>minimax-m3</code> cleanly can leave a smaller model guessing. So experiment - tweak the prompt for the model you are testing, change one thing at a time, and re-run the same cases, and see what you can get.</p>
+<h3 id="when-you%E2%80%99re-done" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done">When you’re done</a></h3>
+<p>As part of your evaluation, get your agent to report on:</p>
+<ol>
+<li>the models you tested,</li>
+<li>the total spend to clear all three maps on stage-5,</li>
+<li>the model performance, and</li>
+<li>the prompt tweaks you needed to get that to work.</li>
+</ol>
+<p>Gather all the details from your teammates, and have one person’s code publish the writeup as an artifact. Post the link on the Padlet.</p>
+<h2 id="activity%3A-a-different-intake-model" tabindex="-1"><a class="header-anchor" href="#activity%3A-a-different-intake-model">Activity: A Different Intake Model</a></h2>
+<p>Intake runs on <code>mimo-v2.5</code>, and <code>INTAKE_MODEL</code> swaps it the same way - the three alternatives above are worth trying here too, and the model that reads free text best is not automatically the one that plans best.</p>
+<p>Unseal the instructor labels: <code>uv run https://dl.hadr.ocelliq.com/hadr-engine.py gen-datasets --include-labels</code> adds <code>contacts_labeled.jsonl</code> (plus the reference report schema) to the same directory. Use your Stage 2 fixture grader to measure each model against this larger reference set. The <a href="/project-2/intake/reference-solution/#eval">reference solution’s eval notes</a> describe the per-field checks and tolerance bands.</p>
+<h2 id="optional%3A-intake-on-your-laptop" tabindex="-1"><a class="header-anchor" href="#optional%3A-intake-on-your-laptop">Optional: intake on your laptop</a></h2>
+<p>If local IT permits, you can try running the models themselves on your local machine. <a href="https://ollama.com/">Ollama</a> and <a href="https://lmstudio.ai/">LM Studio</a> both serve an OpenAI-style API from localhost that you can connect to your intake bot:</p>
+<pre><code class="language-sh"># Everything below the prefix is unchanged: dispatch still runs on OpenCode.
+INTAKE_OPENAI_BASE_URL=http://localhost:11434/v1   # LM Studio: http://localhost:1234/v1
+INTAKE_OPENAI_KEY=l337sp33k                        # any non-empty string; local servers ignore it
+INTAKE_MODEL=qwen3.5:2b
+</code></pre>
+<p>Here are some candidates for size:</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Size</th>
+<th>Why it is on the list</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gemma3:270m</code></td>
+<td>0.27B</td>
+<td>Absolutely microscopic. Expect malformed JSON; how it fails is the interesting part.</td>
+</tr>
+<tr>
+<td><code>qwen3.5:0.8b</code></td>
+<td>0.8B</td>
+<td>Smallest current-generation model that still follows an instruction.</td>
+</tr>
+<tr>
+<td><code>qwen3.5:2b</code></td>
+<td>2B</td>
+<td>The usual sweet spot for extraction on a laptop CPU.</td>
+</tr>
+<tr>
+<td><code>granite4.1:3b</code></td>
+<td>3B</td>
+<td>Trained specifically for structured JSON and function calling.</td>
+</tr>
+<tr>
+<td><code>gemma4:e4b</code></td>
+<td>4.5B effective</td>
+<td>Built for edge hardware; about the ceiling for 8 GB of RAM.</td>
+</tr>
+</tbody>
+</table>
+<p>Here are some candidates for quantization. These are all the same Gemma 4 E4B weights, so any difference you measure is the quantization and nothing else:</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Size</th>
+<th>Why it is on the list</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gemma4:e4b-it-bf16</code></td>
+<td>16 GB</td>
+<td>Unquantized. Too big for most laptops, but it is the accuracy ceiling the rest are measured against.</td>
+</tr>
+<tr>
+<td><code>gemma4:e4b-it-q8_0</code></td>
+<td>12 GB</td>
+<td>8-bit. Usually indistinguishable from bf16 on extraction - if it is not, the fragile thing is your prompt, not the weights.</td>
+</tr>
+<tr>
+<td><code>gemma4:e4b-mxfp8</code></td>
+<td>12 GB</td>
+<td>8-bit again, but a hardware float format rather than an integer one. Needs a GPU that implements it; on anything else it is the same size as <code>q8_0</code> for no gain.</td>
+</tr>
+<tr>
+<td><code>gemma4:e4b-it-q4_K_M</code></td>
+<td>9.6 GB</td>
+<td>4-bit, and what a plain <code>gemma4:e4b</code> pull actually gives you. The default everybody runs without noticing.</td>
+</tr>
+<tr>
+<td><code>gemma4:e4b-nvfp4</code></td>
+<td>8.8 GB</td>
+<td>4-bit float, Blackwell only. Worth a row only if you have the card.</td>
+</tr>
+<tr>
+<td><code>gemma4:e4b-mlx</code></td>
+<td>8.8 GB</td>
+<td>The Apple Silicon build. If you are on a Mac, start here rather than fighting the generic ones.</td>
+</tr>
+<tr>
+<td><code>gemma4:e4b-it-qat</code></td>
+<td>6.1 GB</td>
+<td>Also 4-bit, but quantization-aware trained instead of squashed afterwards. Same bit width as <code>q4_K_M</code> at two-thirds the size, which makes it the direct test of whether <em>how</em> you quantize beats <em>how much</em>.</td>
+</tr>
+</tbody>
+</table>
+<p>Watch two things as you go down the list: whether the JSON parses at all, and <em>which</em> fields rot first. Quantization tends to corrode output when the model has to weigh multiple options or deal with uncertainty.</p>
+<p>Coordinate with your team to pick different models to evaluate.</p>
+<p>Ollama has a mechanism to force the output to be structurally valid JSON, but without a lot of tuning, your local models are going to be fast producers of confidently wrong fields. Tune your prompt alongside your model.</p>
+<h3 id="when-you%E2%80%99re-done-1" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done-1">When you’re done</a></h3>
+<p>Get your agent to gather:</p>
+<ol>
+<li>per-field accuracy against our reference data,</li>
+<li>schema failure rate (how often the output is not valid JSON), and</li>
+<li>wall-clock per contact. Local tokens are free, but you have to wait for them.</li>
+</ol>
+<p>Gather all the details from your teammates, and have one person’s code publish the writeup as an artifact. Post the link on the Padlet.</p>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/project-2/replanning/">Previous: Stage 4: replanning</a> | <a href="/project-3/claude-code-web/">Next: Claude Code on the web</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">

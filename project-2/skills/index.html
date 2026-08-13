@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic Engineering with Claude Code</title>
+    <title>Turn play into a skill</title>
     <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-list">
-        <li class="sidebar-item is-active is-open">
+        <li class="sidebar-item">
           <a href="/" class="sidebar-link">
             <span class="sidebar-link-label">Home</span>
           </a>
@@ -59,7 +59,7 @@
             </li>
           </ul>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item is-open">
           <a href="/project-2/" class="sidebar-link">
             <span class="sidebar-link-label">Project 2: HADR agent</span>
             <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
@@ -78,7 +78,7 @@
               <a href="/project-2/plan-build-review/" class="sidebar-sublink">Plan, build, review</a>
             </li>
             <li class="sidebar-subitem">
-              <a href="/project-2/skills/" class="sidebar-sublink">Turn play into a skill</a>
+              <a href="/project-2/skills/" class="sidebar-sublink" aria-current="page">Turn play into a skill</a>
             </li>
             <li class="sidebar-subitem">
               <a href="/project-2/tokens/" class="sidebar-sublink">Tokens and costing</a>
@@ -171,68 +171,80 @@
     <div class="layout">
       <header class="page-header">
         <div class="page-header-inner">
-          <h1 class="page-title">Agentic Engineering with Claude Code</h1>
-          
+          <h1 class="page-title">Turn play into a skill</h1>
+          <p class="page-subtitle">Project 2: HADR agent</p>
         </div>
       </header>
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="welcome" tabindex="-1"><a class="header-anchor" href="#welcome">Welcome</a></h1>
-<p>AI coding agents can now plan, edit, test, and review software inside a development environment. This workshop teaches you how to direct that work and how to check the result.</p>
-<p>The workshop is for experienced software developers. You will build three projects with Claude Code: a CRUD app, a HADR agent, and a team AI app. You will also evaluate model behaviour, cost, and quality.</p>
-<h2 id="course-path" tabindex="-1"><a class="header-anchor" href="#course-path">Course path</a></h2>
-<ul class="post-list">
-  <li><a href="/setup/"><strong>Setup</strong><span>Form a team, prepare the tools, and understand the course context</span></a></li>
-  <li><a href="/project-1/"><strong>Project 1: CRUD app</strong><span>Turn a product brief into a small working application</span></a></li>
-  <li><a href="/project-2/"><strong>Project 2: HADR agent</strong><span>Play the dispatch game, then build and evaluate an agent</span></a></li>
-  <li><a href="/project-3/"><strong>Project 3: AI app</strong><span>Apply the course techniques in one team project</span></a></li>
-  <li><a href="/conclusion/"><strong>Presentations and conclusion</strong><span>Present the AI app, run the HADR finale, and plan what comes next</span></a></li>
-</ul>
-<p>The <a href="/game/">game reference</a> contains the HADR rules, maps, MCP tools, and API details. Use it when an activity links to it; it is not a separate project.</p>
-<h2 id="about-your-instructor" tabindex="-1"><a class="header-anchor" href="#about-your-instructor">About your instructor</a></h2>
-<p>Hi, I am YJ.</p>
-<ul>
-<li>Former teacher and civil servant; current company cofounder, teacher, programmer, and designer.</li>
-<li><a href="https://tinkercademy.com">Tinkercademy</a> teaches programming, digital making, and AI.</li>
-<li>Cofounder of the Agentic Builders Collective, an AI builders interest group.</li>
-<li><code>yjsoon</code> on <a href="https://x.com/yjsoon">X</a>, <a href="https://linkedin.com/in/yjsoon">LinkedIn</a>, and <a href="https://github.com/yjsoon">GitHub</a>.</li>
-</ul>
-<p>Facilitators will introduce themselves at the start of the workshop.</p>
-<h2 id="about-the-class" tabindex="-1"><a class="header-anchor" href="#about-the-class">About the class</a></h2>
-<ul>
-<li>Two full days, 9:00 to 17:00.</li>
-<li>Breaks are planned for mid-morning and mid-afternoon, with lunch around midday.</li>
-<li>Teams of 3-4.</li>
-<li>Each participant builds a CRUD app and a HADR agent in separate repositories.</li>
-<li>Teammates review the HADR work and share evaluation tasks.</li>
-<li>Each team builds one AI app and presentation together.</li>
-<li>Setup happens in class. The project headings show the learning sequence; they are not a day-by-day timetable.</li>
-</ul>
-<h2 id="shared-workspace" tabindex="-1"><a class="header-anchor" href="#shared-workspace">Shared workspace</a></h2>
-<p>Use the course Padlet at <a href="https://padlet.tk.sg/hadr2608a">padlet.tk.sg/hadr2608a</a> to share useful articles, tools, failures, discoveries, questions, and vocabulary. Keep it open during class and never post secrets or operational information.</p>
-<h2 id="glossary" tabindex="-1"><a class="header-anchor" href="#glossary">Glossary</a></h2>
-<ul class="word-cloud" aria-label="AI agent glossary">
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Agent+loop+is+in+the+context+of+an+AI+agent">Agent loop</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+CLAUDE.md+is+in+the+context+of+an+AI+agent">CLAUDE.md</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Harness+is+in+the+context+of+an+AI+agent">Harness</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Inner+tool+loop+is+in+the+context+of+an+AI+agent">Inner tool loop</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Outer+runner+is+in+the+context+of+an+AI+agent">Outer runner</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+MCP+is+in+the+context+of+an+AI+agent">MCP</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Plan+mode+is+in+the+context+of+an+AI+agent">Plan mode</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Skill+is+in+the+context+of+an+AI+agent">Skill</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Tool+call+is+in+the+context+of+an+AI+agent">Tool call</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Worktree+is+in+the+context+of+an+AI+agent">Worktree</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Context+window+is+in+the+context+of+an+AI+agent">Context window</a></li>
-  <li class="word-cloud-m"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Subagent+is+in+the+context+of+an+AI+agent">Subagent</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+System+prompt+is+in+the+context+of+an+AI+agent">System prompt</a></li>
-  <li class="word-cloud-xl"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Prompt+injection+is+in+the+context+of+an+AI+agent">Prompt injection</a></li>
-  <li class="word-cloud-s"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Eval+is+in+the+context+of+an+AI+agent">Eval</a></li>
-  <li class="word-cloud-l"><a href="https://www.google.com/search?udm=50&amp;q=Please+explain+what+Reconciliation+is+in+the+context+of+an+AI+agent">Reconciliation</a></li>
-</ul>
+          <h1 id="turn-play-into-a-skill" tabindex="-1"><a class="header-anchor" href="#turn-play-into-a-skill">Turn play into a skill</a></h1>
+<p>You have already used tools and MCP while playing two episodes. Now turn the procedure that worked into a reusable skill.</p>
+<table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>What it supplies</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tool</td>
+<td>A typed action the harness can execute</td>
+<td>Reading a file, querying a database, or controlling a browser</td>
+</tr>
+<tr>
+<td><a href="https://www.youtube.com/watch?v=7j_NE6Pjv-E">MCP</a></td>
+<td>A standard connection to tools and context</td>
+<td>Plugging an external system into an agent harness</td>
+</tr>
+<tr>
+<td><a href="https://www.youtube.com/watch?v=fOxC44g8vig">SKILL</a></td>
+<td>Text and resources for a matching task</td>
+<td>Describes a workflow, checklist, or domain-specific tool</td>
+</tr>
+</tbody>
+</table>
+<p>The MCP connection gives Claude access to the simulator. The skill tells a new session how to use that access well. It does not add new tools.</p>
+<h2 id="activity" tabindex="-1"><a class="header-anchor" href="#activity">Activity</a></h2>
+<p>Use the transcript, scratch incident list, and notes from <a href="/project-2/mcp-play/">MCP Play</a>. Work in the same <code>mcp-play/</code> folder.</p>
+<h3 id="write-the-skill" tabindex="-1"><a class="header-anchor" href="#write-the-skill">Write the skill</a></h3>
+<p>Ask Claude to extract the procedure from the episodes:</p>
+<blockquote>
+<p>Read our two MCP Play transcripts and notes. Write the procedure that worked as a skill at <code>.claude/skills/hadr-play/SKILL.md</code>. Include the per-tick checklist, the evidence required before a dispatch, conditions for redirecting a truck, the stopping condition, and the mistakes to avoid. Do not invent rules that the episodes do not support.</p>
+</blockquote>
+<p>A skill is one markdown file in a named folder, with YAML frontmatter:</p>
+<pre><code class="language-markdown">---
+name: hadr-play
+description: Play a HADR fire-dispatch episode over the hadr MCP server. Use when asked to play, resume, or demo the game.
+---
+
+[The operating procedure.]
+</code></pre>
+<p>Review the result. The frontmatter <code>description</code> is the trigger, so it must say when to use the skill. Put the full procedure in the body. Remove advice such as “dispatch carefully” unless it changes an observable action.</p>
+<p>Do not create a skill for a rule or policy that should always be loaded, that belongs in <code>CLAUDE.md</code>. A skill loads only when its description matches.</p>
+<h3 id="test-the-skill" tabindex="-1"><a class="header-anchor" href="#test-the-skill">Test the skill</a></h3>
+<ol>
+<li>Start a fresh Claude session in <code>mcp-play/</code> (skills are discovered at startup).</li>
+<li>Ask it to “play a stage-1 episode” without naming the skill. Confirm that the skill loads.</li>
+<li>Watch one complete episode. If it stalls or misreads state, change the skill rather than adding corrective chat messages.</li>
+<li>If time permits, test one harder scenario or run the same skill from OpenCode. Record what fails when the context, model, or evidence changes.</li>
+</ol>
+<h3 id="when-you%E2%80%99re-done" tabindex="-1"><a class="header-anchor" href="#when-you%E2%80%99re-done">When you’re done</a></h3>
+<ol>
+<li>Open a pull request with the skill and trade reviews with a teammate. Compare the procedures and their evidence.</li>
+<li>Run <code>/context</code>, screenshot the output, and upload it to the Padlet for the tokens activity.</li>
+</ol>
+<p>Before writing future skills, check whether one already exists in <a href="https://github.com/anthropics/skills">Anthropic’s skills library</a> or with <code>npx skills find &lt;keyword&gt;</code>.</p>
 
           
           
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/project-2/plan-build-review/">Previous: Plan, build, review</a> | <a href="/project-2/tokens/">Next: Tokens and costing</a></p>
+          </nav>
           
         </article>
         <footer class="page-foot">

@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Plan, build, review</title>
+    <meta name="description" content="Course notes for Agentic Engineering with Claude Code - HADR Edition." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=Rubik:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
+  </head>
+  <body class="theme-tt">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    
+<aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+  <div class="sidebar-brand">
+    <a href="/" class="sidebar-brand-link">
+      <img class="sidebar-brand-sticker" src="/assets/tkrobot-fingerguns.png" alt="" />
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-title">Agentic Engineering with Claude Code</span>
+        <span class="sidebar-brand-sub">HADR Edition</span>
+      </span>
+    </a>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="sidebar-list">
+        <li class="sidebar-item">
+          <a href="/" class="sidebar-link">
+            <span class="sidebar-link-label">Home</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/setup/" class="sidebar-link">
+            <span class="sidebar-link-label">Setup</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/setup/background/" class="sidebar-sublink">Background</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/project-1/" class="sidebar-link">
+            <span class="sidebar-link-label">Project 1: CRUD app</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/project-1/crud-app/" class="sidebar-sublink">Build the CRUD app</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item is-open">
+          <a href="/project-2/" class="sidebar-link">
+            <span class="sidebar-link-label">Project 2: HADR agent</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/project-2/hadr-game/" class="sidebar-sublink">The HADR game</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/mcp-play/" class="sidebar-sublink">MCP Play</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/starter-kit/" class="sidebar-sublink">Starter kit</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/plan-build-review/" class="sidebar-sublink" aria-current="page">Plan, build, review</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/skills/" class="sidebar-sublink">Turn play into a skill</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/tokens/" class="sidebar-sublink">Tokens and costing</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/evaluation-data/" class="sidebar-sublink">Subagents and Evals</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/agentic-loop/" class="sidebar-sublink">Agentic loop</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/quality-gates/" class="sidebar-sublink">Quality gates and integration</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/dispatcher/" class="sidebar-sublink">Stage 1: dispatcher</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/intake/" class="sidebar-sublink">Stage 2: intake</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/reconciliation/" class="sidebar-sublink">Stage 3: reconciliation</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/replanning/" class="sidebar-sublink">Stage 4: replanning</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/project-2/model-comparisons/" class="sidebar-sublink">Model comparisons</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/project-3/" class="sidebar-link">
+            <span class="sidebar-link-label">Project 3: AI app</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/project-3/claude-code-web/" class="sidebar-sublink">Claude Code on the web</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/conclusion/" class="sidebar-link">
+            <span class="sidebar-link-label">Presentations and conclusion</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/conclusion/hadr-finale/" class="sidebar-sublink">HADR finale</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/conclusion/future/" class="sidebar-sublink">The future</a>
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-item">
+          <a href="/game/" class="sidebar-link">
+            <span class="sidebar-link-label">Game reference</span>
+            <span class="sidebar-toggle" aria-hidden="true">&gt;</span>
+          </a>
+          <ul class="sidebar-sublist">
+            <li class="sidebar-subitem">
+              <a href="/game/api/" class="sidebar-sublink">API</a>
+            </li>
+            <li class="sidebar-subitem">
+              <a href="/game/maps/" class="sidebar-sublink">Maps</a>
+            </li>
+          </ul>
+        </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-foot">
+    <a class="tinkercademy-brand" href="https://tinkercademy.com" rel="noopener" target="_blank" aria-label="Visit Tinkercademy">
+      <img src="/assets/tinkercademy-logo-white.png" alt="Tinkercademy" />
+    </a>
+    <div class="license-lockup">
+      <span class="license-label">Licensed from</span>
+      <a class="ocelliq-brand" href="https://ocelliq.com" rel="noopener" target="_blank" aria-label="Visit OcelliQ">
+        <img class="ocelliq-brand-mark" src="/assets/ocelliq-mark.svg" alt="" />
+        <span>OcelliQ</span>
+      </a>
+    </div>
+  </div>
+</aside>
+
+<button class="sidebar-toggle-btn" type="button" aria-label="Toggle navigation" aria-controls="sidebar">&#9776;</button>
+
+
+    <div class="layout">
+      <header class="page-header">
+        <div class="page-header-inner">
+          <h1 class="page-title">Plan, build, review</h1>
+          <p class="page-subtitle">Project 2: HADR agent</p>
+        </div>
+      </header>
+
+      <main id="main" class="page-main">
+        <article class="content">
+          <h1 id="plan%2C-build%2C-review" tabindex="-1"><a class="header-anchor" href="#plan%2C-build%2C-review">Plan, build, review</a></h1>
+<p>Use the same workflow for each change in this course:</p>
+<ol>
+<li>Read the requirements.</li>
+<li>Ask Claude for a plan.</li>
+<li>Review the plan.</li>
+<li>Ask Claude to build the change.</li>
+<li>Run the tests.</li>
+<li>Ask a teammate to review the pull request.</li>
+<li>Merge the pull request.</li>
+</ol>
+<p>In this activity, you will use this workflow to build the report store and the incident store.</p>
+<h2 id="expected-result" tabindex="-1"><a class="header-anchor" href="#expected-result">Expected result</a></h2>
+<p>At the end of this activity, each participant must have:</p>
+<ul>
+<li>a working <code>ReportStore</code>;</li>
+<li>a working <code>IncidentStore</code>;</li>
+<li>all 11 supplied <code>@warmup</code> scenarios passing;</li>
+<li>all <code>pytest</code> tests passing; and</li>
+<li>two pull requests that a teammate approved before the merge.</li>
+</ul>
+<p>Do not build intake, report matching, dispatch, or replanning in this activity. You will build these parts later in the course.</p>
+<h2 id="use-claude-safely" tabindex="-1"><a class="header-anchor" href="#use-claude-safely">Use Claude safely</a></h2>
+<p>Claude can write code quickly. Claude can also write incorrect code. You must control the scope and check the result.</p>
+<ul>
+<li>Give Claude a clear outcome and clear limits.</li>
+<li>Ask Claude to read the repository before it makes a plan.</li>
+<li>Do not let Claude edit code until you approve the plan.</li>
+<li>Keep each change small.</li>
+<li>Check the code and the test results.</li>
+<li>Put permanent repository rules in <a href="https://www.youtube.com/watch?v=i_OHQH4-M2Y"><code>CLAUDE.md</code></a>.</li>
+<li>Put repeatable checks in <a href="https://code.claude.com/docs/en/hooks">hooks</a>.</li>
+<li>Use <a href="https://code.claude.com/docs/en/checkpointing"><code>/rewind</code></a> if you must remove an incorrect change.</li>
+<li>Use <code>@claude</code> as a second reviewer. A teammate must still make the approval decision.</li>
+</ul>
+<p>You can use <a href="https://www.youtube.com/watch?v=etcVpATXpSc">plan mode</a> for the planning step. You can also publish a plan or report as an <a href="https://code.claude.com/docs/en/artifacts">Artifact</a>.</p>
+<h2 id="write-the-product-brief" tabindex="-1"><a class="header-anchor" href="#write-the-product-brief">Write the product brief</a></h2>
+<p>Project 1 introduced product interviews and PRDs. Do not repeat the full interview here. Use the evidence from MCP Play to agree on the HADR operator’s first need.</p>
+<p>As a team, review your two play transcripts and answer:</p>
+<ul>
+<li>Which decision was hardest?</li>
+<li>Which missing or unreliable information caused it?</li>
+<li>What was the most serious failure?</li>
+<li>Which decisions can the agent make, and which require a person?</li>
+<li>How will you measure a useful result?</li>
+</ul>
+<p>Then ask Claude:</p>
+<blockquote>
+<p>Use our MCP Play evidence to write a one-page HADR product brief. Include the operator, supported decision, unreliable information, most serious failure, human control points, success measures, and non-goals. Cite the observed play failure behind each important requirement. Do not include implementation details.</p>
+</blockquote>
+<p>Review the brief as a team. Remove each statement that the team cannot support. Keep the agreed text. Each participant will add it to the report-store branch as <code>product-brief.md</code>.</p>
+<p>The product brief gives product context. It is not the technical specification for this activity.</p>
+<h2 id="what-you-will-build" tabindex="-1"><a class="header-anchor" href="#what-you-will-build">What you will build</a></h2>
+<p>The report store holds evidence from public contacts. A stored report does not change. You will implement these methods:</p>
+<ul>
+<li><code>add</code>;</li>
+<li><code>get</code>;</li>
+<li><code>all</code>; and</li>
+<li><code>find_reports</code>.</li>
+</ul>
+<p>The incident store holds the agent’s current beliefs. An incident can change when the agent receives more evidence. You will implement these methods:</p>
+<ul>
+<li><code>open</code>;</li>
+<li><code>get</code>;</li>
+<li><code>all</code>;</li>
+<li><code>find</code>;</li>
+<li><code>update</code>;</li>
+<li><code>link</code>; and</li>
+<li><code>close</code>.</li>
+</ul>
+<p>The starter supplies the data classes and the method signatures. Keep each store as a dictionary with a JSON log.</p>
+<p>Do not decide how a report maps to an incident. You will make this decision in the later reconciliation activity.</p>
+<h2 id="understand-the-supplied-specification" tabindex="-1"><a class="header-anchor" href="#understand-the-supplied-specification">Understand the supplied specification</a></h2>
+<p>The starter repository already contains the technical specification. Do not ask Claude to write a second specification.</p>
+<p>The specification has two parts:</p>
+<ol>
+<li>The Gherkin files define the required behavior.</li>
+<li>The method docstrings define the detailed contracts and edge cases.</li>
+</ol>
+<p>Read these files before you write code:</p>
+<ul>
+<li><code>features/reports.feature</code></li>
+<li><code>features/incidents.feature</code></li>
+<li><code>features/steps/report_steps.py</code></li>
+<li><code>features/steps/incident_steps.py</code></li>
+<li><code>features/steps/common_steps.py</code></li>
+<li><code>src/hadr_agent/stores/reports.py</code></li>
+<li><code>src/hadr_agent/stores/incidents.py</code></li>
+</ul>
+<p>A Gherkin scenario gives one example of required behavior:</p>
+<ul>
+<li><code>Given</code> defines the initial state.</li>
+<li><code>When</code> defines the action.</li>
+<li><code>Then</code> defines the expected result.</li>
+</ul>
+<p>Behave runs each scenario as an acceptance test. Gherkin states what the code must do. It does not state how to implement the code.</p>
+<p>The supplied scenarios are the minimum requirements. Do not delete them or make them less strict.</p>
+<h2 id="check-the-starting-state" tabindex="-1"><a class="header-anchor" href="#check-the-starting-state">Check the starting state</a></h2>
+<p><a href="/setup/">Setup</a> instructed you to clone the <a href="https://dl.hadr.ocelliq.com/starter.git">course starter</a> into your own private repository. Run these commands in that repository:</p>
+<pre><code class="language-bash">uv sync
+uv run pytest
+uv run behave --tags=@warmup
+</code></pre>
+<p><code>pytest</code> must pass. The <code>@warmup</code> scenarios must fail because the store methods are not implemented.</p>
+<p>If Behave reports <code>No module named 'hadr_agent'</code>, run <code>uv sync</code> in the repository and try again.</p>
+<p>Do not run <code>uv run behave</code> as the completion check. That command also runs scenarios for later course activities.</p>
+<p>Each participant works in a separate repository. Give your teammates permission to review your pull requests. Never share your OpenCode key.</p>
+<h2 id="add-a-team-scenario" tabindex="-1"><a class="header-anchor" href="#add-a-team-scenario">Add a team scenario</a></h2>
+<p>As a team, compare the product brief with the supplied store scenarios. Look for one important store behavior that the supplied scenarios do not test.</p>
+<p>Add one scenario only if it meets these conditions:</p>
+<ul>
+<li>It supports a decision or constraint in the product brief.</li>
+<li>It applies only to the report store or the incident store.</li>
+<li>You can test it without intake, report matching, dispatch, or replanning.</li>
+<li>You can explain the failure that it prevents.</li>
+</ul>
+<p>Examples of correct scope include:</p>
+<ul>
+<li>a search includes a report that is exactly on the radius boundary;</li>
+<li>a search includes reports on the start and end ticks;</li>
+<li>closing an incident stores the reason and the update tick;</li>
+<li>an update with an unknown field causes an error; or</li>
+<li>an update does not remove linked report IDs.</li>
+</ul>
+<p>Do not add a scenario only to complete this step. Use the supplied scenarios if the product brief does not identify a missing store behavior.</p>
+<p>If the team adds a scenario, each participant must add the same scenario to the applicable feature file. Add or change a step definition only when the scenario needs it. Run the feature and make sure that Behave does not report an undefined step.</p>
+<h2 id="build-the-report-store" tabindex="-1"><a class="header-anchor" href="#build-the-report-store">Build the report store</a></h2>
+<p>Complete the report store first.</p>
+<h3 id="1.-create-a-branch" tabindex="-1"><a class="header-anchor" href="#1.-create-a-branch">1. Create a branch</a></h3>
+<pre><code class="language-bash">git switch master
+git pull
+git switch -c feat/report-store
+</code></pre>
+<p>Add the agreed product brief to this branch as <code>product-brief.md</code>.</p>
+<p>If the team added a report scenario, add it to this branch before Claude changes the store.</p>
+<h3 id="2.-ask-for-a-plan" tabindex="-1"><a class="header-anchor" href="#2.-ask-for-a-plan">2. Ask for a plan</a></h3>
+<p>Start Claude in the repository. Use this request:</p>
+<blockquote>
+<p>Read <code>features/reports.feature</code>, <code>features/steps/report_steps.py</code>, <code>features/steps/common_steps.py</code>, and <code>src/hadr_agent/stores/reports.py</code>. The Gherkin scenarios and method docstrings are the specification. Propose a small implementation plan for <code>ReportStore</code>. Do not edit files. Keep the dictionary store and the JSON log. Do not change later-stage code.</p>
+</blockquote>
+<p>Review the plan. Check these items:</p>
+<ul>
+<li>It covers <code>STORE-R1</code> through <code>STORE-R5</code>.</li>
+<li>It covers the team scenario, if the team added one.</li>
+<li>It follows each method docstring.</li>
+<li>It keeps reports immutable.</li>
+<li>It does not add unrelated behavior.</li>
+<li>It includes the correct test command.</li>
+</ul>
+<p>Reject or correct the plan if one of these items is missing. Approve the plan only when you can explain it.</p>
+<h3 id="3.-build-and-test" tabindex="-1"><a class="header-anchor" href="#3.-build-and-test">3. Build and test</a></h3>
+<p>Ask Claude to implement the approved plan. Then run:</p>
+<pre><code class="language-bash">uv run behave features/reports.feature
+uv run pytest
+git diff --check
+</code></pre>
+<p>Read the code changes. Do not change a supplied scenario only to make a test pass.</p>
+<p>If a test fails, ask Claude to explain the cause before it changes the code. Repeat the tests after each correction.</p>
+<h3 id="4.-review-and-merge" tabindex="-1"><a class="header-anchor" href="#4.-review-and-merge">4. Review and merge</a></h3>
+<p>Commit the change and push the branch. Open a pull request to your own <code>master</code> branch.</p>
+<p>List <code>STORE-R1</code> through <code>STORE-R5</code> in the pull request. Also list the team scenario if you added one. Include the test commands and their results.</p>
+<p>Ask <code>@claude</code> to review the pull request. Then ask a teammate to check:</p>
+<ul>
+<li>the behavior in the Gherkin scenarios;</li>
+<li>the edge cases in the method docstrings;</li>
+<li>changes outside the report store;</li>
+<li>changes to tests; and</li>
+<li>the test evidence.</li>
+</ul>
+<p>Correct each valid problem. Run the tests again. A teammate must approve the pull request before you merge it.</p>
+<h2 id="build-the-incident-store" tabindex="-1"><a class="header-anchor" href="#build-the-incident-store">Build the incident store</a></h2>
+<p>Merge the report-store pull request before you start this unit. Then create the next branch:</p>
+<pre><code class="language-bash">git switch master
+git pull
+git switch -c feat/incident-store
+</code></pre>
+<p>If the team added an incident scenario, add it to this branch before Claude changes the store.</p>
+<p>Use the same plan, build, test, and review process. Use this planning request:</p>
+<blockquote>
+<p>Read <code>features/incidents.feature</code>, <code>features/steps/incident_steps.py</code>, <code>features/steps/common_steps.py</code>, and <code>src/hadr_agent/stores/incidents.py</code>. The Gherkin scenarios and method docstrings are the specification. Propose a small implementation plan for <code>IncidentStore</code>. Do not edit files. Keep the dictionary store and the JSON log. Do not change later-stage code.</p>
+</blockquote>
+<p>The plan must cover <code>STORE-I1</code> through <code>STORE-I6</code> and the team scenario, if the team added one.</p>
+<p>Run these checks after Claude implements the approved plan:</p>
+<pre><code class="language-bash">uv run behave features/incidents.feature
+uv run pytest
+git diff --check
+</code></pre>
+<p>Open a second pull request. List <code>STORE-I1</code> through <code>STORE-I6</code> and the test results. Ask <code>@claude</code> and a teammate to review it. Correct valid problems and run the tests again. Merge only after a teammate approves it.</p>
+<h2 id="optional-review-test" tabindex="-1"><a class="header-anchor" href="#optional-review-test">Optional review test</a></h2>
+<p>Do this only after you complete the required work. Ask a teammate for permission before you create the pull request.</p>
+<p>Open a pull request that contains one deliberate error. For example, remove a test or add an incorrect return value. Do not use a real secret. The pull request must not merge.</p>
+<p>Ask <code>@claude</code> to review the pull request. Compare its findings with the teammate’s findings. Close the pull request. Post the error and the review result to the Padlet.</p>
+<h2 id="completion-check" tabindex="-1"><a class="header-anchor" href="#completion-check">Completion check</a></h2>
+<p>Pull a current copy of your own <code>master</code> branch. Then run:</p>
+<pre><code class="language-bash">git switch master
+git pull
+uv run behave --tags=@warmup
+uv run pytest
+</code></pre>
+<p>You are finished when:</p>
+<ul>
+<li><code>STORE-R1</code> through <code>STORE-R5</code> pass;</li>
+<li><code>STORE-I1</code> through <code>STORE-I6</code> pass;</li>
+<li>each added team scenario passes;</li>
+<li><code>pytest</code> passes;</li>
+<li>the report and incident pull requests have teammate approval; and</li>
+<li>no later-stage code changed.</li>
+</ul>
+
+          
+          
+          
+          <hr />
+          <nav aria-label="Course sequence">
+            <p><a href="/project-2/starter-kit/">Previous: Starter kit</a> | <a href="/project-2/skills/">Next: Turn play into a skill</a></p>
+          </nav>
+          
+        </article>
+        <footer class="page-foot">
+          <p>Agentic Engineering with Claude Code - HADR Edition | Notes rendered with <a href="https://www.11ty.dev/">Eleventy</a>.</p>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        document.querySelectorAll(".sidebar-item").forEach(function (li) {
+          var link = li.querySelector(".sidebar-link");
+          var toggle = li.querySelector(".sidebar-toggle");
+          if (!link || !toggle) return;
+          toggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            li.classList.toggle("is-open");
+          });
+        });
+
+        var btn = document.querySelector(".sidebar-toggle-btn");
+        var body = document.body;
+        if (btn) {
+          btn.addEventListener("click", function () {
+            body.classList.toggle("sidebar-open");
+          });
+        }
+        document.addEventListener("click", function (e) {
+          if (
+            body.classList.contains("sidebar-open") &&
+            !e.target.closest(".sidebar") &&
+            !e.target.closest(".sidebar-toggle-btn")
+          ) {
+            body.classList.remove("sidebar-open");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Cheatcode gate: visiting any page with #somecode (or ?code=somecode) unlocks
+      // every element carrying data-gate="somecode", tab-session-wide. Content authors
+      // add a gate by wrapping content in any element with a data-gate attribute
+      // (plus `hidden`, so it stays invisible even before site.css loads).
+      // Codes are listed on the unlisted instructor notes page.
+      (() => {
+        const code = location.hash.slice(1) || new URLSearchParams(location.search).get("code");
+        if (code) sessionStorage.setItem("unlock-" + code, "1");
+        document.querySelectorAll("[data-gate]").forEach((el) => {
+          if (sessionStorage.getItem("unlock-" + el.dataset.gate)) {
+            el.removeAttribute("data-gate");
+            el.removeAttribute("hidden");
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Copy button on every multiline fenced code block.
+      (() => {
+        const icon = (paths) =>
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+          'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + "</svg>";
+        const copyIcon = icon(
+          '<rect x="9" y="9" width="11" height="11" rx="2"/>' +
+            '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>'
+        );
+        const doneIcon = icon('<path d="M20 6 9 17l-5-5"/>');
+
+        document.querySelectorAll("pre:not(.mermaid)").forEach((pre) => {
+          const code = pre.querySelector("code");
+          if (!code || !code.textContent.trim().includes("\n")) return;
+
+          const wrap = document.createElement("div");
+          wrap.className = "code-wrap";
+          pre.replaceWith(wrap);
+          wrap.appendChild(pre);
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "copy-btn";
+          btn.innerHTML = copyIcon + "<span>Copy</span>";
+          wrap.appendChild(btn);
+
+          let timer;
+          btn.addEventListener("click", () => {
+            navigator.clipboard.writeText(code.textContent).then(
+              () => {
+                btn.innerHTML = doneIcon + "<span>Copied!</span>";
+                btn.classList.add("is-done");
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                  btn.innerHTML = copyIcon + "<span>Copy</span>";
+                  btn.classList.remove("is-done");
+                }, 2000);
+              },
+              () => {
+                btn.innerHTML = copyIcon + "<span>Press Ctrl+C</span>";
+                getSelection().selectAllChildren(code);
+              }
+            );
+          });
+        });
+      })();
+    </script>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2/dist/mermaid-layout-elk.esm.min.mjs";
+      mermaid.registerLayoutLoaders(elkLayouts);
+      mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+    </script>
+  </body>
+</html>
