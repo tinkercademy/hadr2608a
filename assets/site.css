@@ -979,14 +979,84 @@ button {
 
 .agent-submit {
   margin: 1.5rem 0 2.5rem;
-  padding: 0.85rem 1rem;
-  border-left: 4px solid var(--coral);
-  background: var(--tint);
+  padding: 0;
+  border: 1px solid var(--mist);
+  border-radius: 8px;
+  background: var(--paper);
+  overflow: hidden;
 }
 
 .agent-submit summary {
   cursor: pointer;
+  padding: 0.9rem 1rem;
+  background: var(--tint);
   font-weight: 500;
+}
+
+.agent-submit > p,
+.agent-submit > .code-wrap,
+.agent-submit > pre,
+.agent-submit > .agent-prompt {
+  margin-inline: 1rem;
+}
+
+.agent-prompt {
+  margin-block: 1rem 1.25rem;
+  border: 1px solid #303034;
+  border-radius: 7px;
+  overflow: hidden;
+  box-shadow: 4px 4px 0 var(--mist);
+}
+
+.agent-prompt-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.65rem 0.55rem 0.85rem;
+  background: #171717;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.prompt-copy {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #68686c;
+  border-radius: 4px;
+  background: #29292b;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.prompt-copy:hover,
+.prompt-copy:focus-visible {
+  border-color: var(--coral);
+  background: var(--coral);
+  color: #171717;
+}
+
+.prompt-copy:focus-visible {
+  outline: 3px solid rgba(240, 93, 87, 0.32);
+  outline-offset: 2px;
+}
+
+.prompt-copy.is-done {
+  border-color: #8ad5ad;
+  background: #176b43;
+}
+
+.content .agent-prompt > p {
+  margin: 0;
+  padding: 1.1rem 1.2rem 1.2rem;
+  background: #f7f7f5;
+  color: var(--ink);
+  line-height: 1.65;
 }
 
 .results-heading {

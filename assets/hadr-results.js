@@ -6,6 +6,8 @@
   const challengeError = document.querySelector("#challenge-error");
   const resultsBody = document.querySelector("#results-body");
   const refreshButton = document.querySelector("#refresh-results");
+  const copyPromptButton = document.querySelector("#copy-agent-prompt");
+  const promptText = document.querySelector("#agent-prompt-text");
   let challenge;
 
   const number = (formData, name) => Number(formData.get(name));
@@ -151,6 +153,23 @@
   });
 
   refreshButton?.addEventListener("click", loadResults);
+  copyPromptButton?.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(promptText.textContent.trim());
+      copyPromptButton.textContent = "Copied";
+      copyPromptButton.classList.add("is-done");
+      setTimeout(() => {
+        copyPromptButton.textContent = "Copy prompt";
+        copyPromptButton.classList.remove("is-done");
+      }, 2000);
+    } catch {
+      const range = document.createRange();
+      range.selectNodeContents(promptText);
+      getSelection().removeAllRanges();
+      getSelection().addRange(range);
+      copyPromptButton.textContent = "Press Ctrl+C";
+    }
+  });
   loadChallenge();
   loadResults();
 })();
