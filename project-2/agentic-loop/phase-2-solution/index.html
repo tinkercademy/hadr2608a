@@ -196,8 +196,7 @@
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="phase-2-reference-solution" tabindex="-1"><a class="header-anchor" href="#phase-2-reference-solution">Phase 2 reference solution</a></h1>
-<p>The full loop. Two import changes at the top of <code>agent.py</code>: add <code>import json</code>, and extend the SDK types import to <code>from openai.types.chat import ChatCompletionMessageParam, ChatCompletionToolUnionParam</code>. One module-level helper:</p>
+          <p>The full loop. Two import changes at the top of <code>agent.py</code>: add <code>import json</code>, and extend the SDK types import to <code>from openai.types.chat import ChatCompletionMessageParam, ChatCompletionToolUnionParam</code>. One module-level helper:</p>
 <pre><code class="language-python">def _replayable_args(raw: str | None) -&gt; str:
     &quot;&quot;&quot;Tool-call arguments as the provider will accept them back.&quot;&quot;&quot;
     try:

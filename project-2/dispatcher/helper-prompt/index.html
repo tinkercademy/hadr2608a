@@ -196,8 +196,7 @@
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="skeleton-progress-checker-prompt" tabindex="-1"><a class="header-anchor" href="#skeleton-progress-checker-prompt">Skeleton progress checker prompt</a></h1>
-<p>Paste this into Claude Code when the dispatcher feels done. It inspects rather than edits, forces the travel-time decision to be deliberate, and points at the engineering choice - the dispatch-call budget - that the skeleton is the right place to get right.</p>
+          <p>Paste this into Claude Code when the dispatcher feels done. It inspects rather than edits, forces the travel-time decision to be deliberate, and points at the engineering choice - the dispatch-call budget - that the skeleton is the right place to get right.</p>
 <blockquote>
 <p>You are checking our stage-1 walking skeleton. Inspect and report; do not edit anything unless I explicitly ask for a fix. Give me a concise pass / blocker / next-action report.</p>
 <p>Trace the complete path and show evidence for each hop: file-based standing orders loaded, the tick observation read, one incident opened per structured report through our incident store, the dispatch model calling the typed tools, the inner tool loop running until the model yields, the outer runner calling <code>next_tick</code> exactly once per tick, repeating to terminal. A hop you cannot evidence is a blocker.</p>

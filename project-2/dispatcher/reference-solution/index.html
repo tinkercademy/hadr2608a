@@ -196,8 +196,7 @@
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="stage-1-reference-solution" tabindex="-1"><a class="header-anchor" href="#stage-1-reference-solution">Stage 1 reference solution</a></h1>
-<!-- markdownlint-disable MD033 -->
+          <!-- markdownlint-disable MD033 -->
 <p>Four holes: a minimal <code>_finalize</code> (<code>_project_claim</code> ships working and routes through it), the runner’s stage-1 tick (<code>_process_tick</code>), the state message (<code>_state_message</code>), and the system prompt. The stores and the agent loop are complete and already pass.</p>
 <h2 id="intake%3A-project-a-structured-claim-(no-model-call)" tabindex="-1"><a class="header-anchor" href="#intake%3A-project-a-structured-claim-(no-model-call)">Intake: project a structured claim (no model call)</a></h2>
 <p><code>_project_claim</code> ships working; <code>_finalize</code> is what you write. It copies the envelope authority fields (<code>contact_id</code>, <code>reported_location</code>) from the contact - never from the payload - and enforces the report schema, so a <code>none</code> report carries no fire severity or headcount.</p>

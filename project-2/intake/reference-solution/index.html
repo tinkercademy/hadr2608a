@@ -196,8 +196,7 @@
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="stage-2-reference-solution" tabindex="-1"><a class="header-anchor" href="#stage-2-reference-solution">Stage 2 reference solution</a></h1>
-<!-- markdownlint-disable MD033 -->
+          <!-- markdownlint-disable MD033 -->
 <p>Two code holes (<code>_finalize</code> and enabling the human-text path) plus the intake prompt and your own eval. <code>_project_claim</code> and the runner already work, and Stage 1 left you a minimal <code>_finalize</code> to extend.</p>
 <h2 id="_finalize%3A-envelope-authority-%2B-schema" tabindex="-1"><a class="header-anchor" href="#_finalize%3A-envelope-authority-%2B-schema"><code>_finalize</code>: envelope authority + schema</a></h2>
 <p>The model reads the free text; the envelope owns identity and location. Copy <code>contact_id</code> and <code>reported_location</code> from the contact, never from the model. Coerce <code>incident_type</code> to the three legal values, default <code>notes</code>, and null out fire fields on a <code>none</code> report.</p>

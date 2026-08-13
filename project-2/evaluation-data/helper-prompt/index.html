@@ -196,8 +196,7 @@
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="evaluation-checker-prompt" tabindex="-1"><a class="header-anchor" href="#evaluation-checker-prompt">Evaluation checker prompt</a></h1>
-<p>The loop on the previous page has judges - now add the judge of the judges. Paste this checker after each critic cycle (at minimum after the last) as a separate session that decides what is admissible as an intake fixture. It never annotates, never edits the skill, and never extends the schema; it only audits. The one non-negotiable it protects: the model that wrote a label never decides that label is correct.</p>
+          <p>The loop on the previous page has judges - now add the judge of the judges. Paste this checker after each critic cycle (at minimum after the last) as a separate session that decides what is admissible as an intake fixture. It never annotates, never edits the skill, and never extends the schema; it only audits. The one non-negotiable it protects: the model that wrote a label never decides that label is correct.</p>
 <p><img src="/day-1/05-evaluation/judge-of-the-judges-audit.png" alt="An auditor checking accepted labels against their sources, standing apart from the annotators and the critic"></p>
 <p>Paste this into Claude Code, adjusting the paths to your repo:</p>
 <blockquote>

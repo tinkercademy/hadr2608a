@@ -196,8 +196,7 @@
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="game-api" tabindex="-1"><a class="header-anchor" href="#game-api">Game API</a></h1>
-<p>The engine exposes one control surface: MCP over the official Python SDK’s stateful Streamable HTTP transport at <code>http://127.0.0.1:&lt;port&gt;/mcp</code>. There is no REST or WebSocket gameplay surface. Ordinary HTTP serves only the browser display, health, and a read-only snapshot. <code>serve</code> prints the MCP URL, the display URL, and the run-log directory at startup. For the game’s objective, layers, and mechanics see the <a href="/game/overview/">overview</a>.</p>
+          <p>The engine exposes one control surface: MCP over the official Python SDK’s stateful Streamable HTTP transport at <code>http://127.0.0.1:&lt;port&gt;/mcp</code>. There is no REST or WebSocket gameplay surface. Ordinary HTTP serves only the browser display, health, and a read-only snapshot. <code>serve</code> prints the MCP URL, the display URL, and the run-log directory at startup. For the game’s objective, layers, and mechanics see the <a href="/game/overview/">overview</a>.</p>
 <h2 id="connecting" tabindex="-1"><a class="header-anchor" href="#connecting">Connecting</a></h2>
 <ul>
 <li>One MCP session is one controller. A session may span several HTTP requests; they share one session identity and count as one controller.</li>

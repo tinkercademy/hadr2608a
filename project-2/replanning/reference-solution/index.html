@@ -196,8 +196,7 @@
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="stage-4-reference-solution" tabindex="-1"><a class="header-anchor" href="#stage-4-reference-solution">Stage 4 reference solution</a></h1>
-<!-- markdownlint-disable MD033 -->
+          <!-- markdownlint-disable MD033 -->
 <p>By Stage 4 the pipeline already replans: the confidence-aware <code>_state_message</code> re-ranks incidents every tick, reconciliation retains contradictions and demotes false alarms, and the <code>dispatch</code> tool retargets a committed truck. The deliverable is scenarios that prove revision happens, the two safety caps, and one shipped-code fix.</p>
 <h2 id="new-evidence-overturns-a-decision" tabindex="-1"><a class="header-anchor" href="#new-evidence-overturns-a-decision">New evidence overturns a decision</a></h2>
 <p>You do not add a replanning engine; you feed fresh beliefs into the same per-tick comparison. In a live <code>stage4-replan@londone</code> run the dispatcher reverses itself when the picture changes:</p>

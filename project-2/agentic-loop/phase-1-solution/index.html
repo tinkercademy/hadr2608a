@@ -196,8 +196,7 @@
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="phase-1-reference-solution" tabindex="-1"><a class="header-anchor" href="#phase-1-reference-solution">Phase 1 reference solution</a></h1>
-<p>One call, no tools, no loop: send the system prompt and the task, return the raw content (think block and all) as the final message. This replaces the <code>raise NotImplementedError</code> body of <code>agent_loop</code>; no new imports needed.</p>
+          <p>One call, no tools, no loop: send the system prompt and the task, return the raw content (think block and all) as the final message. This replaces the <code>raise NotImplementedError</code> body of <code>agent_loop</code>; no new imports needed.</p>
 <pre><code class="language-python">    result = LoopResult()
     resp = client.chat.completions.create(
         model=model,

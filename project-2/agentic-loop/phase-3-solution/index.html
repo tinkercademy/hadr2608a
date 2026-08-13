@@ -196,8 +196,7 @@
 
       <main id="main" class="page-main">
         <article class="content">
-          <h1 id="phase-3-reference-solution" tabindex="-1"><a class="header-anchor" href="#phase-3-reference-solution">Phase 3 reference solution</a></h1>
-<p>An example scenario for an edge LOOP-1…5 never exercises: malformed JSON in the model’s tool-call arguments, which the docstring contract says must fall back to an empty dict rather than crash. Append to <code>features/agent_loop.feature</code>:</p>
+          <p>An example scenario for an edge LOOP-1…5 never exercises: malformed JSON in the model’s tool-call arguments, which the docstring contract says must fall back to an empty dict rather than crash. Append to <code>features/agent_loop.feature</code>:</p>
 <pre><code class="language-gherkin">  Scenario: LOOP-6 malformed tool arguments fall back to an empty dict
     Given the scripted model calls tool &quot;travel_time&quot; with malformed arguments, then yields
     When the agent loop runs
