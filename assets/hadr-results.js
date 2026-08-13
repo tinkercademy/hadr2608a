@@ -79,7 +79,7 @@
     results.forEach((result, index) => {
       const row = document.createElement("tr");
       addCell(row, String(index + 1), "result-order");
-      addCell(row, result.team ? `${result.displayName} · ${result.team}` : result.displayName);
+      addCell(row, result.displayName);
       addCell(row, formatNumber.format(result.casualties), "result-score");
       addCell(row, formatNumber.format(result.buildingsLost), "result-score");
       addCell(row, formatNumber.format(result.tokens.total));
@@ -116,7 +116,6 @@
     const submission = {
       challengeId: challenge.id,
       displayName: text(formData, "displayName"),
-      team: text(formData, "team"),
       scenario: challenge.scenario,
       seed: challenge.seed,
       runId: text(formData, "runId"),

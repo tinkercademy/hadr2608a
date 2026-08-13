@@ -222,14 +222,13 @@
 
 <h2>Publish your result</h2>
 
-<p>Identify yourself with your name as it appears on the class list and your team, if applicable. Your name and team appear on the room results board. Only the result summary is stored; never upload <code>.env</code> or the engine JSONL log.</p>
+<p>Identify yourself with your name as it appears on the class list. Your name appears on the room results board. Only the result summary is stored; never upload <code>.env</code> or the engine JSONL log.</p>
 
 <form id="result-form" class="result-form">
   <fieldset>
     <legend>Operator</legend>
     <div class="form-grid">
       <label>Your name <span>(shown to the class)</span><input name="displayName" required minlength="2" maxlength="40" autocomplete="name" /></label>
-      <label>Team <span>(optional)</span><input name="team" maxlength="40" autocomplete="organization" /></label>
       <label>Git commit<input name="gitCommit" required minlength="7" maxlength="40" pattern="[a-fA-F0-9]{7,40}" placeholder="abc1234" autocapitalize="off" /></label>
       <label>Class submission code <span>(from your facilitator)</span><input name="submissionCode" type="password" required autocomplete="off" /></label>
     </div>
@@ -267,7 +266,7 @@
 export HADR_SUBMISSION_CODE</code></pre>
   <p>Then paste this into Claude Code in your HADR repository:</p>
   <blockquote>
-    <p>Submit my HADR challenge result. Do not edit any files. Read the current challenge and its <code>submissionTemplate</code> from <code>https://hadr2608a.tk.sg/api/hadr/challenge</code>, run its exact scenario and seed with <code>uv run hadr-runner</code>, and capture the terminal summary. Read only the <code>INTAKE_MODEL</code> and <code>DISPATCH_MODEL</code> names from <code>.env</code>; never print or transmit keys, tokens, base URLs, or other environment values. Fill every field in <code>submissionTemplate</code>, including my current Git commit. Ask for my name as it appears on the class list and my optional team; tell me that both will be public on the class board. Show me the complete JSON and wait for my approval. After approval, POST it to <code>https://hadr2608a.tk.sg/api/hadr/results</code> with <code>Content-Type: application/json</code> and the environment variable <code>HADR_SUBMISSION_CODE</code> in the <code>X-Submission-Code</code> header. Do not upload <code>.env</code> or any engine JSONL run log. Report the server response exactly.</p>
+    <p>Submit my HADR challenge result. Do not edit any files. Read the current challenge and its <code>submissionTemplate</code> from <code>https://hadr2608a.tk.sg/api/hadr/challenge</code>, run its exact scenario and seed with <code>uv run hadr-runner</code>, and capture the terminal summary. Read only the <code>INTAKE_MODEL</code> and <code>DISPATCH_MODEL</code> names from <code>.env</code>; never print or transmit keys, tokens, base URLs, or other environment values. Fill every field in <code>submissionTemplate</code>, including my current Git commit. Ask for my name as it appears on the class list and tell me it will be public on the class board. Show me the complete JSON and wait for my approval. After approval, POST it to <code>https://hadr2608a.tk.sg/api/hadr/results</code> with <code>Content-Type: application/json</code> and the environment variable <code>HADR_SUBMISSION_CODE</code> in the <code>X-Submission-Code</code> header. Do not upload <code>.env</code> or any engine JSONL run log. Report the server response exactly.</p>
   </blockquote>
 </details>
 
@@ -288,7 +287,7 @@ export HADR_SUBMISSION_CODE</code></pre>
   </table>
 </div>
 
-<script src="/assets/hadr-results.js?v=1" defer></script>
+<script src="/assets/hadr-results.js?v=2" defer></script>
 
           
           
